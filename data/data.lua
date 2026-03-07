@@ -4,6 +4,7 @@ local package = ...
 package.includes = {
 	"items.lua",
 	"frames.lua", 
+	"components.lua", 
 }
 
 -- called when mod is initializing

@@ -61,13 +61,15 @@ Frame:RegisterFrame("f_mothership", {
 Frame:RegisterFrame("f_landingpod", {
 	size = "Special", race = "robot", index = 1001, name = "Command Center",
 	minimap_color = { 0.8, 0.8, 0.8 },
-	visibility_range = 30,
-	slots = { storage = 12, },
-	health_points = 1000, -- 500
+	visibility_range = 60,
+	slots = { storage = 24, },
+	component_boost = 200,
+	health_points = 2000, -- 500
 	texture = "Main/textures/icons/frame/building_2x2_ad.png",
 	trigger_channels = "building",
 	visual = "v_base2x2_as",
 	components = {
+		{ "c_carrier_factory", "hidden" },
 		{ "c_carrier_factory", "hidden" },
 	},
 	drop_on_deconstruct = function(x, y)
@@ -540,41 +542,45 @@ end
 
 -------------- PLAYER BOTS
 
-Frame:RegisterFrame("f_bot_1s_as", {
+Frame:RegisterFrame("f_bot_1s_as", { -- 스카우트
 	size = "Unit", race = "robot", index = 1012, name = "Scout",
 	texture = "Main/textures/icons/frame/bot_1s_ad.png",
 	desc = "Advanced high-speed starter bot with a single small socket",
 	minimap_color = { 0.9, 0.9, 0.8 },
 	slot_type = "garage",
-	visibility_range = 10,
-	slots = { storage = 4, },
-	movement_speed = 4,
+	visibility_range = 20,
+	slots = { storage = 8, },
+	movement_speed = 8,
+	component_boost = 200,
 	start_disconnected = true,
-	health_points = 250, -- 150
-	power = -2,
+	health_points = 500, -- 150
+	power = -1,
 	flags = "AnimateRoot",
 	trigger_channels = "bot",
-	production_recipe = CreateProductionRecipe({ icchip = 1, uframe = 3, fused_electrodes = 2 }, { c_robotics_factory = 60 }),
+	production_recipe = CreateProductionRecipe({ icchip = 2, uframe = 6, fused_electrodes = 4 }, { c_robotics_factory = 60 }),
 	visual = "v_bot_1s_as",
-	components = { { "c_higrade_capacitor", "hidden" } },
+	components = { { "c_higrade_capacitor", "hidden" },{ "c_higrade_capacitor", "hidden" } },
 })
 
-Frame:RegisterFrame("f_bot_1s_adw", {
+Frame:RegisterFrame("f_bot_1s_adw", { -- 엔지니어
 	size = "Unit", race = "robot", index = 1011, name = "Engineer",
 	texture = "Main/textures/icons/frame/bot_1s_adw.png",
 	desc = "Engineer unit with excellent production speed and extensive upgradeability",
 	minimap_color = { 0.9, 0.9, 0.8 },
 	slot_type = "garage",
-	visibility_range = 7,
-	slots = { storage = 2, },
-	movement_speed = 2,
-	component_boost = 200,
+	visibility_range = 14,
+	slots = { storage = 4, },
+	movement_speed = 4,
+	component_boost = 400,
 	start_disconnected = true,
-	health_points = 200, -- 120
-	power = -4,
+	health_points = 400, -- 120
+	power = -2,
 	flags = "AnimateRoot",
 	trigger_channels = "bot",
-	production_recipe = CreateProductionRecipe({ icchip = 1, uframe = 2, fused_electrodes = 2 }, { c_robotics_factory = 60  }),
+	production_recipe = CreateProductionRecipe(
+	{ icchip = 2, uframe = 4, fused_electrodes = 4 }, 
+	{ c_robotics_factory = 60  }
+	),
 	visual = "v_bot_1s_adw",
 	components = {
 		--{ "c_moduleefficiency", "hidden" },
@@ -583,22 +589,23 @@ Frame:RegisterFrame("f_bot_1s_adw", {
 	}
 })
 
-Frame:RegisterFrame("f_bot_2m_as", {
+Frame:RegisterFrame("f_bot_2m_as", { -- 본부
 	size = "Unit", race = "robot", index = 1013, name = "Command Center",
 	texture = "Main/textures/icons/frame/bot_2m_ad.png",
 	minimap_color = { 0.9, 0.9, 0.8 },
 	slot_type = "garage",
-	visibility_range = 20,
-	slots = { storage = 8, },
-	movement_speed = 4,
+	visibility_range = 40,
+	slots = { storage = 16, },
+	movement_speed = 8,
+	component_boost = 200,
 	start_disconnected = true,
-	power = -2,
-	health_points = 400, -- 150
+	power = -1,
+	health_points = 800, -- 150
 	flags = "AnimateRoot",
 	trigger_channels = "bot",
 	visual = "v_bot_2m_as",
-	production_recipe = CreateProductionRecipe({ icchip = 10, uframe = 20, fused_electrodes = 20 }, { c_robotics_factory = 80 }),
-	components = { { "c_higrade_capacitor", "hidden" } },
+	production_recipe = CreateProductionRecipe({ icchip = 20, uframe = 40, fused_electrodes = 20 }, { c_robotics_factory = 80 }),
+	components = { { "c_higrade_capacitor", "hidden" },{ "c_higrade_capacitor", "hidden" } },
 })
 
 Frame:RegisterFrame("f_bot_1s_a", {
@@ -3300,20 +3307,21 @@ FrameObsidian:RegisterFrame("f_alien_powergenerator", {
 	},
 })
 
-Frame:RegisterFrame("f_carrier_bot", {
+Frame:RegisterFrame("f_carrier_bot", { -- 운반
 	size = "Unit", race = "robot", index = 1001, name = "Runner",
 	texture = "Main/textures/icons/frame/carrier_bot.png",
 	desc = "A small cargo bot for moving items",
 	minimap_color = { 0.9, 0.9, 0.8 },
-	health_points = 5,
+	health_points = 10,
 	slot_type = "garage",
-	visibility_range = 5,
-	slots = { storage = 1 },
-	movement_speed = 3,
+	visibility_range = 10,
+	slots = { storage = 2 },
+	movement_speed = 6,
+	component_boost = 200,
 	start_disconnected = false,
 	flags = "AnimateRoot",
 	trigger_channels = "bot",
-	power = -2,
-	production_recipe = CreateProductionRecipe({ metalplate = 3, crystal = 3 }, { c_carrier_factory = 10, c_assembler = 15 }),
+	power = -1,
+	production_recipe = CreateProductionRecipe({ metalplate = 6, crystal = 6 }, { c_carrier_factory = 10, c_assembler = 15 }),
 	visual = "v_carrier_bot",
 })
