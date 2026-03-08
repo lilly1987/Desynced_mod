@@ -909,7 +909,7 @@ c_fabricator:RegisterComponent("c_assembler", { --# 조립기
 	desc = "Main production facility for robotic components and robotic materials",
 	visual = "v_assembler_01_m",
 	production_effect = "fx_assembler",
-	power = -5,
+	power = -10,
 	production_recipe = CreateProductionRecipe({ metalplate = 5, crystal = 10 }, { c_fabricator = 40, c_assembler = 40 }),
 	link_to_visual = true,
 	on_add = function(comp_def, comp)
@@ -946,8 +946,8 @@ local c_robotics_factory = c_fabricator:RegisterComponent("c_robotics_factory", 
 	desc = "Dedicated laboratory for robotics",
 	visual = "v_roboticsfactory_01_m",
 	production_effect = "fx_robotics_factory",
-	power = -15,
-	production_recipe = CreateProductionRecipe({ c_fabricator = 2, reinforced_plate = 20, circuit_board = 10 }, { c_assembler = 20 }),
+	power = -30,
+	production_recipe = CreateProductionRecipe({ c_fabricator = 1, reinforced_plate = 10, circuit_board = 5 }, { c_assembler = 20 }),
 	registers = {
 		c_fabricator.registers[1], -- production
 		c_fabricator.registers[2], -- missing ingredient
@@ -980,8 +980,8 @@ c_fabricator:RegisterComponent("c_advanced_assembler", { --#
 	desc = "High-tech production facility for advanced robotic components",
 	visual = "v_adv_assembler_01_l",
 	production_effect = "fx_assembler",
-	power = -175,
-	production_recipe = CreateProductionRecipe({ c_assembler = 2, hdframe = 40, icchip = 20, cable = 20 }, { c_assembler = 200 }),
+	power = -350,
+	production_recipe = CreateProductionRecipe({ c_assembler = 1, hdframe = 20, icchip = 10, cable = 10 }, { c_assembler = 200 }),
 	-- production_recipe = CreateProductionRecipe({ hdframe = 20, blight_plasma = 10, blight_bar = 10 }, { c_assembler = 150 }),
 	registers = {
 		c_fabricator.registers[1], -- production
@@ -1013,7 +1013,7 @@ local c_power_relay = Comp:RegisterComponent("c_power_relay", {
 	texture = "Main/textures/icons/components/Component_PowerRelay_01_M.png",
 	visual = "v_power_relay_01_m",
 	transfer_radius = 30,
-	production_recipe = CreateProductionRecipe({ c_small_relay = 2, wire = 10, energized_plate = 10 }, { c_assembler = 60 }),
+	production_recipe = CreateProductionRecipe({ c_small_relay = 1, wire = 5, energized_plate = 5 }, { c_assembler = 60 }),
 })
 
 ----- power_relay -----
@@ -1066,7 +1066,7 @@ local c_uplink = Comp:RegisterComponent("c_uplink", { --# 업링크
 	texture = "Main/textures/icons/components/Component_Uplink_01_M.png",
 	desc = "Uploads data to orbital mainframe for tech research",
 	visual = "v_uplink_m",
-	power = -10,
+	power = -20,
 	production_effect = "fx_uplink",
 	registers = {
 		{ tip = "Current researching technology", read_only = true, ui_icon = "icon_uplink", click_action = true },
@@ -1398,17 +1398,6 @@ function c_repairer_aoe:on_update(comp, cause)
 	return comp:SetStateStartWork(self.duration)
 end
 
-c_repairer_aoe:RegisterComponent("c_repairer_small_aoe", {
-	attachment_size = "Small", race = "robot", index = 1043, name = "Small AOE Repair Component",
-	texture = "Main/textures/icons/components/Component_Repairer_01_S_aoe.png",
-	visual = "v_repairer_AoE_01_s",
-	production_recipe = CreateProductionRecipe({ c_repairer = 1, circuit_board = 5, hdframe = 1 }, { c_assembler = 50 }),
-
-	-- internal variable
-	power = -5,
-	trigger_radius = 1,
-	repair = 2,   -- repair health per use
-})
 
 c_repairer_aoe:RegisterComponent("c_repairer_my_aoe", {
 	attachment_size = "Hidden", race = "robot", index = 1043, name = "my AOE Repair Component",
@@ -1420,6 +1409,19 @@ c_repairer_aoe:RegisterComponent("c_repairer_my_aoe", {
 	power = 0,
 	trigger_radius = 128,
 	repair = 100,   -- repair health per use
+})
+
+
+c_repairer_aoe:RegisterComponent("c_repairer_small_aoe", {
+	attachment_size = "Small", race = "robot", index = 1043, name = "Small AOE Repair Component",
+	texture = "Main/textures/icons/components/Component_Repairer_01_S_aoe.png",
+	visual = "v_repairer_AoE_01_s",
+	production_recipe = CreateProductionRecipe({ c_repairer = 1, circuit_board = 5, hdframe = 1 }, { c_assembler = 50 }),
+
+	-- internal variable
+	power = -5,
+	trigger_radius = 1,
+	repair = 2,   -- repair health per use
 })
 
 c_repairer_aoe:RegisterComponent("c_alien_heart_repair", {
@@ -3048,68 +3050,6 @@ function c_turret:on_update(comp, cause)
 	return comp:SetStateStartWork(self.duration)
 end
 
-----------------------------
-----------------------------
-c_turret:RegisterComponent("c_my_turret_energy", { -- 소형 포탑
-	attachment_size = "Hidden", race = "robot", index = 1001, name = "Small Turret",
-	texture = "Main/textures/icons/components/Component_StarterTurret_01_S.png",
-	desc = "Basic defensive turret",
-	power = 0,
-	visual = "v_starterturret_s",
-	production_recipe = CreateProductionRecipe({ crystal = 1 }, { c_fabricator = 1 }),
-	trigger_radius = 128,
-	attack_radius = 128,
-
-	-- internal variable
-	damage = 128, -- damage per shot -- 5
-	damage_type = "energy_damage",
-	blast = 4,
-	duration = 5, -- charge duration -- 3
-	shoot_while_moving = true,
-	shoot_fx = "fx_turret_laser",
-	shoot_speed = 0,
-})
-
-c_turret:RegisterComponent("c_my_turret_plasma", { -- 소형 포탑
-	attachment_size = "Hidden", race = "robot", index = 1001, name = "Small Turret",
-	texture = "Main/textures/icons/components/Component_StarterTurret_01_S.png",
-	desc = "Basic defensive turret",
-	power = 0,
-	visual = "v_starterturret_s",
-	production_recipe = CreateProductionRecipe({ crystal = 1 }, { c_fabricator = 1 }),
-	trigger_radius = 128,
-	attack_radius = 128,
-
-	-- internal variable
-	damage = 128, -- damage per shot -- 5
-	damage_type = "plasma_damage",
-	blast = 4,
-	duration = 5, -- charge duration -- 3
-	shoot_while_moving = true,
-	shoot_fx = "fx_turret_laser",
-	shoot_speed = 0,
-})
-
-c_turret:RegisterComponent("c_my_turret_physical", { -- 소형 포탑
-	attachment_size = "Hidden", race = "robot", index = 1001, name = "Small Turret",
-	texture = "Main/textures/icons/components/Component_StarterTurret_01_S.png",
-	desc = "Basic defensive turret",
-	power = 0,
-	visual = "v_starterturret_s",
-	production_recipe = CreateProductionRecipe({ crystal = 1 }, { c_fabricator = 1 }),
-	trigger_radius = 128,
-	attack_radius = 128,
-
-	-- internal variable
-	damage = 128, -- damage per shot -- 5
-	damage_type = "physical_damage",
-	blast = 4,
-	duration = 5, -- charge duration -- 3
-	shoot_while_moving = true,
-	shoot_fx = "fx_turret_laser",
-	shoot_speed = 0,
-})
-
 ----- PORTABLE TURRET ------
 ----------------------------
 
@@ -3132,6 +3072,70 @@ local c_portable_turret = c_turret:RegisterComponent("c_portable_turret", { -- �
 	shoot_speed = 0,
 })
 
+------------------------------------
+------------------------------------
+
+c_turret:RegisterComponent("c_my_turret_energy", { -- 소형 포탑
+	attachment_size = "Hidden", race = "robot", index = 1001, name = "Small Turret",
+	texture = "Main/textures/icons/components/Component_StarterTurret_01_S.png",
+	desc = "Basic defensive turret",
+	power = 0,
+	visual = "v_starterturret_s",
+	production_recipe = CreateProductionRecipe({  }, { c_fabricator = 1 }),
+	trigger_radius = 128,
+	attack_radius = 128,
+
+	-- internal variable
+	damage = 128, -- damage per shot -- 5
+	damage_type = "energy_damage",
+	blast = 4,
+	duration = 5, -- charge duration -- 3
+	shoot_while_moving = true,
+	shoot_fx = "fx_turret_laser",
+	shoot_speed = 0,
+})
+
+c_turret:RegisterComponent("c_my_turret_plasma", { -- 소형 포탑
+	attachment_size = "Hidden", race = "robot", index = 1001, name = "Small Turret",
+	texture = "Main/textures/icons/components/Component_StarterTurret_01_S.png",
+	desc = "Basic defensive turret",
+	power = 0,
+	visual = "v_starterturret_s",
+	production_recipe = CreateProductionRecipe({  }, { c_fabricator = 1 }),
+	trigger_radius = 128,
+	attack_radius = 128,
+
+	-- internal variable
+	damage = 128, -- damage per shot -- 5
+	damage_type = "plasma_damage",
+	blast = 4,
+	duration = 5, -- charge duration -- 3
+	shoot_while_moving = true,
+	shoot_fx = "fx_turret_laser",
+	shoot_speed = 0,
+})
+
+c_turret:RegisterComponent("c_my_turret_physical", { -- 소형 포탑
+	attachment_size = "Hidden", race = "robot", index = 1001, name = "Small Turret",
+	texture = "Main/textures/icons/components/Component_StarterTurret_01_S.png",
+	desc = "Basic defensive turret",
+	power = 0,
+	visual = "v_starterturret_s",
+	production_recipe = CreateProductionRecipe({ }, {  }),
+	trigger_radius = 128,
+	attack_radius = 128,
+
+	-- internal variable
+	damage = 128, -- damage per shot -- 5
+	damage_type = "physical_damage",
+	blast = 4,
+	duration = 5, -- charge duration -- 3
+	shoot_while_moving = true,
+	shoot_fx = "fx_turret_laser",
+	shoot_speed = 0,
+})
+
+------------------------------------
 ----- ADVANCED PORTABLE TURRET -----
 ------------------------------------
 
@@ -3760,7 +3764,7 @@ local c_wind_turbine = Comp:RegisterComponent("c_wind_turbine", { --
 	production_recipe = CreateProductionRecipe({ circuit_board = 6, energized_plate = 12, wire = 10 }, { c_assembler = 100 }),
 	activation = "Always",
 	adjust_extra_power = true,
-	max_power = 20,
+	max_power = 100,
 	speed = 4,
 	registers = {{ read_only = true}},
 })
@@ -3774,7 +3778,7 @@ c_wind_turbine:RegisterComponent("c_wind_turbine_l", { --
 	production_recipe = CreateProductionRecipe({ c_wind_turbine = 2, circuit_board = 6, hdframe = 4, wire = 20 }, { c_assembler = 100 }),
 	activation = "Always",
 	adjust_extra_power = true,
-	max_power = 80,
+	max_power = 400,
 	speed = 2,
 })
 
@@ -3816,6 +3820,7 @@ function c_power_cell:on_add(comp)
 	comp:SetRegister(1, { id = "v_power_production", num = (self.power or 0)* TICKS_PER_SECOND })
 end
 
+
 ----- integrated cell -----
 c_power_cell:RegisterComponent("c_my_cell", {
 	attachment_size = "Hidden", race = "robot", index = 1011, name = "My Cell",
@@ -3825,6 +3830,8 @@ c_power_cell:RegisterComponent("c_my_cell", {
 	transfer_radius = 128,
 	production_recipe = false,
 })
+
+
 ----- integrated cell -----
 c_power_cell:RegisterComponent("c_integrated_cell", {
 	attachment_size = "Hidden", race = "robot", index = 1011, name = "Integrated Cell",
@@ -4233,7 +4240,8 @@ function c_crane:on_remove(comp)
 	comp.owner.crane_range = new_range
 end
 
---- portable crane ---
+
+
 c_crane:RegisterComponent("c_crane_my", {
 	attachment_size = "Hidden", race = "robot", index = 1022, name = "Item Transporter",
 	texture = "Main/textures/icons/components/Component_Transporter_01_M.png",
@@ -4243,6 +4251,7 @@ c_crane:RegisterComponent("c_crane_my", {
 	production_recipe = CreateProductionRecipe({ crystal = 1 }, { c_fabricator = 1 }),
 	range = 128,
 })
+
 --- portable crane ---
 c_crane:RegisterComponent("c_portablecrane", {
 	attachment_size = "Internal", race = "robot", index = 1023, name = "Portable Transporter",
@@ -11636,3 +11645,8 @@ function FactionAction.TryActivateSimulatorExtract(faction, arg)
 		end
 	end
 end
+
+
+----------------------------
+----------------------------
+

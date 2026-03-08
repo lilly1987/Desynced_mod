@@ -387,27 +387,6 @@ data.visuals.v_bot_1s_b = {
 	destroy_effect = "fx_digital",
 }
 
-
-data.visuals.v_bot_1s_as_my = {
-	--mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD.Bot_1S_AD'",
-	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD/Ver2/Bot_1S_AD.Bot_1S_AD'",
-	light_radius = 5,
-	light_color = bot_light_color,
-	sockets = {
-		{ "Small1", "Large"    },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-	},
-	--	placement = "Max",
-	move_effect = "fx_move_bot",
-	destroy_effect = "fx_digital",
-}
-
 data.visuals.v_bot_1s_as = {
 	--mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD.Bot_1S_AD'",
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD/Ver2/Bot_1S_AD.Bot_1S_AD'",
@@ -424,24 +403,6 @@ data.visuals.v_bot_1s_as = {
 	destroy_effect = "fx_digital",
 }
 
-data.visuals.v_bot_1s_adw_my = {
-	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
-	light_radius = 5,
-	light_color = bot_light_color,
-	sockets = {
-		{ "Small1", "Large"    },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-	},
-	--	placement = "Max",
-	move_effect = "fx_move_bot",
-	destroy_effect = "fx_digital",
-}
 
 data.visuals.v_bot_1s_adw = {
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
@@ -449,6 +410,10 @@ data.visuals.v_bot_1s_adw = {
 	light_color = bot_light_color,
 	sockets = {
 		{ "Small1", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 		{ "",       "Large" },
 		{ "",       "Large" },
 		{ "",       "Large" },
@@ -1171,6 +1136,9 @@ data.visuals.v_base2x2_as = {
 	sockets = {
 		{ "Medium1", "Large"  },
 		{ "Medium2", "Large"  },
+		{ "",        "Large" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 		{ "",        "Large" },
 		{ "",        "Large" },
 		{ "",        "Large" },
@@ -2484,16 +2452,6 @@ data.visuals.v_metalore = { mesh = "StaticMesh'/Game/Meshes/Containers/Container
 
 data.visuals.v_carrier_bot = {
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Carrier_A.Bot_Carrier_A'",
-	sockets = {
-		{ "",        "Large" },
-		{ "",        "Large" },
-		{ "",        "Large" },
-		{ "",        "Large" },
-		{ "",        "Large" },
-		{ "",        "Large" },
-		{ "",        "Large" },
-		{ "",        "Large" },
-	},
 }
 
 data.visuals.v_transport_bot = {
@@ -3345,7 +3303,7 @@ data.visuals.v_alien_powergenerator = {
 	},
 }
 
-
+-----------------------------
 data.visuals.v_base_my = {
 	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
 	placement = "Max",
@@ -3366,4 +3324,42 @@ data.visuals.v_base_my = {
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
+}
+
+
+
+data.visuals.v_bot_1s_adw_my = {
+	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
+	light_radius = 5,
+	light_color = bot_light_color,
+	sockets = {
+		{ "Small1", "Large"    },
+		{ "",       "Large" }, 
+	},
+	--	placement = "Max",
+	move_effect = "fx_move_bot",
+	destroy_effect = "fx_digital",
+}
+
+
+data.visuals.v_bot_1s_as_my = {
+	--mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD.Bot_1S_AD'",
+	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD/Ver2/Bot_1S_AD.Bot_1S_AD'",
+	light_radius = 5,
+	light_color = bot_light_color,
+	sockets = {
+		{ "Small1", "Large"    },
+		{ "",       "Large" }, 
+	},
+	--	placement = "Max",
+	move_effect = "fx_move_bot",
+	destroy_effect = "fx_digital",
+}
+
+data.visuals.v_carrier_bot_my = {
+	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Carrier_A.Bot_Carrier_A'",
+	sockets = {
+		{ "Small1", "Large"    },
+		{ "",       "Large" }, 
+	},
 }

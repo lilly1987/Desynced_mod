@@ -62,7 +62,7 @@ Frame:RegisterFrame("f_landingpod", { --# 본부
 	size = "Special", race = "robot", index = 1001, name = "Command Center",
 	minimap_color = { 0.8, 0.8, 0.8 },
 	visibility_range = 60,
-	slots = { storage = 24, },
+	slots = { storage = 27, },
 	component_boost = 800,
 	health_points = 2000, -- 500
 	texture = "Main/textures/icons/frame/building_2x2_ad.png",
@@ -75,10 +75,17 @@ Frame:RegisterFrame("f_landingpod", { --# 본부
 		
 		{ "c_crane_my", "hidden" },
 		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
 		-- { "c_adv_miner", "hidden" } ,
+		{ "c_fabricator", "auto" } ,
+		{ "c_assembler", "auto" } ,
+		{ "c_advanced_assembler", "auto" } ,
+		{ "c_robotics_factory", "auto" } ,
+		{ "c_refinery", "auto" } ,
+		{ "c_advanced_refinery", "auto" } ,
+		{ "c_uplink", "auto" } ,
 		
 	},
 	drop_on_deconstruct = function(x, y)
@@ -742,7 +749,7 @@ Frame:RegisterFrame("f_bot_2m_as", { --# 본부
 	minimap_color = { 0.9, 0.9, 0.8 },
 	slot_type = "garage",
 	visibility_range = 40,
-	slots = { storage = 16, },
+	slots = { storage = 32, },
 	movement_speed = 8,
 	component_boost = 800,
 	start_disconnected = true,
@@ -3507,7 +3514,7 @@ Frame:RegisterFrame("f_bot_1s_as_my", { --# 스카우트
 	minimap_color = { 0.9, 0.9, 0.8 },
 	slot_type = "garage",
 	visibility_range = 128,
-	slots = { storage = 32, },
+	slots = { storage = 27, },
 	movement_speed = 128,
 	component_boost = 800,
 	start_disconnected = true,
@@ -3522,10 +3529,27 @@ Frame:RegisterFrame("f_bot_1s_as_my", { --# 스카우트
 	
 		{ "c_crane_my", "hidden" },
 		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		
+		{ "c_adv_miner", "auto" } ,
+		
+		{ "c_fabricator", "hidden" } ,  --# 제작기
+		{ "c_fabricator", "hidden" } ,  --# 제작기
+		{ "c_assembler", "hidden" } , -- 조립기
+		{ "c_assembler", "hidden" } ,
+		{ "c_refinery", "hidden" } , -- 정제기
+		{ "c_refinery", "hidden" } ,
+		{ "c_robotics_factory", "hidden" } , -- 로봇 공학 조립기
+		{ "c_robotics_factory", "hidden" } ,
+		{ "c_advanced_assembler", "hidden" } ,
+		-- { "c_advanced_assembler", "hidden" } ,
+		-- { "c_advanced_refinery", "hidden" } ,
+		{ "c_advanced_refinery", "hidden" } ,
+		{ "c_uplink", "hidden" } ,
+		
 	},
 })
 
@@ -3537,7 +3561,7 @@ Frame:RegisterFrame("f_bot_1s_adw_my", { --# 엔지니어
 	minimap_color = { 0.9, 0.9, 0.8 },
 	slot_type = "garage",
 	visibility_range = 128,
-	slots = { storage = 32, },
+	slots = { storage = 27, },
 	movement_speed = 128,
 	component_boost = 800,
 	start_disconnected = true,
@@ -3553,14 +3577,24 @@ Frame:RegisterFrame("f_bot_1s_adw_my", { --# 엔지니어
 		--{ "c_internal_crane", "hidden" },
 		
 		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
 		
-		{ "c_fabricator", "hidden" } ,
+		{ "c_adv_miner", "auto" } ,
+		
+		{ "c_fabricator", "hidden" } ,  --# 제작기
+		{ "c_fabricator", "hidden" } ,  --# 제작기
+		{ "c_assembler", "hidden" } , -- 조립기
 		{ "c_assembler", "hidden" } ,
-		{ "c_advanced_assembler", "hidden" } ,
-		{ "c_robotics_factory", "hidden" } ,
+		{ "c_refinery", "hidden" } , -- 정제기
 		{ "c_refinery", "hidden" } ,
+		{ "c_robotics_factory", "hidden" } , -- 로봇 공학 조립기
+		{ "c_robotics_factory", "hidden" } ,
+		{ "c_advanced_assembler", "hidden" } ,
+		-- { "c_advanced_assembler", "hidden" } ,
+		-- { "c_advanced_refinery", "hidden" } ,
 		{ "c_advanced_refinery", "hidden" } ,
 		{ "c_uplink", "hidden" } ,
+		
 		-- { "c_repairer_my_aoe", "hidden" } ,
 		-- { "c_my_turret_energy", "hidden" } , -- 포탑
 		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
@@ -3578,7 +3612,7 @@ Frame:RegisterFrame("f_carrier_bot_my", { --# 운반
 	health_points = 10000,
 	slot_type = "garage",
 	visibility_range = 128,
-	slots = { storage = 32 },
+	slots = { storage = 27 },
 	movement_speed = 100,
 	component_boost = 800,
 	start_disconnected = false,
@@ -3586,16 +3620,32 @@ Frame:RegisterFrame("f_carrier_bot_my", { --# 운반
 	trigger_channels = "bot",
 	power = 0,
 	production_recipe = CreateProductionRecipe({ }, { c_carrier_factory = 1 }),
-	visual = "v_carrier_bot",
+	visual = "v_carrier_bot_my",
+	-- visual = "v_carrier_bot",
 	
 	components = {
 		{ "c_crane_my", "hidden" },
 		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
 		
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "auto" } ,
+		
+		{ "c_fabricator", "hidden" } ,  --# 제작기
+		{ "c_fabricator", "hidden" } ,  --# 제작기
+		{ "c_assembler", "hidden" } , -- 조립기
+		{ "c_assembler", "hidden" } ,
+		{ "c_refinery", "hidden" } , -- 정제기
+		{ "c_refinery", "hidden" } ,
+		{ "c_robotics_factory", "hidden" } , -- 로봇 공학 조립기
+		{ "c_robotics_factory", "hidden" } ,
+		{ "c_advanced_assembler", "hidden" } ,
+		-- { "c_advanced_assembler", "hidden" } ,
+		-- { "c_advanced_refinery", "hidden" } ,
+		{ "c_advanced_refinery", "hidden" } ,
+		{ "c_uplink", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		
 		-- { "c_adv_miner", "hidden" } ,
 	},
 })
@@ -3606,7 +3656,7 @@ Frame:RegisterFrame("f_building_my", {
 	desc = "Basic 1x1 Building with Good Inventory space, but supports only one Small Component",
 	minimap_color = { 0.8, 0.8, 0.8 },
 	visibility_range = 128,
-	slots = { storage = 32 },
+	slots = { storage = 27 },
 	health_points = 10000, --150
 	construction_recipe = CreateConstructionRecipe({  }, 1),
 	texture = "Main/textures/icons/frame/building_1x1_d.png",
@@ -3614,6 +3664,15 @@ Frame:RegisterFrame("f_building_my", {
 	visual = "v_base_my",
 	components = {
 		{ "c_crane_my", "hidden" },
+		
+		-- { "c_fabricator", "auto" } ,
+		-- { "c_assembler", "auto" } ,
+		-- { "c_advanced_assembler", "auto" } ,
+		-- { "c_robotics_factory", "auto" } ,
+		-- { "c_refinery", "auto" } ,
+		-- { "c_advanced_refinery", "auto" } ,
+		-- { "c_uplink", "auto" } ,
+		
 		-- { "c_repairer_my_aoe", "hidden" } ,
 		-- { "c_my_turret_energy", "hidden" } , -- 포탑
 		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
