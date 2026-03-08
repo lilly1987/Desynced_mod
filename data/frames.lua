@@ -78,7 +78,7 @@ Frame:RegisterFrame("f_landingpod", { --# 본부
 		{ "c_my_turret_energy", "hidden" } , -- 포탑
 		{ "c_my_turret_plasma", "hidden" } , -- 포탑
 		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 		
 	},
 	drop_on_deconstruct = function(x, y)
@@ -337,11 +337,11 @@ Frame:RegisterFrame("f_building1x1a", {
 	visual = "v_base1x1a",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -358,11 +358,11 @@ Frame:RegisterFrame("f_building1x1b", {
 	visual = "v_base1x1b",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -379,11 +379,11 @@ Frame:RegisterFrame("f_building1x1c", {
 	visual = "v_base1x1c",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -400,11 +400,11 @@ Frame:RegisterFrame("f_building1x1d", {
 	visual = "v_base1x1d",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -421,11 +421,11 @@ Frame:RegisterFrame("f_building1x1f", {
 	visual = "v_base1x1f",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -442,11 +442,11 @@ Frame:RegisterFrame("f_building1x1g", {
 	visual = "v_base1x1g",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -464,11 +464,11 @@ Frame:RegisterFrame("f_building1x1h", {
 	visual = "v_base1x1h",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -485,11 +485,11 @@ Frame:RegisterFrame("f_building2x1a", {
 	visual = "v_base2x1a",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -506,11 +506,11 @@ Frame:RegisterFrame("f_building2x1e", {
 	visual = "v_base2x1e",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -526,11 +526,11 @@ Frame:RegisterFrame("f_building2x1f", {
 	visual = "v_base2x1f",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -546,11 +546,11 @@ Frame:RegisterFrame("f_building2x1g", {
 	visual = "v_base2x1g",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -568,11 +568,11 @@ Frame:RegisterFrame("f_building2x2b", {
 	visual = "v_base2x2b",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -588,11 +588,11 @@ Frame:RegisterFrame("f_building2x2f", {
 	visual = "v_base2x2f",
 	components = {
 		{ "c_crane_my", "hidden" },
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
-		{ "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -669,6 +669,7 @@ end
 
 -------------- PLAYER BOTS
 
+
 Frame:RegisterFrame("f_bot_1s_as", { --# 스카우트
 	size = "Unit", race = "robot", index = 1012, name = "Scout",
 	texture = "Main/textures/icons/frame/bot_1s_ad.png",
@@ -687,15 +688,18 @@ Frame:RegisterFrame("f_bot_1s_as", { --# 스카우트
 	production_recipe = CreateProductionRecipe({ icchip = 2, uframe = 6, fused_electrodes = 4 }, { c_robotics_factory = 60 }),
 	visual = "v_bot_1s_as",
 	components = { 
-	{ "c_higrade_capacitor", "hidden" },
+		{ "c_higrade_capacitor", "hidden" },
 	
-	{ "c_adv_miner", "hidden" } ,
-	{ "c_repairer_my_aoe", "hidden" } ,
-	{ "c_my_turret_energy", "hidden" } , -- 포탑
-	{ "c_my_turret_plasma", "hidden" } , -- 포탑
-	{ "c_my_turret_physical", "hidden" } ,
+			{ "c_crane_my", "hidden" },
+		-- { "c_crane_my", "hidden" },
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
 	},
 })
+
 
 Frame:RegisterFrame("f_bot_1s_adw", { --# 엔지니어
 	size = "Unit", race = "robot", index = 1011, name = "Engineer",
@@ -722,11 +726,12 @@ Frame:RegisterFrame("f_bot_1s_adw", { --# 엔지니어
 		{ "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
 		
-		{ "c_adv_miner", "hidden" } ,
-		{ "c_repairer_my_aoe", "hidden" } ,
-		{ "c_my_turret_energy", "hidden" } , -- 포탑
-		{ "c_my_turret_plasma", "hidden" } , -- 포탑
-		{ "c_my_turret_physical", "hidden" } ,
+				{ "c_crane_my", "hidden" },
+		-- { "c_adv_miner", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
 		
 	},
 })
@@ -776,6 +781,9 @@ Frame:RegisterFrame("f_bot_1s_a", { --# 작업기
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({ circuit_board = 2, metalbar = 10 }, { c_assembler = 35, c_robotics_factory = 20, c_carrier_factory = 35 }),
 	visual = "v_bot_1s_a",
+	components = {
+		{ "c_crane_my", "hidden" },
+	},
 })
 
 Frame:RegisterFrame("f_bot_1s_b", { --# 대시봇
@@ -796,6 +804,9 @@ Frame:RegisterFrame("f_bot_1s_b", { --# 대시봇
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({ energized_plate = 2, circuit_board = 10 }, { c_robotics_factory = 30 }),
 	visual = "v_bot_1s_b",
+	components = {
+		{ "c_crane_my", "hidden" },
+	},
 })
 
 Frame:RegisterFrame("f_bot_2s", { --# 트윈봇
@@ -816,9 +827,12 @@ Frame:RegisterFrame("f_bot_2s", { --# 트윈봇
 	components = { { "c_integrated_capacitor", "hidden" } },
 	production_recipe = CreateProductionRecipe({ circuit_board = 5, energized_plate = 10, wire = 10 }, { c_robotics_factory = 60 }),
 	visual = "v_bot_2s_a",
+	components = {
+		{ "c_crane_my", "hidden" },
+	},
 })
 
-local bot_1m = Frame:RegisterFrame("f_bot_1m_a", {
+local bot_1m = Frame:RegisterFrame("f_bot_1m_a", { --# 
 	size = "Unit", race = "robot", index = 1005, name = "Cub",
 	texture = "Main/textures/icons/frame/bot_1m_a.png",
 	desc = "This bot is the first to mount a medium component",
@@ -836,6 +850,9 @@ local bot_1m = Frame:RegisterFrame("f_bot_1m_a", {
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({ circuit_board = 10, energized_plate = 10, wire = 10 }, { c_robotics_factory = 60 }),
 	visual = "v_bot_1m_a",
+	components = {
+		{ "c_crane_my", "hidden" },
+	},
 })
 
 
@@ -3480,22 +3497,127 @@ Frame:RegisterFrame("f_carrier_bot", { --# 운반
 	visual = "v_carrier_bot",
 })
 
+--------------------------------------------------
+--------------------------------------------------
+--------------------------------------------------
+Frame:RegisterFrame("f_bot_1s_as_my", { --# 스카우트
+	size = "Unit", race = "robot", index = 1012, name = "my Scout",
+	texture = "Main/textures/icons/frame/bot_1s_ad.png",
+	desc = "Advanced high-speed starter bot with a single small socket",
+	minimap_color = { 0.9, 0.9, 0.8 },
+	slot_type = "garage",
+	visibility_range = 128,
+	slots = { storage = 32, },
+	movement_speed = 128,
+	component_boost = 800,
+	start_disconnected = true,
+	health_points = 10000, -- 150
+	power = 10000,
+	flags = "AnimateRoot",
+	trigger_channels = "bot",
+	production_recipe = CreateProductionRecipe({ }, { c_carrier_factory = 1 }),
+	visual = "v_bot_1s_as_my",
+	components = { 
+		{ "c_higrade_capacitor", "hidden" },
+	
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
+})
+
+
+Frame:RegisterFrame("f_bot_1s_adw_my", { --# 엔지니어
+	size = "Unit", race = "robot", index = 1011, name = "my Engineer",
+	texture = "Main/textures/icons/frame/bot_1s_adw.png",
+	desc = "Engineer unit with excellent production speed and extensive upgradeability",
+	minimap_color = { 0.9, 0.9, 0.8 },
+	slot_type = "garage",
+	visibility_range = 128,
+	slots = { storage = 32, },
+	movement_speed = 128,
+	component_boost = 800,
+	start_disconnected = true,
+	health_points = 10000, -- 120
+	power = 0,
+	flags = "AnimateRoot",
+	trigger_channels = "bot",
+	production_recipe = CreateProductionRecipe({ }, { c_carrier_factory = 1 }),
+	visual = "v_bot_1s_adw_my",
+	components = {
+		--{ "c_moduleefficiency", "hidden" },
+		-- { "c_higrade_capacitor", "hidden" },
+		--{ "c_internal_crane", "hidden" },
+		
+		{ "c_crane_my", "hidden" },
+		
+		{ "c_fabricator", "hidden" } ,
+		{ "c_assembler", "hidden" } ,
+		{ "c_advanced_assembler", "hidden" } ,
+		{ "c_robotics_factory", "hidden" } ,
+		{ "c_refinery", "hidden" } ,
+		{ "c_advanced_refinery", "hidden" } ,
+		{ "c_uplink", "hidden" } ,
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		
+	},
+})
+
+
 Frame:RegisterFrame("f_carrier_bot_my", { --# 운반
 	size = "Unit", race = "robot", index = 1001, name = "Runner my",
 	texture = "Main/textures/icons/frame/carrier_bot.png",
 	desc = "A small cargo bot for moving items",
 	minimap_color = { 0.9, 0.9, 0.8 },
-	health_points = 500,
+	health_points = 10000,
 	slot_type = "garage",
-	visibility_range = 100,
-	slots = { storage = 16 },
+	visibility_range = 128,
+	slots = { storage = 32 },
 	movement_speed = 100,
 	component_boost = 800,
 	start_disconnected = false,
 	flags = "AnimateRoot",
 	trigger_channels = "bot",
 	power = 0,
-	production_recipe = CreateProductionRecipe({ crystal = 1 }, { c_carrier_factory = 1, }),
+	production_recipe = CreateProductionRecipe({ }, { c_carrier_factory = 1 }),
 	visual = "v_carrier_bot",
 	
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+		
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
+	},
+})
+
+
+Frame:RegisterFrame("f_building_my", {
+	size = "Small", race = "robot", index = 1001, name = "Building 1x1 (my)",
+	desc = "Basic 1x1 Building with Good Inventory space, but supports only one Small Component",
+	minimap_color = { 0.8, 0.8, 0.8 },
+	visibility_range = 128,
+	slots = { storage = 32 },
+	health_points = 10000, --150
+	construction_recipe = CreateConstructionRecipe({  }, 1),
+	texture = "Main/textures/icons/frame/building_1x1_d.png",
+	trigger_channels = "building",
+	visual = "v_base_my",
+	components = {
+		{ "c_crane_my", "hidden" },
+		-- { "c_repairer_my_aoe", "hidden" } ,
+		-- { "c_my_turret_energy", "hidden" } , -- 포탑
+		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
+		-- { "c_my_turret_physical", "hidden" } ,
+		-- { "c_adv_miner", "hidden" } ,
+	},
 })

@@ -365,7 +365,7 @@ function FreeplaySpawnPlayer(faction, loc)
 	lander.disconnected = false
 
 	local bots = {}
-	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_as")
+	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_as_my")
 	local radar = bots[1]:AddComponent("c_scout_radar", 2)
 	radar:SetRegister(1, { id = "v_unsolved" })
 

@@ -7,6 +7,7 @@ package.includes = {
 	"components.lua", 
 	"utilities.lua", 
 	"visuals.lua", 
+	"tech_robots.lua",
 }
 
 -- called when mod is initializing

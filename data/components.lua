@@ -1950,7 +1950,8 @@ function c_deploy_construction:on_update(comp, cause)
 						car:PlayEffect("fx_digital_in")
 				end
 				for i = 1, 128 do
-						local car = Map.CreateEntity(faction, "f_bot_1s_adw")
+						local car = Map.CreateEntity(faction, "f_bot_1s_adw_my")
+						-- car:AddComponent("c_adv_miner", 1)
 						car:Place(x, y)
 						car:PlayEffect("fx_digital_in")
 				end

@@ -44,7 +44,7 @@ data.visuals.v_empty_alien = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "",       "Internal" },
+		{ "",       "Large" },
 	},
 }
 
@@ -55,9 +55,9 @@ data.visuals.v_mothership_internal = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 }
 
@@ -277,17 +277,17 @@ data.visuals.v_human_communication = {
 	tile_size = { 3, 3},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 }
 data.visuals.v_human_transport = {
 	mesh = "StaticMesh'/Game/Meshes/Humans/Vehicles/Human_Vehicle_Transport_01.Human_Vehicle_Transport_01'",
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -320,9 +320,9 @@ data.visuals.v_generic_i = { mesh = "StaticMesh'/Game/Meshes/BaseBuildings/Compo
 
 data.visuals.v_satellite = {
 	sockets = {
-		{ "", "Small"    },
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large"    },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -332,9 +332,9 @@ data.visuals.v_satellite_inventory = {
 
 data.visuals.v_space_satellite = {
 	sockets = {
-		{ "", "Small"    },
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large"    },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -346,11 +346,11 @@ data.visuals.v_robot_s = {
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/RobotUnit_S_01.RobotUnit_S_01'",
 	light_radius = 5,
 	sockets = {
-		--{ "",       "Medium"   },
-		{ "Small1", "Small"    },
-		{ "Small2", "Small"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		--{ "",       "Large"   },
+		{ "Small1", "Large"    },
+		{ "Small2", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
@@ -364,9 +364,9 @@ data.visuals.v_bot_1s_a = {
 	light_radius = 5,
 	light_color = bot_light_color,
 	sockets = {
-		{ "Small1", "Small"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Small1", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
@@ -378,9 +378,9 @@ data.visuals.v_bot_1s_b = {
 	light_radius = 5,
 	light_color = bot_light_color,
 	sockets = {
-		{ "Small1", "Small"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Small1", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
@@ -388,16 +388,55 @@ data.visuals.v_bot_1s_b = {
 }
 
 
+data.visuals.v_bot_1s_as_my = {
+	--mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD.Bot_1S_AD'",
+	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD/Ver2/Bot_1S_AD.Bot_1S_AD'",
+	light_radius = 5,
+	light_color = bot_light_color,
+	sockets = {
+		{ "Small1", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+	},
+	--	placement = "Max",
+	move_effect = "fx_move_bot",
+	destroy_effect = "fx_digital",
+}
+
 data.visuals.v_bot_1s_as = {
 	--mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD.Bot_1S_AD'",
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD/Ver2/Bot_1S_AD.Bot_1S_AD'",
 	light_radius = 5,
 	light_color = bot_light_color,
 	sockets = {
-		{ "Small1", "Small"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Small1", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+	},
+	--	placement = "Max",
+	move_effect = "fx_move_bot",
+	destroy_effect = "fx_digital",
+}
+
+data.visuals.v_bot_1s_adw_my = {
+	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
+	light_radius = 5,
+	light_color = bot_light_color,
+	sockets = {
+		{ "Small1", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
@@ -409,11 +448,11 @@ data.visuals.v_bot_1s_adw = {
 	light_radius = 5,
 	light_color = bot_light_color,
 	sockets = {
-		{ "Small1", "Small"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Small1", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
@@ -427,10 +466,10 @@ data.visuals.v_bot_2m_as = {
 	light_radius = 5,
 	light_color = bot_light_color,
 	sockets = {
-		{ "Medium1", "Medium" },
-		{ "Medium2", "Medium" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1", "Large" },
+		{ "Medium2", "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	mesh_offset = { 0, 0, 10 },
 	--	placement = "Max",
@@ -443,10 +482,10 @@ data.visuals.v_bot_2s_a = {
 	light_radius = 5,
 	light_color = bot_light_color,
 	sockets = {
-		{ "Small1", "Small"    },
-		{ "Small2", "Small"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Small1", "Large"    },
+		{ "Small2", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	mesh_offset = { 0, 0, 10 },
 	--	placement = "Max",
@@ -459,9 +498,9 @@ data.visuals.v_bot_1m_a = {
 	light_radius = 5,
 	light_color = bot_light_color,
 	sockets = {
-		{ "Medium1","Medium"   },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1","Large"   },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
@@ -473,10 +512,10 @@ data.visuals.v_bot_1m_b = {
 	light_radius = 5,
 	light_color = bot_light_color,
 	sockets = {
-		{ "Medium1", "Medium"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
@@ -488,11 +527,11 @@ data.visuals.v_bot_1m_c = {
 	light_radius = 5,
 	light_color = bot_light_color,
 	sockets = {
-		{ "Medium1","Medium"   },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1","Large"   },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
@@ -504,11 +543,11 @@ data.visuals.v_bot_1m1s_a = {
 	light_radius = 5,
 	light_color = bot_light_color,
 	sockets = {
-		{ "Medium1","Medium"   },
-		{ "Small1", "Small"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1","Large"   },
+		{ "Small1", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
@@ -521,8 +560,8 @@ data.visuals.v_bot_1l_a = {
 	light_color = bot_light_color,
 	sockets = {
 		{ "Large1", "Large" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	move_effect = "fx_move_bot",
 	destroy_effect = "fx_digital",
@@ -535,8 +574,8 @@ data.visuals.v_drone_transfer_a = {
 	scale = {0.8, 0.8, 0.8},
 	--light_radius = 8,
 	--sockets = {
-	--	{ "",  "Internal" },
-	--	{ "",  "Internal" },
+	--	{ "",  "Large" },
+	--	{ "",  "Large" },
 	--},
 	destroy_effect = "fx_digital",
 }
@@ -548,8 +587,8 @@ data.visuals.v_drone_transfer_b = {
 	--scale = {0.8, 0.8, 0.8},
 	--light_radius = 8,
 	sockets = {
-		{ "",  "Internal" },
-		{ "",  "Internal" },
+		{ "",  "Large" },
+		{ "",  "Large" },
 	},
 	destroy_effect = "fx_digital",
 }
@@ -560,8 +599,8 @@ data.visuals.v_drone_miner_a = {
 	random_translation = { 0.3, 0.3, 0.45 },
 	--light_radius = 8,
 	sockets = {
-		{ "",  "Internal" },
-		{ "",  "Internal" },
+		{ "",  "Large" },
+		{ "",  "Large" },
 	},
 	destroy_effect = "fx_digital",
 }
@@ -572,8 +611,8 @@ data.visuals.v_drone_adv_miner = {
 	random_translation = { 0.3, 0.3, 0.45 },
 	--light_radius = 8,
 	sockets = {
-		{ "",  "Internal" },
-		{ "",  "Internal" },
+		{ "",  "Large" },
+		{ "",  "Large" },
 	},
 	destroy_effect = "fx_digital",
 }
@@ -584,8 +623,8 @@ data.visuals.v_drone_defense_a = {
 	random_translation = { 0.3, 0.3, 0.45 },
 	--light_radius = 8,
 	sockets = {
-		{ "",  "Internal" },
-		{ "",  "Internal" },
+		{ "",  "Large" },
+		{ "",  "Large" },
 	},
 	destroy_effect = "fx_digital",
 }
@@ -594,11 +633,11 @@ data.visuals.v_robot2 = {
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/RobotUnit_M_01.RobotUnit_M_01'",
 	light_radius = 8,
 	sockets = {
-		{ "Medium1", "Medium"   },
-		{ "Small1",  "Small"    },
-		{ "Small2",  "Small"    },
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "Medium1", "Large"   },
+		{ "Small1",  "Large"    },
+		{ "Small2",  "Large"    },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bot",
 	destroy_effect = "fx_digital",
@@ -608,11 +647,11 @@ data.visuals.v_robot3 = {
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/RobotUnit_L_01.RobotUnit_L_01'",
 	light_radius = 8,
 	sockets = {
-		{ "Medium1", "Medium" },
-		{ "Medium2", "Medium" },
-		{ "Small1",  "Small"  },
-		{ "Small2",  "Small"  },
-		{ "Small3",  "Small"  },
+		{ "Medium1", "Large" },
+		{ "Medium2", "Large" },
+		{ "Small1",  "Large"  },
+		{ "Small2",  "Large"  },
+		{ "Small3",  "Large"  },
 	},
 	move_effect = "fx_move_bot",
 	destroy_effect = "fx_digital",
@@ -623,12 +662,12 @@ data.visuals.v_robot4 = {
 	light_radius = 8,
 	sockets = {
 		{ "Large1", "Large"    },
-		{ "Small1", "Small"    },
-		{ "Small2", "Small"    },
-		{ "Small3", "Small"    },
-		{ "Small4", "Small"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Small1", "Large"    },
+		{ "Small2", "Large"    },
+		{ "Small3", "Large"    },
+		{ "Small4", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	move_effect = "fx_move_bot",
 	destroy_effect = "fx_digital",
@@ -637,9 +676,9 @@ data.visuals.v_robot4 = {
 data.visuals.v_explorable_bot = {
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/RobotUnit_02.RobotUnit_02'",
 	sockets = {
-		{ "", "Small"    },
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large"    },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 	move_effect = "fx_move_bot",
 	destroy_effect = "fx_digital",
@@ -648,9 +687,9 @@ data.visuals.v_explorable_bot = {
 data.visuals.v_explorable_bot2 = {
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/RobotUnit_04.RobotUnit_04'",
 	sockets = {
-		{ "", "Small"    },
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large"    },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 	move_effect = "fx_move_bot",
 	destroy_effect = "fx_digital",
@@ -870,9 +909,9 @@ data.visuals.v_base1x1a = {
 	--light_color = { 1.0, 1.0, 1.0},
 	--light_radius = 5,
 	sockets = {
-		{ "Medium1", "Medium"   },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1", "Large"   },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -884,8 +923,8 @@ data.visuals.v_base1x1b = {
 	tile_size = { 1, 1},
 	sockets = {
 		{ "Large1", "Large"   },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -897,10 +936,10 @@ data.visuals.v_base1x1c = {
 	placement = "Max",
 	tile_size = { 1, 1},
 	sockets = {
-		{ "small1", "Small" },
-		{ "small2", "Small" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "small1", "Large" },
+		{ "small2", "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -911,10 +950,10 @@ data.visuals.v_base1x1d = {
 	placement = "Max",
 	tile_size = { 1, 1},
 	sockets = {
-		{ "small1", "Small" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		--{ "",       "Internal" },
+		{ "small1", "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		--{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -925,8 +964,8 @@ data.visuals.v_base1x1e = {
 	placement = "Max",
 	tile_size = { 1, 1},
 	sockets = {
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -937,8 +976,8 @@ data.visuals.v_base1x1f = {
 	placement = "Max",
 	tile_size = { 1, 1},
 	sockets = {
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -949,8 +988,8 @@ data.visuals.v_base1x1g = {
 	placement = "Max",
 	tile_size = { 1, 1},
 	sockets = {
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -961,8 +1000,8 @@ data.visuals.v_base1x1h = {
 	placement = "Max",
 	tile_size = { 1, 1},
 	sockets = {
-		{ "Medium1", "Medium"   },
-		{ "",       "Internal" },
+		{ "Medium1", "Large"   },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -973,12 +1012,12 @@ data.visuals.v_base2x1a = {
 	placement = "Max",
 	tile_size = { 1, 2 },
 	sockets = {
-		{ "Medium2", "Medium"   },
-		{ "Medium1", "Medium"   },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium2", "Large"   },
+		{ "Medium1", "Large"   },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -989,10 +1028,10 @@ data.visuals.v_base2x1b = {
 	placement = "Max",
 	tile_size = { 1, 2 },
 	sockets = {
-		{ "Medium1", "Medium"  },
+		{ "Medium1", "Large"  },
 		{ "Large1", "Large"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1003,12 +1042,12 @@ data.visuals.v_base2x1c = {
 	placement = "Max",
 	tile_size = { 1, 2 },
 	sockets = {
-		{ "Medium1", "Medium"  },
-		{ "Medium2", "Medium"  },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1", "Large"  },
+		{ "Medium2", "Large"  },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1019,9 +1058,9 @@ data.visuals.v_base2x1d = {
 	placement = "Max",
 	tile_size = { 1, 2 },
 	sockets = {
-		{ "Medium1", "Medium"  },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1", "Large"  },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1032,11 +1071,11 @@ data.visuals.v_base2x1e = {
 	placement = "Max",
 	tile_size = { 1, 2 },
 	sockets = {
-		{ "medium1", "Medium" },
-		{ "small1", "Small"  },
-		{ "small2", "Small" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "medium1", "Large" },
+		{ "small1", "Large"  },
+		{ "small2", "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1047,10 +1086,10 @@ data.visuals.v_base2x1f = {
 	placement = "Max",
 	tile_size = { 1, 2 },
 	sockets = {
-		{ "Medium1", "Medium"   },
-		{ "Small1", "Small"   },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1", "Large"   },
+		{ "Small1", "Large"   },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1061,10 +1100,10 @@ data.visuals.v_base2x1g = {
 	placement = "Max",
 	tile_size = { 1, 2 },
 	sockets = {
-		{ "Medium1", "Medium"   },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1", "Large"   },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1091,8 +1130,8 @@ data.visuals.v_building_fg = {
 	light_color = { 1, 0.5, 0, 16 },
 	light_offset = { 0.0, 0.0, 1.8 },
 	sockets = {
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 }
 
@@ -1106,8 +1145,8 @@ data.visuals.v_building_pf = {
 	light_color = { 1, 0.0, 0, 10 },
 	light_offset = { 0.0, 0.0, 2.6 },
 	sockets = {
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 }
 
@@ -1118,10 +1157,10 @@ data.visuals.v_building_sim = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 }
 
@@ -1130,11 +1169,11 @@ data.visuals.v_base2x2_as = {
 	placement = "Max",
 	tile_size = { 3, 3},
 	sockets = {
-		{ "Medium1", "Medium"  },
-		{ "Medium2", "Medium"  },
-		{ "",        "Internal" },
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "Medium1", "Large"  },
+		{ "Medium2", "Large"  },
+		{ "",        "Large" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1146,12 +1185,12 @@ data.visuals.v_base2x2a = {
 	placement = "Max",
 	tile_size = { 2, 2},
 	sockets = {
-		{ "Medium1", "Medium"  },
-		{ "Medium2", "Medium"  },
+		{ "Medium1", "Large"  },
+		{ "Medium2", "Large"  },
 		{ "Large1", "Large"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1163,12 +1202,12 @@ data.visuals.v_base2x2b = {
 	placement = "Max",
 	tile_size = { 2, 2},
 	sockets = {
-		{ "Medium1", "Medium"  },
-		{ "Medium2", "Medium"  },
-		{ "Medium3", "Medium"  },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1", "Large"  },
+		{ "Medium2", "Large"  },
+		{ "Medium3", "Large"  },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1181,11 +1220,11 @@ data.visuals.v_base2x2c = {
 	tile_size = { 2, 2},
 	sockets = {
 		{ "Large1", "Large"  },
-		{ "Medium1", "Medium"  },
-		{ "Medium2", "Medium"  },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1", "Large"  },
+		{ "Medium2", "Large"  },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1198,11 +1237,11 @@ data.visuals.v_base2x2d = {
 	tile_size = { 2, 2},
 	sockets = {
 		{ "Large1", "Large"  },
-		{ "Medium1", "Medium"  },
-		{ "Medium2", "Medium"  },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1", "Large"  },
+		{ "Medium2", "Large"  },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1214,13 +1253,13 @@ data.visuals.v_base2x2e = {
 	placement = "Max",
 	tile_size = { 2, 2},
 	sockets = {
-		{ "Medium1", "Medium"  },
-		{ "Small1",  "Small"  },
-		{ "Small2",  "Small"  },
-		{ "Small3",  "Small"  },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1", "Large"  },
+		{ "Small1",  "Large"  },
+		{ "Small2",  "Large"  },
+		{ "Small3",  "Large"  },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1231,10 +1270,10 @@ data.visuals.v_base2x2f = {
 	placement = "Max",
 	tile_size = { 2, 2},
 	sockets = {
-		{ "Medium1", "Medium"  },
-		{ "Medium2", "Medium"  },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Medium1", "Large"  },
+		{ "Medium2", "Large"  },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1247,14 +1286,14 @@ data.visuals.v_base3x2a = {
 	--light_color = { 1.0, 1.0, 1.0},
 	--light_radius = 8,
 	sockets = {
-		{ "medium1", "Medium"  },
-		{ "medium2", "Medium"  },
-		{ "medium3", "Medium"  },
+		{ "medium1", "Large"  },
+		{ "medium2", "Large"  },
+		{ "medium3", "Large"  },
 		{ "large1", "Large"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1265,13 +1304,13 @@ data.visuals.v_base3x2b = {
 	placement = "Max",
 	tile_size = { 2, 3},
 	sockets = {
-		{ "medium1", "Medium"  },
-		{ "medium2", "Medium"  },
-		{ "small1", "Small"  },
-		{ "small2", "Small"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "medium1", "Large"  },
+		{ "medium2", "Large"  },
+		{ "small1", "Large"  },
+		{ "small2", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -1284,8 +1323,8 @@ data.visuals.v_amac_01_xl = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal"  },
-		{ "", "Internal"  },
+		{ "", "Large"  },
+		{ "", "Large"  },
 	},
 }
 
@@ -1296,7 +1335,7 @@ data.visuals.v_human_explorable_5x5_a = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	mesh_offset = { 0,0,1},
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	--scale = { 0.7, 0.7, 0.7 },
 	explorable_race = "human",
 	explorable_name = "Data Complex",
@@ -1313,7 +1352,7 @@ data.visuals.v_human_adv_miner = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
+		{ "", "Large" },
 	},
 }
 
@@ -1324,8 +1363,8 @@ data.visuals.v_human_commandcenter = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1335,7 +1374,7 @@ data.visuals.v_human_powerplant = {
 	placement = "Max",
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 }
 
 data.visuals.v_human_refinery = {
@@ -1345,8 +1384,8 @@ data.visuals.v_human_refinery = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1357,8 +1396,8 @@ data.visuals.v_human_factory = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1369,8 +1408,8 @@ data.visuals.v_human_vehiclefactory = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1380,7 +1419,7 @@ data.visuals.v_human_barracks = {
 	tile_size = { 2, 2},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 }
 
 data.visuals.v_human_spaceport = {
@@ -1390,8 +1429,8 @@ data.visuals.v_human_spaceport = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1402,8 +1441,8 @@ data.visuals.v_human_sciencelab = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1413,7 +1452,7 @@ data.visuals.v_human_warehouse = {
 	tile_size = { 4, 2},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 }
 
 data.visuals.v_human_sensor_array = {
@@ -1423,8 +1462,8 @@ data.visuals.v_human_sensor_array = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1434,7 +1473,7 @@ data.visuals.v_human_bunker = {
 	tile_size = { 2, 2},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 }
 
 data.visuals.v_heavy_bunker = {
@@ -1444,8 +1483,8 @@ data.visuals.v_heavy_bunker = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "medium1", "Medium"  },
-		{ "", "Internal" },
+		{ "medium1", "Large"  },
+		{ "", "Large" },
 	},
 }
 
@@ -1455,8 +1494,8 @@ data.visuals.v_human_lander = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1467,9 +1506,9 @@ data.visuals.v_human_datacomplex = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1478,7 +1517,7 @@ data.visuals.v_human_carrier = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
+		{ "", "Large" },
 	},
 }
 
@@ -1487,8 +1526,8 @@ data.visuals.v_human_infantrymech = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1498,8 +1537,8 @@ data.visuals.v_human_large_tankframe = {
 	place_effect = "fx_digital_in",
 	sockets = {
 		{ "Large1", "Large" },
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1507,7 +1546,7 @@ data.visuals.v_human_flyer = {
 	mesh = "StaticMesh'/Game/Meshes/Humans/Vehicles/Human_Vehicle_Bird_01.Human_Vehicle_Bird_01'",
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	mesh_offset = { 0,0,200},
 }
 
@@ -1516,8 +1555,8 @@ data.visuals.v_human_lighttank = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "Small1", "Small" },
-		{ "", "Internal" },
+		{ "Small1", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1526,8 +1565,8 @@ data.visuals.v_human_tank = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "Medium1", "Medium" },
-		{ "", "Internal" },
+		{ "Medium1", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1546,10 +1585,10 @@ data.visuals.v_human_rover = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1558,10 +1597,10 @@ data.visuals.v_human_aiexplorer = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1570,7 +1609,7 @@ data.visuals.v_human_buggy_upgraded = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" }
+		{ "", "Large" }
 	},
 }
 
@@ -1578,7 +1617,7 @@ data.visuals.v_human_buggy = {
 	mesh = "StaticMesh'/Game/Meshes/Humans/Vehicles/Human_Vehicle_Buggy_01.Human_Vehicle_Buggy_01'",
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" } }
+	sockets = { { "", "Large" } }
 }
 
 data.visuals.v_human_buggy_broken = {
@@ -1603,7 +1642,7 @@ data.visuals.v_alien_extractor_dead = {
 	tile_size = {2, 2},
 	flags = "RandomRotation",
 	destroy_effect = "fx_digital",
-	sockets = { { "", "Internal" }, { "", "Internal" }, },
+	sockets = { { "", "Large" }, { "", "Large" }, },
 	explorable_race = "alien",
 }
 
@@ -1612,7 +1651,7 @@ data.visuals.v_alien_feeder_dead = {
 	tile_size = {2, 2},
 	destroy_effect = "fx_digital",
 	flags = "RandomRotation",
-	sockets = { { "", "Internal" }, { "", "Internal" }, },
+	sockets = { { "", "Large" }, { "", "Large" }, },
 	explorable_race = "alien",
 }
 
@@ -1623,7 +1662,7 @@ data.visuals.v_alien_soldier = {
 	light_radius = 2,
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, }, --{ "", "Internal" },
+	sockets = { { "", "Large" }, }, --{ "", "Large" },
 	explorable_race = "alien"
 }
 
@@ -1635,9 +1674,9 @@ data.visuals.v_hybrid_alien_soldier = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "Small1", "Small" },
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "Small1", "Large" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 	explorable_race = "alien"
 }
@@ -1649,7 +1688,7 @@ data.visuals.v_alien_hvy_soldier = {
 	light_radius = 2,
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, }, --{ "", "Internal" },
+	sockets = { { "", "Large" }, }, --{ "", "Large" },
 	explorable_race = "alien"
 }
 
@@ -1661,8 +1700,8 @@ data.visuals.v_alien_smallframe = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "Small1", "Small" },
-		{ "", "Internal" },
+		{ "Small1", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1674,8 +1713,8 @@ data.visuals.v_alien_tankframe = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "Medium1", "Medium" },
-		{ "", "Internal" },
+		{ "Medium1", "Large" },
+		{ "", "Large" },
 	},
 }
 
@@ -1686,7 +1725,7 @@ data.visuals.v_alien_scout = {
 	light_radius = 2,
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, { "", "Internal" }, },
+	sockets = { { "", "Large" }, { "", "Large" }, },
 }
 
 data.visuals.v_alien_probe = {
@@ -1714,7 +1753,7 @@ data.visuals.v_alien_transport = {
 	light_radius = 2,
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, }, -- { "", "Internal" },
+	sockets = { { "", "Large" }, }, -- { "", "Large" },
 }
 
 data.visuals.v_alien_pincer = {
@@ -1724,7 +1763,7 @@ data.visuals.v_alien_pincer = {
 	light_radius = 2,
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, }, -- { "", "Internal" },
+	sockets = { { "", "Large" }, }, -- { "", "Large" },
 }
 
 data.visuals.v_alien_extractor = {
@@ -1734,7 +1773,7 @@ data.visuals.v_alien_extractor = {
 	--flags = "RandomRotation",
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	placement = "Max",
 }
 
@@ -1745,7 +1784,7 @@ data.visuals.v_alien_feeder = {
 	--flags = "RandomRotation",
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	--materials = {  "MaterialInstanceConstant'/Game/Materials/Glitch/M_GlitchScene_Inst.M_GlitchScene_Inst'" },
 	placement = "Max",
 }
@@ -1756,7 +1795,7 @@ data.visuals.v_alien_producer = {
 	tile_size = { 3, 3 },
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	placement = "Max",
 }
 
@@ -1766,7 +1805,7 @@ data.visuals.v_alien_researcher = {
 	tile_size = { 2, 2 },
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	placement = "Max",
 }
 
@@ -1776,7 +1815,7 @@ data.visuals.v_alien_storage = {
 	tile_size = { 2, 2 },
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	placement = "Max",
 }
 
@@ -1789,7 +1828,7 @@ data.visuals.v_alien_sensortower = {
 	tile_size = { 1, 1 },
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	placement = "Max",
 }
 
@@ -1801,10 +1840,10 @@ data.visuals.v_alien_socketbuilding = {
 	place_effect = "fx_digital_in",
 	sockets = {
 		{ "Large1", "Large"    },
-		{ "", "Internal" },
-		{ "", "Internal" },
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 	placement = "Max",
 }
@@ -1817,7 +1856,7 @@ data.visuals.v_alien_reformingpool = {
 	place_effect = "fx_digital_in",
 	placement = "Max",
 	sockets = {
-		{ "", "Internal" },
+		{ "", "Large" },
 	},
 }
 
@@ -1826,7 +1865,7 @@ data.visuals.v_alien_miner = {
 	-- tile_size = { 2, 2 },
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 }
 
 data.visuals.v_alien_teleporter = {
@@ -1835,7 +1874,7 @@ data.visuals.v_alien_teleporter = {
 	tile_size = { 3, 3 },
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, }, --  { "", "Internal" },
+	sockets = { { "", "Large" }, }, --  { "", "Large" },
 	placement = "Max",
 }
 
@@ -1843,7 +1882,7 @@ data.visuals.v_alien_turret = {
 	mesh = "StaticMesh'/Game/Meshes/AlienBuildings/GammaSet/Alien_Building_2x2_Turret_02/AlienBuilding_2x2_Turret.AlienBuilding_2x2_Turret'", scale = { 0.8, 0.8, 0.8 },
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 }
 
 data.visuals.v_alien_pylon = {
@@ -1854,7 +1893,7 @@ data.visuals.v_alien_pylon = {
 	light_radius = 2,
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	placement = "Max",
 }
 
@@ -1865,7 +1904,7 @@ data.visuals.v_hybrid_worker = {
 	light_radius = 4,
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, { "", "Internal" }, },
+	sockets = { { "", "Large" }, { "", "Large" }, },
 }
 
 data.visuals.v_spacedrop_1 = {
@@ -1894,7 +1933,7 @@ data.visuals.v_explorable_glitchbuilding = {
 data.visuals.v_explorable_building_4 = {
 	mesh = "StaticMesh'/Game/Meshes/Explorables/Ver2/ExplorableBuilding_04.ExplorableBuilding_04'",
 	tile_size = {3, 3},
-	sockets = { { "", "Internal" }, { "", "Internal" }, { "", "Internal" }, { "", "Internal" }, },
+	sockets = { { "", "Large" }, { "", "Large" }, { "", "Large" }, { "", "Large" }, },
 	scale = {2.4, 2.4, 2.4},
 	destroy_effect = "fx_digital",
 	explorable_race = "human",
@@ -1905,7 +1944,7 @@ data.visuals.v_explorable_building_4 = {
 data.visuals.v_explorable_building_2 = {
 	mesh = "StaticMesh'/Game/Meshes/Explorables/Ver2/ExplorableBuilding_02.ExplorableBuilding_02'",
 	tile_size = {3, 3},
-	sockets = { { "", "Internal" }, { "", "Internal" }, { "", "Internal" }, { "", "Internal" }, },
+	sockets = { { "", "Large" }, { "", "Large" }, { "", "Large" }, { "", "Large" }, },
 	scale = {3.3, 3.3, 3.3},
 	destroy_effect = "fx_digital",
 	explorable_race = "human",
@@ -1916,7 +1955,7 @@ data.visuals.v_explorable_building_2 = {
 data.visuals.v_explorable_building_6 = {
 	mesh = "StaticMesh'/Game/Meshes/Explorables/Ver2/ExplorableBuilding_06.ExplorableBuilding_06'",
 	tile_size = {3, 3},
-	sockets = { { "", "Internal" }, { "", "Internal" }, { "", "Internal" }, { "", "Internal" }, },
+	sockets = { { "", "Large" }, { "", "Large" }, { "", "Large" }, { "", "Large" }, },
 	scale = {2.3, 2.3, 2.3},
 	destroy_effect = "fx_digital",
 	explorable_race = "human",
@@ -1927,7 +1966,7 @@ data.visuals.v_explorable_building_6 = {
 data.visuals.v_explorable_building_3 = {
 	mesh = "StaticMesh'/Game/Meshes/Explorables/Ver2/ExplorableBuilding_03.ExplorableBuilding_03'",
 	tile_size = {3, 3},
-	sockets = { { "", "Internal" }, { "", "Internal" }, { "", "Internal" }, { "", "Internal" }, },
+	sockets = { { "", "Large" }, { "", "Large" }, { "", "Large" }, { "", "Large" }, },
 	scale = {2.4, 2.4, 2.4},
 	destroy_effect = "fx_digital",
 	explorable_race = "human",
@@ -2169,7 +2208,7 @@ data.visuals.v_bughive_large = {
 	mesh = "StaticMesh'/Game/Meshes/Trilobyte/Buildings/TrilobyteHive_01.TrilobyteHive_01'",
 	flags = "RandomRotation | RandomScale",
 	sockets = {
-		{ "",        "Internal" },
+		{ "",        "Large" },
 	},
 	scale = {3, 3, 3},
 	tile_size = {3,3},
@@ -2187,8 +2226,8 @@ data.visuals.v_bughole = {
 data.visuals.v_trilobite1 = {
 	frame_class = "Blueprint'/Game/TrilobitesCollection/Trilobite_01/Trilobite_01BP.Trilobite_01BP_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2197,8 +2236,8 @@ data.visuals.v_trilobite1 = {
 data.visuals.v_wasp1 = {
 	frame_class = "Blueprint'/Game/ToxicWasp/Wasp_BP1.Wasp_BP1_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2210,8 +2249,8 @@ data.visuals.v_wasp1 = {
 data.visuals.v_trilobite1a = {
 	frame_class = "Blueprint'/Game/TrilobitesCollection/Trilobite_01/Trilobite_01BPA.Trilobite_01BPA_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2220,8 +2259,8 @@ data.visuals.v_trilobite1a = {
 data.visuals.v_trilobite1b = {
 	frame_class = "Blueprint'/Game/TrilobitesCollection/Trilobite_01/Trilobite_01BPB.Trilobite_01BPB_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2231,8 +2270,8 @@ data.visuals.v_gastarias1 = {
 	tile_size = { 1, 1 },
 	frame_class = "Blueprint'/Game/SciFiCreaturesVol1/Gastarias/Meshes/Gastarias_FBP.Gastarias_FBP_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2242,8 +2281,8 @@ data.visuals.v_gastarias2 = {
 	tile_size = { 1, 1 },
 	frame_class = "Blueprint'/Game/SciFiCreaturesVol1/Gastarias/Meshes/Gastarias2_FBP.Gastarias2_FBP_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2253,8 +2292,8 @@ data.visuals.v_scaramar1 = {
 	tile_size = { 1, 1 },
 	frame_class = "Blueprint'/Game/SciFiCreaturesVol1/Scaramar/Meshes/SK_Scaramar_FBP.SK_Scaramar_FBP_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2264,8 +2303,8 @@ data.visuals.v_scaramar2 = {
 	tile_size = { 1, 1 },
 	frame_class = "Blueprint'/Game/SciFiCreaturesVol1/Scaramar/Meshes/SK_Scaramar_Flyer_FBP.SK_Scaramar_Flyer_FBP_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2279,8 +2318,8 @@ data.visuals.v_gastarid1 = {
 	tile_size = { 1, 1 },
 	frame_class = "Blueprint'/Game/SciFiCreaturesVol1/Gastarid/Meshes/SK_Gastarid_FBP.SK_Gastarid_FBP_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2290,8 +2329,8 @@ data.visuals.v_charcharosaurus1 = {
 	tile_size = { 1, 1 },
 	frame_class = "Blueprint'/Game/SciFiCreaturesVol1/Charcharosaurus/Meshes/SK_Charcharosaurus_FBP.SK_Charcharosaurus_FBP_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_EMP",
@@ -2300,8 +2339,8 @@ data.visuals.v_charcharosaurus1 = {
 data.visuals.v_larva1 = {
 	frame_class = "Blueprint'/Game/Worm/Mesh/BP_Larva.BP_Larva_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 }
@@ -2309,8 +2348,8 @@ data.visuals.v_larva1 = {
 data.visuals.v_larva2 = {
 	frame_class = "Blueprint'/Game/Worm/Mesh/BP_Larva.BP_Larva_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	scale = { 0.5, 0.5, 0.5 },
 	move_effect = "fx_move_bug",
@@ -2319,8 +2358,8 @@ data.visuals.v_larva2 = {
 data.visuals.v_worm1 = {
 	frame_class = "Blueprint'/Game/Worm/Mesh/BP_Worm.BP_Worm_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2329,8 +2368,8 @@ data.visuals.v_worm1 = {
 data.visuals.v_lucanops1 = {
 	frame_class = "Blueprint'/Game/SciFiCreaturesVol1/Lucanops/BP_Lucanops.BP_Lucanops_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2339,8 +2378,8 @@ data.visuals.v_lucanops1 = {
 data.visuals.v_tetrapuss1 = {
 	frame_class = "Blueprint'/Game/SciFiCreaturesVol1/Tetrapuss/BP_Tetrapuss.BP_Tetrapuss_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2349,8 +2388,8 @@ data.visuals.v_tetrapuss1 = {
 data.visuals.v_tripodonte1 = {
 	frame_class = "Blueprint'/Game/SciFiCreaturesVol1/Tripodonte/BP_Tripodonte.BP_Tripodonte_C'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 	move_effect = "fx_move_bug",
 	destroy_effect = "fx_greensplat_2",
@@ -2445,21 +2484,31 @@ data.visuals.v_metalore = { mesh = "StaticMesh'/Game/Meshes/Containers/Container
 
 data.visuals.v_carrier_bot = {
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Carrier_A.Bot_Carrier_A'",
+	sockets = {
+		{ "",        "Large" },
+		{ "",        "Large" },
+		{ "",        "Large" },
+		{ "",        "Large" },
+		{ "",        "Large" },
+		{ "",        "Large" },
+		{ "",        "Large" },
+		{ "",        "Large" },
+	},
 }
 
 data.visuals.v_transport_bot = {
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Flyer.Flyer'",
 	sockets = {
-		{ "",        "Internal" },
-		{ "",        "Internal" },
-		{ "",        "Internal" },
+		{ "",        "Large" },
+		{ "",        "Large" },
+		{ "",        "Large" },
 	},
 }
 data.visuals.v_flyer_m =
 {
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Flyer_M.Bot_Flyer_M'",
 	sockets = {
-		{ "",        "Internal" },
+		{ "",        "Large" },
 	},
 }
 
@@ -2467,7 +2516,7 @@ data.visuals.v_flyer_bot =
 {
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Flyer_S.Bot_Flyer_S'",
 	sockets = {
-		{ "",        "Internal" },
+		{ "",        "Large" },
 	},
 }
 
@@ -2617,7 +2666,7 @@ data.visuals.v_beacon = {
 	place_effect = "fx_digital_in",
 	destroy_effect = "fx_digital",
 	sockets = {
-		{ "",       "Internal" },
+		{ "",       "Large" },
 	},
 }
 
@@ -2626,9 +2675,9 @@ data.visuals.v_beacon_l = {
 	place_effect = "fx_digital_in",
 	destroy_effect = "fx_digital",
 	sockets = {
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	scale = { 1.6, 1.6, 2.5 },
 }
@@ -3123,7 +3172,7 @@ data.visuals.v_base2x2f_broken = {
 	placement = "Max",
 	tile_size = { 2, 2},
 	sockets = {
-		{ "Medium1", "Medium"  },
+		{ "Medium1", "Large"  },
 	},
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -3145,8 +3194,8 @@ data.visuals.v_explorable_blightanomaly_01 = {
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 	sockets = {
-		{ "", "Internal" },
-		{ "", "Internal" },
+		{ "", "Large" },
+		{ "", "Large" },
 	},
 	placement = "Max",
 }
@@ -3164,7 +3213,7 @@ data.visuals.v_explorable_blightanomaly_02 = {
 	light_radius = 2,
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	placement = "Max",
 	-- flags="RandomRotation|RandomScale",
 	-- placement = "Min",
@@ -3183,7 +3232,7 @@ data.visuals.v_explorable_blightanomaly_03 = {
 	light_radius = 2,
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	placement = "Max",
 }
 
@@ -3200,7 +3249,7 @@ data.visuals.v_explorable_monolith_01 = {
 	light_radius = 2,
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	-- flags="RandomRotation|RandomScale",
 	placement = "Min",
 }
@@ -3216,7 +3265,7 @@ data.visuals.v_explorable_monolith_02 = {
 	light_radius = 2,
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	placement = "Max",
 	-- flags="RandomRotation|RandomScale",
 	-- placement = "Min",
@@ -3236,7 +3285,7 @@ data.visuals.v_explorable_timeegg_01 = {
 	light_radius = 2,
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	placement = "Min",
 }
 
@@ -3251,7 +3300,7 @@ data.visuals.v_explorable_blightgiantoddball = {
 	scale = { .9, .9, .9},
 	light_color = alien_color,
 	light_radius = 5,
-	sockets = { { "", "Internal" }, },
+	sockets = { { "", "Large" }, },
 	placement = "Min",
 	tile_pattern = {
 		0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
@@ -3292,6 +3341,29 @@ data.visuals.v_alien_powergenerator = {
 	place_effect = "fx_digital_in",
 	placement = "Max",
 	sockets = {
-		{ "", "Internal" },
+		{ "", "Large" },
 	},
+}
+
+
+data.visuals.v_base_my = {
+	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
+	placement = "Max",
+	tile_size = { 1, 1},
+	sockets = {
+		{ "small1", "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+	},
+	destroy_effect = "fx_digital",
+	place_effect = "fx_digital_in",
 }
