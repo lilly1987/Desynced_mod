@@ -5,6 +5,8 @@ package.includes = {
 	"items.lua",
 	"frames.lua", 
 	"components.lua", 
+	"utilities.lua", 
+	"visuals.lua", 
 }
 
 -- called when mod is initializing

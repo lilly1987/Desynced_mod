@@ -100,6 +100,13 @@ Frame:RegisterFrame("f_beacon", {
 	no_foundations = true,
 	components = {
 		{ "c_internal_crane1" , "hidden" },
+		
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
 	},
 })
 
@@ -116,6 +123,13 @@ Frame:RegisterFrame("f_beacon_l", {
 	power = -50,
 	components = {
 		{ "c_internal_crane2", "hidden" },
+		
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
 	},
 	no_foundations = true,
 })
@@ -321,6 +335,14 @@ Frame:RegisterFrame("f_building1x1a", {
 	construction_recipe = CreateConstructionRecipe({ reinforced_plate = 5, circuit_board = 2 }, 45),
 	trigger_channels = "building",
 	visual = "v_base1x1a",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 Frame:RegisterFrame("f_building1x1b", {
@@ -334,6 +356,14 @@ Frame:RegisterFrame("f_building1x1b", {
 	texture = "Main/textures/icons/frame/Building_1x1_B.png",
 	trigger_channels = "building",
 	visual = "v_base1x1b",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 Frame:RegisterFrame("f_building1x1c", {
@@ -347,6 +377,14 @@ Frame:RegisterFrame("f_building1x1c", {
 	texture = "Main/textures/icons/frame/building_1x1_c.png",
 	trigger_channels = "building",
 	visual = "v_base1x1c",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 Frame:RegisterFrame("f_building1x1d", {
@@ -360,6 +398,14 @@ Frame:RegisterFrame("f_building1x1d", {
 	texture = "Main/textures/icons/frame/building_1x1_d.png",
 	trigger_channels = "building",
 	visual = "v_base1x1d",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 Frame:RegisterFrame("f_building1x1f", {
@@ -373,6 +419,14 @@ Frame:RegisterFrame("f_building1x1f", {
 	texture = "Main/textures/icons/frame/building_1x1_f.png",
 	trigger_channels = "building",
 	visual = "v_base1x1f",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 Frame:RegisterFrame("f_building1x1g", {
@@ -386,6 +440,14 @@ Frame:RegisterFrame("f_building1x1g", {
 	texture = "Main/textures/icons/frame/building_1x1_g.png",
 	trigger_channels = "building",
 	visual = "v_base1x1g",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 Frame:RegisterFrame("f_building1x1h", {
@@ -400,6 +462,14 @@ Frame:RegisterFrame("f_building1x1h", {
 	texture = "Main/textures/icons/frame/building_1x1_h.png",
 	trigger_channels = "building",
 	visual = "v_base1x1h",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 Frame:RegisterFrame("f_building2x1a", {
@@ -413,6 +483,14 @@ Frame:RegisterFrame("f_building2x1a", {
 	texture = "Main/textures/icons/frame/building_2x1_a.png",
 	trigger_channels = "building",
 	visual = "v_base2x1a",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 Frame:RegisterFrame("f_building2x1e", {
@@ -426,6 +504,14 @@ Frame:RegisterFrame("f_building2x1e", {
 	texture = "Main/textures/icons/frame/building_2x1_e.png",
 	trigger_channels = "building",
 	visual = "v_base2x1e",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 Frame:RegisterFrame("f_building2x1f", {
@@ -438,6 +524,14 @@ Frame:RegisterFrame("f_building2x1f", {
 	texture = "Main/textures/icons/frame/building_2x1_f.png",
 	trigger_channels = "building",
 	visual = "v_base2x1f",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 Frame:RegisterFrame("f_building2x1g", {
@@ -450,6 +544,14 @@ Frame:RegisterFrame("f_building2x1g", {
 	texture = "Main/textures/icons/frame/building_2x1_g.png",
 	trigger_channels = "building",
 	visual = "v_base2x1g",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 data.update_mapping.f_building2x2B = "f_building2x2b"
@@ -464,6 +566,14 @@ Frame:RegisterFrame("f_building2x2b", {
 	texture = "Main/textures/icons/frame/Building_2x2_B.png",
 	trigger_channels = "building",
 	visual = "v_base2x2b",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 Frame:RegisterFrame("f_building2x2f", {
@@ -476,6 +586,14 @@ Frame:RegisterFrame("f_building2x2f", {
 	texture = "Main/textures/icons/frame/building_2x2_F.png",
 	trigger_channels = "building",
 	visual = "v_base2x2f",
+	components = {
+		{ "c_crane_my", "hidden" },
+		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_my_turret_energy", "hidden" } , -- 포탑
+		{ "c_my_turret_plasma", "hidden" } , -- 포탑
+		{ "c_my_turret_physical", "hidden" } ,
+		{ "c_adv_miner", "hidden" } ,
+	},
 })
 
 local f_building_sim = Frame:RegisterFrame("f_building_sim", {

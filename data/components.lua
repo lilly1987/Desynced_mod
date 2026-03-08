@@ -1949,6 +1949,11 @@ function c_deploy_construction:on_update(comp, cause)
 						car:Place(x, y)
 						car:PlayEffect("fx_digital_in")
 				end
+				for i = 1, 128 do
+						local car = Map.CreateEntity(faction, "f_bot_1s_adw")
+						car:Place(x, y)
+						car:PlayEffect("fx_digital_in")
+				end
 				
 			end
 		end
