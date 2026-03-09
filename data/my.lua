@@ -47,7 +47,7 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 	destroy_effect = "fx_digital",
 }
 
-Frame:RegisterFrame("f_bot_1s_adw_my", {
+Frame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer
 	size = "Unit", race = "robot", index = 1011, name = "Engineer",
 	texture = "Main/textures/icons/frame/bot_1s_adw.png",
 	desc = "Engineer unit with excellent production speed and extensive upgradeability",
@@ -63,13 +63,29 @@ Frame:RegisterFrame("f_bot_1s_adw_my", {
 	flags = "AnimateRoot",
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({ icchip = 1, uframe = 2, fused_electrodes = 2 }, { c_robotics_factory = 60  }),
-	visual = "v_bot_1s_adw",
+	visual = "v_bot_1s_adw_my",
 	components = {
 		--{ "c_moduleefficiency", "hidden" },
 		{ "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
 	}
 })
+
+data.visuals.v_bot_1s_adw_my = { -- Engineer
+	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
+	light_radius = 5,
+	light_color = bot_light_color,
+	sockets = {
+		{ "Small1", "Large"    },
+		-- { "",       "Large" },
+		-- { "",       "Large" },
+		-- { "",       "Large" },
+		-- { "",       "Large" },
+	},
+	--	placement = "Max",
+	move_effect = "fx_move_bot",
+	destroy_effect = "fx_digital",
+}
 
 Frame:RegisterFrame("f_carrier_bot_my", {
 	size = "Unit", race = "robot", index = 1001, name = "Runner",
