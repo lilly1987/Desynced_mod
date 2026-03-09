@@ -3526,15 +3526,18 @@ Frame:RegisterFrame("f_bot_1s_as_my", { --# 스카우트
 	visual = "v_bot_1s_as_my",
 	components = { 
 		{ "c_higrade_capacitor", "hidden" },
-	
+		
 		{ "c_crane_my", "hidden" },
 		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_repairkit_my", "hidden" } ,
+		{ "c_virus_protection_my", "hidden" } ,
 		
+		{ "c_adv_miner", "auto" } ,
+		{ "c_blight_extractor_my", "hidden" } ,
+		-- { "c_blight_container_m", "hidden" } ,-- 중형 역병 용기
 		-- { "c_my_turret_energy", "hidden" } , -- 포탑
 		-- { "c_my_turret_plasma", "hidden" } , -- 포탑
 		-- { "c_my_turret_physical", "hidden" } ,
-		
-		{ "c_adv_miner", "auto" } ,
 		
 		{ "c_fabricator", "hidden" } ,  --# 제작기
 		{ "c_fabricator", "hidden" } ,  --# 제작기
@@ -3576,10 +3579,14 @@ Frame:RegisterFrame("f_bot_1s_adw_my", { --# 엔지니어
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
 		
+
 		{ "c_crane_my", "hidden" },
 		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_repairkit_my", "hidden" } ,
+		{ "c_virus_protection_my", "hidden" } ,
 		
 		{ "c_adv_miner", "auto" } ,
+		{ "c_blight_extractor", "hidden" } ,
 		
 		{ "c_fabricator", "hidden" } ,  --# 제작기
 		{ "c_fabricator", "hidden" } ,  --# 제작기
@@ -3624,10 +3631,14 @@ Frame:RegisterFrame("f_carrier_bot_my", { --# 운반
 	-- visual = "v_carrier_bot",
 	
 	components = {
+
 		{ "c_crane_my", "hidden" },
 		{ "c_repairer_my_aoe", "hidden" } ,
+		{ "c_repairkit_my", "hidden" } ,
+		{ "c_virus_protection_my", "hidden" } ,
 		
 		{ "c_adv_miner", "auto" } ,
+		{ "c_blight_extractor", "hidden" } ,
 		
 		{ "c_fabricator", "hidden" } ,  --# 제작기
 		{ "c_fabricator", "hidden" } ,  --# 제작기
@@ -3664,6 +3675,7 @@ Frame:RegisterFrame("f_building_my", {
 	visual = "v_base_my",
 	components = {
 		{ "c_crane_my", "hidden" },
+		{ "c_virus_protection", "hidden" },
 		
 		-- { "c_fabricator", "auto" } ,
 		-- { "c_assembler", "auto" } ,

@@ -540,6 +540,7 @@ local function bitlock_effect(comp_def, comp, target)
 	if not target.def.immortal and target.has_component_list
 		and not target.faction:IsUnlocked("t_robots_antivirus")
 		and not target:FindComponent("c_virus_protection")
+		and not target:FindComponent("c_virus_protection_my")
 		--and not target:FindComponent("c_virus_cure")
 		and (not target.def.movement_speed or target.def.movement_speed > 0) then
 		local effect = target:FindComponent("c_virus_bitlock_effect")
@@ -1486,6 +1487,21 @@ function c_repairkit:on_update(comp, cause)
 	return comp:SetStateStartWork(self.duration)
 end
 
+c_repairkit:RegisterComponent("c_repairkit_my", {
+	attachment_size = "Hidden", race = "robot", index = 1043, name = "Repair Kit",
+	desc = "Can repair the unit or building it is equipped on",
+	texture = "Main/textures/icons/components/repairkit.png",
+	visual = "v_generic_i",
+	production_recipe = false,
+	activation = "Always",
+	power = 0,
+	on_add = on_add_charge,
+	on_remove = on_remove_clear_extra_data,
+	repair = 1,
+	duration = 1,
+	repair_fx = "fx_heal_unit",
+})
+
 ----- deployment -----
 local c_deployment = Comp:RegisterComponent("c_deployment",{
 	attachment_size = "Hidden", race = "robot", index = 1042, name = "Deployment",
@@ -1946,13 +1962,19 @@ function c_deploy_construction:on_update(comp, cause)
 				FactionCount("built_landingpod", true, faction)
 
 				-- spawn 2 carriers
-				for i = 1, 128 do
+				for i = 1, 64 do
 						local car = Map.CreateEntity(faction, "f_carrier_bot_my")
 						car:Place(x, y)
 						car:PlayEffect("fx_digital_in")
 				end
-				for i = 1, 128 do
+				for i = 1, 64 do
 						local car = Map.CreateEntity(faction, "f_bot_1s_adw_my")
+						-- car:AddComponent("c_adv_miner", 1)
+						car:Place(x, y)
+						car:PlayEffect("fx_digital_in")
+				end
+				for i = 1, 64 do
+						local car = Map.CreateEntity(faction, "f_bot_1s_as_my")
 						-- car:AddComponent("c_adv_miner", 1)
 						car:Place(x, y)
 						car:PlayEffect("fx_digital_in")
@@ -4223,7 +4245,7 @@ local c_crane = Comp:RegisterComponent("c_crane", {
 	power = -5,
 	desc = "Enables automatic transfer of inventory directly between units and buildings in range",
 	production_recipe = CreateProductionRecipe({ crystal_powder = 5, icchip = 2, cable = 5 }, { c_advanced_assembler = 20 }),
-	range = 3,
+	range = 30,
 })
 
 function c_crane:on_add(comp)
@@ -4260,7 +4282,7 @@ c_crane:RegisterComponent("c_portablecrane", {
 	power = 0,
 	desc = "Enables automatic transfer of inventory directly between adjacent units and buildings",
 	production_recipe = CreateProductionRecipe({ circuit_board = 5, wire = 1 }, { c_assembler = 50 }),
-	range = 1,
+	range = 10,
 })
 
 --- long range portable crane ---
@@ -4271,14 +4293,14 @@ local c_internal_crane1 = c_crane:RegisterComponent("c_internal_crane1", {
 	power = 0,
 	production_recipe = false,
 	visual = "v_generic_i",
-	range = 1,
+	range = 10,
 	get_ui = true,
 })
 
 c_internal_crane1:RegisterComponent("c_internal_crane2", {
 	attachment_size = "Hidden", race = "robot", index = 1044, name = "Item Transporter",
 	desc = "Integrated Transporter with decent range",
-	range = 2,
+	range = 20,
 })
 
 c_crane:RegisterComponent("c_internal_transporter", {
@@ -4286,7 +4308,7 @@ c_crane:RegisterComponent("c_internal_transporter", {
 	texture = "Main/textures/icons/hidden/internal_transporter.png",
 	desc = "Integrated Transporter with decent range",
 	production_recipe = false,
-	range = 3,
+	range = 30,
 	get_ui = true,
 })
 
@@ -4296,7 +4318,7 @@ c_crane:RegisterComponent("c_alien_crane2", {
 	desc = "Alien Transporter with a Range of 3",
 	production_recipe = false,
 	power = 0,
-	range = 3,
+	range = 30,
 	get_ui = true,
 })
 
@@ -4306,7 +4328,7 @@ c_crane:RegisterComponent("c_alien_crane3", {
 	desc = "Alien Transporter with a Range of 4",
 	production_recipe = false,
 	power = 0,
-	range = 4,
+	range = 40,
 	get_ui = true,
 })
 
@@ -6434,6 +6456,7 @@ function c_virus:on_update(comp, trigger)
 			and not other_entity:FindComponent("c_virus")
 			and not other_entity:FindComponent("c_virus_cure")
 			and not other_entity:FindComponent("c_virus_protection")
+			and not other_entity:FindComponent("c_virus_protection_my")
 			and not Map.FindClosestEntity(other_entity, 3, function(e)
 				return e:FindComponent("c_virus_cure") ~= nil
 			end, FF_OPERATING)
@@ -6462,6 +6485,14 @@ local c_virus_protection = Comp:RegisterComponent("c_virus_protection", {
 	visual = "v_generic_i",
 	texture = "Main/textures/icons/components/virus_protection.png",
 	production_recipe = CreateProductionRecipe({ infected_circuit_board = 1, reinforced_plate = 1 }, { c_assembler = 40, c_human_factory = 60 }),
+})
+
+c_virus_protection:RegisterComponent("c_virus_protection_my", {
+	attachment_size = "Hidden", race = "virus", index = 4013, name = "Virus Protection",
+	desc = "Protects from receiving the virus and removes any viruses when equipped",
+	visual = "v_generic_i",
+	texture = "Main/textures/icons/components/virus_protection.png",
+	production_recipe = false,
 })
 
 
@@ -7567,6 +7598,19 @@ function c_blight_extractor:on_update(comp, cause)
 	if blightdelta >= 0 then extraction_time = extraction_time // 2 end
 	return comp:SetStateStartWork(extraction_time, true)
 end
+
+c_blight_extractor:RegisterComponent("c_blight_extractor_my", {
+	attachment_size = "Hidden", race = "blight", index = 2001, name = "Blight Extractor",
+	texture = "Main/textures/icons/components/component_blightextractor_01_s.png",
+	desc = "Extracts blight gas when placed inside a blighted area",
+	power = 0,
+	visual = "v_blightextractor_s",
+	slots = { gas = 4 },
+	production_recipe = false,
+	extracts = "blight_extraction",
+	extraction_time = 75,
+	activation = "Always",
+})
 
 c_fabricator:RegisterComponent("c_mission_human_aicenter", {
 	attachment_size = "Hidden", race = "human", index = 3009, name = "AI Research Center",
@@ -9615,6 +9659,7 @@ c_virus_bitlock:RegisterComponent("c_virus_jamming", {
 			--and not target.faction:IsUnlocked("t_robots_antivirus")
 			and not target:FindComponent("c_virus")
 			and not target:FindComponent("c_virus_cure")
+			and not target:FindComponent("c_virus_protection_my") 
 			and not target:FindComponent("c_virus_protection") then
 
 			local vir = target:AddComponent("c_virus", "hidden")
@@ -11094,6 +11139,7 @@ Comp:RegisterComponent("c_anomaly_event", {
 				if not comp.owner:FindComponent("c_virus")
 					and not comp.owner:FindComponent("c_virus_cure")
 					and not comp.owner:FindComponent("c_virus_protection")
+					and not comp.owner:FindComponent("c_virus_protection_my")
 					then
 					comp.owner:AddComponent("c_virus", "hidden")
 				end
@@ -11505,7 +11551,7 @@ c_crane:RegisterComponent("c_phase_transporter5", {
 	texture = "Main/textures/icons/components/Component_Range5Transporter_01_L.png",
 	visual = "v_Range5Transporter_01_l",
 	power = -50,
-	range = 5,
+	range = 50,
 	production_recipe = CreateProductionRecipe({ cpu = 10, crystalized_obsidian = 5, uframe = 10 }, { c_adv_alien_factory = 150, }),
 })
 

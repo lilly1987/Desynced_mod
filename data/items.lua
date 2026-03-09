@@ -679,7 +679,7 @@ data.items.blight_extraction = {
 	texture = "Main/textures/icons/items/blight_extraction.png",
 	slot_type = "gas",
 	stack_size = 100,
-	extracted_by = { c_blight_extractor = true },
+	extracted_by = { c_blight_extractor = true,c_blight_extractor_my = true },
 }
 
 data.items.blightbar = {
