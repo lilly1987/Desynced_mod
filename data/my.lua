@@ -1,3 +1,62 @@
+function Comp:FindComponent(id)
+    local comp = data.components[id]
+    if not comp then
+        print("COMPONENT INFO: Component not found: " .. tostring(id))
+        return nil
+    end
+    return comp
+end
+function MyMake(faction,x,y)
+	for i = 1, 64 do
+			local car = Map.CreateEntity(faction, "f_bot_1s_as_my")
+			car:Place(x, y)
+			car:PlayEffect("fx_digital_in")
+	end
+	for i = 1, 64 do
+			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my")
+			car:Place(x, y)
+			car:PlayEffect("fx_digital_in")
+	end
+	for i = 1, 64 do
+			local car = Map.CreateEntity(faction, "f_carrier_bot_my")
+			car:Place(x, y)
+			car:PlayEffect("fx_digital_in")
+	end
+end
+function FreeplaySpawnPlayer(faction, loc)
+	-- lander bot
+	local lander = Map.CreateEntity(faction, "f_bot_2m_as")
+	lander:AddComponent("c_deployment", "hidden")
+	lander:AddComponent("c_power_cell_my", "hidden")
+	-- lander:AddItem("c_fabricator", 1)
+	-- lander:AddItem("c_adv_portable_turret", 1)
+	lander:Place(loc.x, loc.y)
+	lander.disconnected = false
+
+	local bots = {}
+	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_as_my")
+	local radar = bots[#bots]:AddComponent("c_scout_radar", 2)
+	radar:SetRegister(1, { id = "v_unsolved" })
+	bots[#bots]:Place(loc.x-2, loc.y+3)
+	-- bots[#bots].disconnected = false
+
+	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my")
+	-- bots[2]:AddComponent("c_adv_miner", 1)
+	bots[#bots]:Place(loc.x+3, loc.y+4)
+	-- bots[2].disconnected = false
+
+	-- bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw")
+	-- bots[3]:AddComponent("c_adv_miner", 1)
+	-- bots[#bots]:Place(loc.x+1, loc.y+2)
+	-- bots[3].disconnected = false
+	
+	bots[#bots+1] = Map.CreateEntity(faction, "f_carrier_bot_my")
+	-- bots[3]:AddComponent("c_adv_miner", 1)
+	bots[#bots]:Place(loc.x+1, loc.y+2)
+	-- bots[3].disconnected = false
+
+	return lander, bots
+end
 
 for key, visual in pairs(data.visuals) do
     if visual.sockets then
@@ -21,9 +80,11 @@ Frame:RegisterFrame("f_bot_1s_as_my", {
 	power = -2,
 	flags = "AnimateRoot",
 	trigger_channels = "bot",
-	production_recipe = CreateProductionRecipe({ icchip = 1, uframe = 3, fused_electrodes = 2 }, { c_robotics_factory = 60 }),
+	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_as_my",
-	components = { { "c_higrade_capacitor", "hidden" } },
+	components = { 
+		-- { "c_higrade_capacitor", "hidden" } 
+	},
 })
 
 data.visuals.v_bot_1s_as_my = { -- Scout
@@ -62,13 +123,13 @@ Frame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer
 	power = -4,
 	flags = "AnimateRoot",
 	trigger_channels = "bot",
-	production_recipe = CreateProductionRecipe({ icchip = 1, uframe = 2, fused_electrodes = 2 }, { c_robotics_factory = 60  }),
+	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
 	components = {
 		--{ "c_moduleefficiency", "hidden" },
-		{ "c_higrade_capacitor", "hidden" },
+		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
-	}
+	},
 })
 
 data.visuals.v_bot_1s_adw_my = { -- Engineer
@@ -101,8 +162,11 @@ Frame:RegisterFrame("f_carrier_bot_my", {
 	flags = "AnimateRoot",
 	trigger_channels = "bot",
 	power = -2,
-	production_recipe = CreateProductionRecipe({ metalplate = 3, crystal = 3 }, { c_carrier_factory = 10, c_assembler = 15 }),
+	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_carrier_bot_my",
+	components = {
+		-- { "c_higrade_capacitor", "hidden" },
+	},
 })
 
 data.visuals.v_carrier_bot_my = { -- Runner
@@ -122,68 +186,6 @@ data.visuals.v_carrier_bot_my = { -- Runner
 		{ "",       "Large" },
 	},
 }
-
-function MyMake(faction,x,y)
-	for i = 1, 64 do
-			local car = Map.CreateEntity(faction, "f_bot_1s_as_my")
-			car:Place(x, y)
-			car:PlayEffect("fx_digital_in")
-	end
-	for i = 1, 64 do
-			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my")
-			car:Place(x, y)
-			car:PlayEffect("fx_digital_in")
-	end
-	for i = 1, 64 do
-			local car = Map.CreateEntity(faction, "f_carrier_bot_my")
-			car:Place(x, y)
-			car:PlayEffect("fx_digital_in")
-	end
-end
-
-function FreeplaySpawnPlayer(faction, loc)
-	-- lander bot
-	local lander = Map.CreateEntity(faction, "f_bot_2m_as")
-	lander:AddComponent("c_deployment", "hidden")
-	lander:AddComponent("c_power_cell")
-	lander:AddItem("c_fabricator", 1)
-	lander:AddItem("c_adv_portable_turret", 1)
-	lander:Place(loc.x, loc.y)
-	lander.disconnected = false
-
-	local bots = {}
-	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_as_my")
-	local radar = bots[#bots]:AddComponent("c_scout_radar", 2)
-	radar:SetRegister(1, { id = "v_unsolved" })
-	bots[#bots]:Place(loc.x-2, loc.y+3)
-	-- bots[#bots].disconnected = false
-
-	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw")
-	-- bots[2]:AddComponent("c_adv_miner", 1)
-	bots[#bots]:Place(loc.x+3, loc.y+4)
-	-- bots[2].disconnected = false
-
-	-- bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw")
-	-- bots[3]:AddComponent("c_adv_miner", 1)
-	-- bots[#bots]:Place(loc.x+1, loc.y+2)
-	-- bots[3].disconnected = false
-	
-	bots[#bots+1] = Map.CreateEntity(faction, "f_carrier_bot_my")
-	-- bots[3]:AddComponent("c_adv_miner", 1)
-	bots[#bots]:Place(loc.x+1, loc.y+2)
-	-- bots[3].disconnected = false
-
-	return lander, bots
-end
-
-function Comp:FindComponent(id)
-    local comp = data.components[id]
-    if not comp then
-        print("COMPONENT INFO: Component not found: " .. tostring(id))
-        return nil
-    end
-    return comp
-end
 
 local c_deploy_construction = Comp:FindComponent("c_deploy_construction")
 
@@ -271,3 +273,15 @@ function c_deploy_construction:on_update(comp, cause)
 		end
 	end)
 end
+
+Comp:RegisterComponent("c_power_cell_my", {
+	attachment_size = "hidden", race = "robot", index = 1011, name = "Power Cell",
+	texture = "Main/textures/icons/components/powercell.png",
+	desc = "Transmits <hl>500</> power per second over a small area",
+	visual = "v_generic_i",
+	power = 100000000,
+	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
+	transfer_radius = 128,
+	registers = { { read_only = true, tip = "Power Production" } },
+	get_ui = true,
+})
