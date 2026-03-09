@@ -62,10 +62,10 @@ Frame:RegisterFrame("f_carrier_bot_my", {
 	trigger_channels = "bot",
 	power = -2,
 	production_recipe = CreateProductionRecipe({ metalplate = 3, crystal = 3 }, { c_carrier_factory = 10, c_assembler = 15 }),
-	visual = "v_carrier_bot",
+	visual = "v_carrier_bot_my",
 })
 
-data.visuals.v_carrier_bot = { -- Runner
+data.visuals.v_carrier_bot_my = { -- Runner
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Carrier_A.Bot_Carrier_A'",
 	sockets = {
 		{ "",       "Large" },
