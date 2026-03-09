@@ -25,7 +25,7 @@ function MyMake(faction,x,y)
 end
 function FreeplaySpawnPlayer(faction, loc)
 	-- lander bot
-	local lander = Map.CreateEntity(faction, "f_bot_2m_as")
+	local lander = Map.CreateEntity(faction, "f_bot_2m_as_my")
 	lander:AddComponent("c_deployment", "hidden")
 	lander:AddComponent("c_power_cell_my", "hidden")
 	-- lander:AddItem("c_fabricator", 1)
@@ -188,7 +188,6 @@ data.visuals.v_carrier_bot_my = { -- Runner
 }
 
 local c_deploy_construction = Comp:FindComponent("c_deploy_construction")
-
 function c_deploy_construction:on_update(comp, cause)
 	local ed = comp.extra_data
 	local bp = ed.bp
@@ -256,7 +255,7 @@ function c_deploy_construction:on_update(comp, cause)
 			-- destroy the deploy entity without dropping items
 			lander:Destroy(false)
 
-			if frame_id == "f_landingpod" then
+			if frame_id == "f_landingpod" or frame_id == "f_landingpod_my" then
 				FactionCount("built_landingpod", true, faction)
 
 				-- spawn 2 carriers
@@ -284,4 +283,54 @@ Comp:RegisterComponent("c_power_cell_my", {
 	transfer_radius = 128,
 	registers = { { read_only = true, tip = "Power Production" } },
 	get_ui = true,
+})
+
+Frame:RegisterFrame("f_bot_2m_as_my", {
+	size = "Unit", race = "robot", index = 1013, name = "Command Center",
+	texture = "Main/textures/icons/frame/bot_2m_ad.png",
+	minimap_color = { 0.9, 0.9, 0.8 },
+	slot_type = "garage",
+	visibility_range = 20,
+	slots = { storage = 8, },
+	movement_speed = 4,
+	start_disconnected = true,
+	power = -2,
+	health_points = 400, -- 150
+	flags = "AnimateRoot",
+	trigger_channels = "bot",
+	visual = "v_bot_2m_as",
+	production_recipe = CreateProductionRecipe({ icchip = 10, uframe = 20, fused_electrodes = 20 }, { c_robotics_factory = 80 }),
+	components = { 
+	{ "c_higrade_capacitor", "hidden" } 
+	},
+})
+
+Frame:RegisterFrame("f_landingpod_my", {
+	size = "Special", race = "robot", index = 1001, name = "Command Center",
+	minimap_color = { 0.8, 0.8, 0.8 },
+	visibility_range = 30,
+	slots = { storage = 12, },
+	health_points = 1000, -- 500
+	texture = "Main/textures/icons/frame/building_2x2_ad.png",
+	trigger_channels = "building",
+	visual = "v_base2x2_as",
+	components = {
+		{ "c_carrier_factory", "hidden" },
+	},
+	drop_on_deconstruct = function(x, y)
+		Map.DropItemAt(x, y, "c_deployer", { bp = { frame = "f_landingpod_my" }, onetime = true }, true)
+	end,
+})
+
+local c_deployment = Comp:FindComponent("c_deployment")
+c_deployment:RegisterComponent("c_deployment_my",{
+	attachment_size = "Hidden", race = "robot", index = 1042, name = "Deployment",
+	texture = "Main/textures/icons/hidden/integrated_deployer.png",
+	desc = "Initial planetary colonization support package, cannot deploy while frame is active",
+	visual = "v_generic_i",
+	activation = "OnFirstRegisterChange",
+	action_tooltip = "Deploy",
+	required_resources = { "crystal", "metalore" },
+	registers = { { tip = "Deploy Base", click_action = true, ui_icon = "icon_new", filter = 'coord' } },
+	deployment_frame = "f_landingpod_my",
 })
