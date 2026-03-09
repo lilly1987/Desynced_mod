@@ -2,12 +2,12 @@ local package = ...
 
 -- files loaded when mod is initializing
 package.includes = {
-	"items.lua",
-	"frames.lua", 
-	"components.lua", 
-	"utilities.lua", 
-	"visuals.lua", 
-	"tech_robots.lua",
+	-- "items.lua",
+	-- "frames.lua", 
+	-- "components.lua", 
+	-- "utilities.lua", 
+	-- "visuals.lua", 
+	-- "tech_robots.lua",
 }
 
 -- called when mod is initializing
