@@ -18,14 +18,6 @@ local new_unlocks = {
 for _, v in ipairs(new_unlocks) do
     table.insert(data.techs.t_robot_tech_basic.unlocks, v)
 end
-function Comp:FindComponent(id)
-    local comp = data.components[id]
-    if not comp then
-        print("COMPONENT INFO: Component not found: " .. tostring(id))
-        return nil
-    end
-    return comp
-end
 function MyMake(faction,x,y)
 	for i = 1, 64 do
 			local car = Map.CreateEntity(faction, "f_bot_1s_as_my")
@@ -82,7 +74,7 @@ MyFrame = {
 	minimap_color = { 0.8, 0.8, 0.8 },
 	shield_type = "alloy",
 }
-function MyFrame:MyRegisterFrame(id, frame)
+function MyFrame:RegisterFrame(id, frame)
 	frame["component_boost"]= 1000
 	frame["health_points"]= 10000 -- 10만 안됨)
 	frame["visibility_range"]= 128
@@ -98,7 +90,7 @@ function MyFrame:MyRegisterFrame(id, frame)
 	return frame
 end
 
-MyFrame:MyRegisterFrame("f_bot_1s_as_my", {
+MyFrame:RegisterFrame("f_bot_1s_as_my", {
 	size = "Unit", race = "robot", index = 112, name = "Scout",
 	texture = "Main/textures/icons/frame/bot_1s_ad.png",
 	desc = "Advanced high-speed starter bot with a single small socket",
@@ -140,7 +132,7 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 	destroy_effect = "fx_digital",
 }
 
-MyFrame:MyRegisterFrame("f_bot_1s_adw_my", { -- Engineer
+MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
 	texture = "Main/textures/icons/frame/bot_1s_adw.png",
 	desc = "Engineer unit with excellent production speed and extensive upgradeability",
@@ -180,7 +172,7 @@ data.visuals.v_bot_1s_adw_my = { -- Engineer
 	destroy_effect = "fx_digital",
 }
 
-MyFrame:MyRegisterFrame("f_carrier_bot_my", {
+MyFrame:RegisterFrame("f_carrier_bot_my", {
 	size = "Unit", race = "robot", index = 101, name = "Runner",
 	texture = "Main/textures/icons/frame/carrier_bot.png",
 	desc = "A small cargo bot for moving items",
@@ -219,7 +211,7 @@ data.visuals.v_carrier_bot_my = { -- Runner
 	},
 }
 
-MyFrame:MyRegisterFrame("f_bot_2m_as_my", { -- 본부 이동
+MyFrame:RegisterFrame("f_bot_2m_as_my", { -- 본부 이동
 	size = "Unit", race = "robot", index = 113, name = "Command Center",
 	texture = "Main/textures/icons/frame/bot_2m_ad.png",
 	minimap_color = { 0.9, 0.9, 0.8 },
@@ -239,7 +231,7 @@ MyFrame:MyRegisterFrame("f_bot_2m_as_my", { -- 본부 이동
 	},
 })
 
-MyFrame:MyRegisterFrame("f_landingpod_my", { -- 본부 건물
+MyFrame:RegisterFrame("f_landingpod_my", { -- 본부 건물
 	size = "Special", race = "robot", index = 101, name = "Command Center",
 	minimap_color = { 0.8, 0.8, 0.8 },
 	visibility_range = 128,
@@ -256,7 +248,68 @@ MyFrame:MyRegisterFrame("f_landingpod_my", { -- 본부 건물
 	end,
 })
 
-Comp:FindComponent("c_deploy_construction").on_update = function(self, comp, cause)
+MyComp = {
+	slot_type = "storage",
+	stack_size = 1,
+	texture = "Main/textures/icons/frame/replace.png"
+}
+function MyComp:FindComponent(id)
+    local comp = data.components[id]
+    if not comp then
+        print("COMPONENT INFO: Component not found: " .. tostring(id))
+        return nil
+    end
+    return comp
+end
+function MyComp:RegisterComponent(id, comp)
+	comp.id = id
+	comp.base_id = self.base_id or self.id or id
+	if not comp.name then comp.name = id end
+	if comp.production_recipe ~= nil then
+			comp["production_recipe"] = CreateProductionRecipe({}, { c_carrier_factory = 1 })
+	end
+	if comp.construction_recipe ~= nil then
+			comp["construction_recipe"] = CreateConstructionRecipe({}, 1)
+	end
+	--for k,v in pairs(comp) do if Tool.Hash(v) == Tool.Hash(self[k]) and k ~= "base_id" then print("COMPONENT INFO: Inherited component contains duplicated field value: " .. tostring(id) .. " (" .. tostring(k) .. " = " .. tostring(v):gsub("\n", "") .. ")") end end
+	data.components[id] = setmetatable(comp, { __index = self })
+	return comp
+end
+
+MyComp:RegisterComponent("c_higrade_capacitor_my", {
+	attachment_size = "Hidden", race = "robot", index = 115, name = "Hi-Grade Capacitor",
+	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
+	visual = "v_generic_i",
+	desc = "Stores excess power from your logistics network making it available when needed",
+	power_storage = 100000000,
+	drain_rate = 500,
+	charge_rate = 4000,
+	-- get_ui = battery_get_ui,
+	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
+})
+MyComp:RegisterComponent("c_power_cell_my", {
+	attachment_size = "hidden", race = "robot", index = 111, name = "Power Cell",
+	texture = "Main/textures/icons/components/powercell.png",
+	desc = "Transmits <hl>100000000</> power per second over a small area",
+	visual = "v_generic_i",
+	power = 100000000,
+	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
+	transfer_radius = 128,
+	registers = { { read_only = true, tip = "Power Production" } },
+	-- get_ui = true,
+})
+MyComp:RegisterComponent("c_higrade_capacitor_my", {
+	attachment_size = "Hidden", race = "robot", index = 115, name = "Hi-Grade Capacitor",
+	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
+	visual = "v_generic_i",
+	desc = "Stores excess power from your logistics network making it available when needed",
+	power_storage = 100000000,
+	drain_rate = 100000000,
+	charge_rate = 100000000,
+	-- get_ui = battery_get_ui,
+	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
+})
+MyComp:FindComponent("c_deploy_construction").on_update = function(self, comp, cause)
 
 	local ed = comp.extra_data
 	local bp = ed.bp
@@ -341,29 +394,7 @@ Comp:FindComponent("c_deploy_construction").on_update = function(self, comp, cau
 		end
 	end)
 end
-Comp:RegisterComponent("c_higrade_capacitor_my", {
-	attachment_size = "Hidden", race = "robot", index = 115, name = "Hi-Grade Capacitor",
-	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
-	visual = "v_generic_i",
-	desc = "Stores excess power from your logistics network making it available when needed",
-	power_storage = 100000,
-	drain_rate = 500,
-	charge_rate = 4000,
-	-- get_ui = battery_get_ui,
-	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
-})
-Comp:RegisterComponent("c_power_cell_my", {
-	attachment_size = "hidden", race = "robot", index = 111, name = "Power Cell",
-	texture = "Main/textures/icons/components/powercell.png",
-	desc = "Transmits <hl>100000000</> power per second over a small area",
-	visual = "v_generic_i",
-	power = 100000000,
-	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
-	transfer_radius = 128,
-	registers = { { read_only = true, tip = "Power Production" } },
-	-- get_ui = true,
-})
-Comp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{
+MyComp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{
 	attachment_size = "Hidden", race = "robot", index = 1042, name = "Deployment",
 	texture = "Main/textures/icons/hidden/integrated_deployer.png",
 	desc = "Initial planetary colonization support package, cannot deploy while frame is active",
@@ -374,15 +405,37 @@ Comp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{
 	registers = { { tip = "Deploy Base", click_action = true, ui_icon = "icon_new", filter = 'coord' } },
 	deployment_frame = "f_landingpod_my",
 })
+MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_my",{
+	attachment_size = "hidden", race = "robot", index = 1031, name = "Turret",
+	texture = "Main/textures/icons/components/component_standardTurret_01_m.png",
+	desc = "Medium sized turret with good damage and range",
+	power = -10,
+	visual = "v_turret_m",
+	activation = "OnFirstRegisterChange|OnTrustChange",
+	action_tooltip = action_tooltip_set_target,
+	registers = {
+		{ type = "entity", tip = "Preferred Target", ui_icon = "icon_target", click_action = true, filter = 'entity' },
+		{ read_only = true, tip = "Current Target", click_action = true },
+	},
+	production_recipe = CreateProductionRecipe({  c_adv_portable_turret = 1, wire = 10, hdframe = 5 }, { c_assembler = 5 }),
+	-- production_recipe = CreateProductionRecipe({ circuit_board = 1, energized_plate = 5, crystal = 10 }, { c_assembler = 5 }),
+	on_add = on_add_charge,
+	on_remove = on_remove_clear_extra_data,
+	get_ui = true,
 
-Comp:RegisterComponent("c_higrade_capacitor_my", {
-	attachment_size = "Hidden", race = "robot", index = 115, name = "Hi-Grade Capacitor",
-	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
-	visual = "v_generic_i",
-	desc = "Stores excess power from your logistics network making it available when needed",
-	power_storage = 100000000,
-	drain_rate = 100000000,
-	charge_rate = 100000000,
-	-- get_ui = battery_get_ui,
-	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
+	trigger_radius = 7,
+	attack_radius = 7,
+
+	trigger_channels = "bot|building|bug",
+
+	-- internal variable
+	damage = 72,   -- damage per shot -- 8
+	damage_type = "energy_damage",
+	duration = 6, -- charge duration -- 2
+	shoot_fx = "fx_turret_laser",  -- fx_turret_1
+	shoot_speed = 1,
+	shoot_socket = "fx",
+	shoot_while_moving = true,
+	--shoot_target = "ground", -- set to "air" or "ground" to limit, otherwise can shoot both
 })
+
