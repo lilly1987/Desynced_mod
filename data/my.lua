@@ -46,7 +46,7 @@ end
 function FreeplaySpawnPlayer(faction, loc)
 	-- lander bot
 	local lander = Map.CreateEntity(faction, "f_bot_2m_as_my")
-	lander:AddComponent("c_deployment", "hidden")
+	lander:AddComponent("c_deployment_my", "hidden")
 	lander:AddComponent("c_power_cell_my", "hidden")
 	-- lander:AddItem("c_fabricator", 1)
 	-- lander:AddItem("c_adv_portable_turret", 1)
@@ -256,8 +256,10 @@ MyFrame:MyRegisterFrame("f_landingpod_my", { -- 본부 건물
 	end,
 })
 
-local c_deploy_construction = Comp:FindComponent("c_deploy_construction")
-function c_deploy_construction:on_update(comp, cause)
+-- local c_deploy_construction = Comp:FindComponent("c_deploy_construction")
+-- function c_deploy_construction:on_update(comp, cause)
+Comp:FindComponent("c_deploy_construction").on_update = function(self, comp, cause)
+
 	local ed = comp.extra_data
 	local bp = ed.bp
 
@@ -364,9 +366,7 @@ Comp:RegisterComponent("c_power_cell_my", {
 	registers = { { read_only = true, tip = "Power Production" } },
 	get_ui = true,
 })
-
-local c_deployment = Comp:FindComponent("c_deployment")
-c_deployment:RegisterComponent("c_deployment_my",{
+Comp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{
 	attachment_size = "Hidden", race = "robot", index = 1042, name = "Deployment",
 	texture = "Main/textures/icons/hidden/integrated_deployer.png",
 	desc = "Initial planetary colonization support package, cannot deploy while frame is active",
@@ -376,4 +376,16 @@ c_deployment:RegisterComponent("c_deployment_my",{
 	required_resources = { "crystal", "metalore" },
 	registers = { { tip = "Deploy Base", click_action = true, ui_icon = "icon_new", filter = 'coord' } },
 	deployment_frame = "f_landingpod_my",
+})
+
+Comp:RegisterComponent("c_higrade_capacitor_my", {
+	attachment_size = "Hidden", race = "robot", index = 1015, name = "Hi-Grade Capacitor",
+	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
+	visual = "v_generic_i",
+	desc = "Stores excess power from your logistics network making it available when needed",
+	power_storage = 10000,
+	drain_rate = 50,
+	charge_rate = 400,
+	get_ui = battery_get_ui,
+	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
 })
