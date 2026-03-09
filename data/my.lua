@@ -26,16 +26,21 @@ Frame:RegisterFrame("f_bot_1s_as_my", {
 	components = { { "c_higrade_capacitor", "hidden" } },
 })
 
-data.visuals.v_bot_1s_as_my = {
+data.visuals.v_bot_1s_as_my = { -- Scout
 	--mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD.Bot_1S_AD'",
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD/Ver2/Bot_1S_AD.Bot_1S_AD'",
 	light_radius = 5,
 	light_color = bot_light_color,
 	sockets = {
-		{ "Small1", "Small"    },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
-		{ "",       "Internal" },
+		{ "Small1", "Large"    },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
 	},
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
@@ -59,6 +64,25 @@ Frame:RegisterFrame("f_carrier_bot_my", {
 	production_recipe = CreateProductionRecipe({ metalplate = 3, crystal = 3 }, { c_carrier_factory = 10, c_assembler = 15 }),
 	visual = "v_carrier_bot",
 })
+
+data.visuals.v_carrier_bot = { -- Runner
+	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Carrier_A.Bot_Carrier_A'",
+	sockets = {
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+		{ "",       "Large" },
+	},
+}
+
 
 -- function Comp:RegisterComponent(id, comp)
 	-- comp.id = id
