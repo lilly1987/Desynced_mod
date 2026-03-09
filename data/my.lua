@@ -71,6 +71,41 @@ function MyMake(faction,x,y)
 	end
 end
 
+function FreeplaySpawnPlayer(faction, loc)
+	-- lander bot
+	local lander = Map.CreateEntity(faction, "f_bot_2m_as")
+	lander:AddComponent("c_deployment", "hidden")
+	lander:AddComponent("c_power_cell")
+	lander:AddItem("c_fabricator", 1)
+	lander:AddItem("c_adv_portable_turret", 1)
+	lander:Place(loc.x, loc.y)
+	lander.disconnected = false
+
+	local bots = {}
+	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_as_my")
+	local radar = bots[#bots]:AddComponent("c_scout_radar", 2)
+	radar:SetRegister(1, { id = "v_unsolved" })
+	bots[#bots]:Place(loc.x-2, loc.y+3)
+	-- bots[#bots].disconnected = false
+
+	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw")
+	-- bots[2]:AddComponent("c_adv_miner", 1)
+	bots[#bots]:Place(loc.x+3, loc.y+4)
+	-- bots[2].disconnected = false
+
+	-- bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw")
+	-- bots[3]:AddComponent("c_adv_miner", 1)
+	-- bots[#bots]:Place(loc.x+1, loc.y+2)
+	-- bots[3].disconnected = false
+	
+	bots[#bots+1] = Map.CreateEntity(faction, "f_carrier_bot_my")
+	-- bots[3]:AddComponent("c_adv_miner", 1)
+	bots[#bots]:Place(loc.x+1, loc.y+2)
+	-- bots[3].disconnected = false
+
+	return lander, bots
+end
+
 function Comp:FindComponent(id)
     local comp = data.components[id]
     if not comp then
