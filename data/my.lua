@@ -47,6 +47,30 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 	destroy_effect = "fx_digital",
 }
 
+Frame:RegisterFrame("f_bot_1s_adw_my", {
+	size = "Unit", race = "robot", index = 1011, name = "Engineer",
+	texture = "Main/textures/icons/frame/bot_1s_adw.png",
+	desc = "Engineer unit with excellent production speed and extensive upgradeability",
+	minimap_color = { 0.9, 0.9, 0.8 },
+	slot_type = "garage",
+	visibility_range = 7,
+	slots = { storage = 2, },
+	movement_speed = 2,
+	component_boost = 200,
+	start_disconnected = true,
+	health_points = 200, -- 120
+	power = -4,
+	flags = "AnimateRoot",
+	trigger_channels = "bot",
+	production_recipe = CreateProductionRecipe({ icchip = 1, uframe = 2, fused_electrodes = 2 }, { c_robotics_factory = 60  }),
+	visual = "v_bot_1s_adw",
+	components = {
+		--{ "c_moduleefficiency", "hidden" },
+		{ "c_higrade_capacitor", "hidden" },
+		--{ "c_internal_crane", "hidden" },
+	}
+})
+
 Frame:RegisterFrame("f_carrier_bot_my", {
 	size = "Unit", race = "robot", index = 1001, name = "Runner",
 	texture = "Main/textures/icons/frame/carrier_bot.png",
@@ -83,20 +107,17 @@ data.visuals.v_carrier_bot_my = { -- Runner
 	},
 }
 
-
--- function Comp:RegisterComponent(id, comp)
-	-- comp.id = id
-	-- comp.base_id = self.base_id or self.id or id
-	-- if not comp.name then comp.name = id end
-	--for k,v in pairs(comp) do if Tool.Hash(v) == Tool.Hash(self[k]) and k ~= "base_id" then print("COMPONENT INFO: Inherited component contains duplicated field value: " .. tostring(id) .. " (" .. tostring(k) .. " = " .. tostring(v):gsub("\n", "") .. ")") end end
-	-- data.components[id] = setmetatable(comp, { __index = self })
-	-- return comp
--- end
-
--- local c_deploy_construction = Comp:RegisterComponent("c_deploy_construction", {})
--- function c_deploy_construction:on_update(comp, cause)
-
 function MyMake(faction,x,y)
+	for i = 1, 64 do
+			local car = Map.CreateEntity(faction, "f_bot_1s_as_my")
+			car:Place(x, y)
+			car:PlayEffect("fx_digital_in")
+	end
+	for i = 1, 64 do
+			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my")
+			car:Place(x, y)
+			car:PlayEffect("fx_digital_in")
+	end
 	for i = 1, 64 do
 			local car = Map.CreateEntity(faction, "f_carrier_bot_my")
 			car:Place(x, y)
