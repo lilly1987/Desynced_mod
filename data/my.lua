@@ -1,3 +1,10 @@
+for key, visual in pairs(data.visuals) do
+    if visual.sockets then
+        for i, socket in ipairs(visual.sockets) do
+						socket[2] = "Large"   -- 원하는 값으로 변경
+        end
+    end
+end
 function Comp:FindComponent(id)
     local comp = data.components[id]
     if not comp then
@@ -57,16 +64,23 @@ function FreeplaySpawnPlayer(faction, loc)
 
 	return lander, bots
 end
-
-for key, visual in pairs(data.visuals) do
-    if visual.sockets then
-        for i, socket in ipairs(visual.sockets) do
-						socket[2] = "Large"   -- 원하는 값으로 변경
-        end
-    end
+MyFrame = {
+	texture = "Main/textures/icons/frame/replace.png",
+	minimap_color = { 0.8, 0.8, 0.8 },
+	shield_type = "alloy",
+}
+function MyFrame:MyRegisterFrame(id, frame)
+	frame["component_boost"]= 1000
+	frame["health_points"]= 10000 -- 10만 안됨)
+	frame["visibility_range"]= 128
+	frame["slots"]= { storage = 20, }
+	frame["power"]= 0
+	-- frame["production_recipe"]= CreateProductionRecipe({ }, { c_carrier_factory = 1} ),
+	data.frames[id] = setmetatable(frame, { __index = self })
+	return frame
 end
 
-Frame:RegisterFrame("f_bot_1s_as_my", {
+MyFrame:MyRegisterFrame("f_bot_1s_as_my", {
 	size = "Unit", race = "robot", index = 1012, name = "Scout",
 	texture = "Main/textures/icons/frame/bot_1s_ad.png",
 	desc = "Advanced high-speed starter bot with a single small socket",
@@ -108,7 +122,7 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 	destroy_effect = "fx_digital",
 }
 
-Frame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer
+MyFrame:MyRegisterFrame("f_bot_1s_adw_my", { -- Engineer
 	size = "Unit", race = "robot", index = 1011, name = "Engineer",
 	texture = "Main/textures/icons/frame/bot_1s_adw.png",
 	desc = "Engineer unit with excellent production speed and extensive upgradeability",
@@ -148,7 +162,7 @@ data.visuals.v_bot_1s_adw_my = { -- Engineer
 	destroy_effect = "fx_digital",
 }
 
-Frame:RegisterFrame("f_carrier_bot_my", {
+MyFrame:MyRegisterFrame("f_carrier_bot_my", {
 	size = "Unit", race = "robot", index = 1001, name = "Runner",
 	texture = "Main/textures/icons/frame/carrier_bot.png",
 	desc = "A small cargo bot for moving items",
@@ -186,6 +200,43 @@ data.visuals.v_carrier_bot_my = { -- Runner
 		{ "",       "Large" },
 	},
 }
+
+MyFrame:MyRegisterFrame("f_bot_2m_as_my", {
+	size = "Unit", race = "robot", index = 1013, name = "Command Center",
+	texture = "Main/textures/icons/frame/bot_2m_ad.png",
+	minimap_color = { 0.9, 0.9, 0.8 },
+	slot_type = "garage",
+	visibility_range = 20,
+	slots = { storage = 8, },
+	movement_speed = 4,
+	start_disconnected = true,
+	power = -2,
+	health_points = 400, -- 150
+	flags = "AnimateRoot",
+	trigger_channels = "bot",
+	visual = "v_bot_2m_as",
+	production_recipe = CreateProductionRecipe({ icchip = 10, uframe = 20, fused_electrodes = 20 }, { c_robotics_factory = 80 }),
+	components = { 
+	{ "c_higrade_capacitor", "hidden" } 
+	},
+})
+
+MyFrame:MyRegisterFrame("f_landingpod_my", {
+	size = "Special", race = "robot", index = 1001, name = "Command Center",
+	minimap_color = { 0.8, 0.8, 0.8 },
+	visibility_range = 128,
+	slots = { storage = 20, },
+	health_points = 10000, -- 500
+	texture = "Main/textures/icons/frame/building_2x2_ad.png",
+	trigger_channels = "building",
+	visual = "v_base2x2_as",
+	components = {
+		{ "c_carrier_factory", "hidden" },
+	},
+	drop_on_deconstruct = function(x, y)
+		Map.DropItemAt(x, y, "c_deployer", { bp = { frame = "f_landingpod_my" }, onetime = true }, true)
+	end,
+})
 
 local c_deploy_construction = Comp:FindComponent("c_deploy_construction")
 function c_deploy_construction:on_update(comp, cause)
@@ -283,43 +334,6 @@ Comp:RegisterComponent("c_power_cell_my", {
 	transfer_radius = 128,
 	registers = { { read_only = true, tip = "Power Production" } },
 	get_ui = true,
-})
-
-Frame:RegisterFrame("f_bot_2m_as_my", {
-	size = "Unit", race = "robot", index = 1013, name = "Command Center",
-	texture = "Main/textures/icons/frame/bot_2m_ad.png",
-	minimap_color = { 0.9, 0.9, 0.8 },
-	slot_type = "garage",
-	visibility_range = 20,
-	slots = { storage = 8, },
-	movement_speed = 4,
-	start_disconnected = true,
-	power = -2,
-	health_points = 400, -- 150
-	flags = "AnimateRoot",
-	trigger_channels = "bot",
-	visual = "v_bot_2m_as",
-	production_recipe = CreateProductionRecipe({ icchip = 10, uframe = 20, fused_electrodes = 20 }, { c_robotics_factory = 80 }),
-	components = { 
-	{ "c_higrade_capacitor", "hidden" } 
-	},
-})
-
-Frame:RegisterFrame("f_landingpod_my", {
-	size = "Special", race = "robot", index = 1001, name = "Command Center",
-	minimap_color = { 0.8, 0.8, 0.8 },
-	visibility_range = 30,
-	slots = { storage = 12, },
-	health_points = 1000, -- 500
-	texture = "Main/textures/icons/frame/building_2x2_ad.png",
-	trigger_channels = "building",
-	visual = "v_base2x2_as",
-	components = {
-		{ "c_carrier_factory", "hidden" },
-	},
-	drop_on_deconstruct = function(x, y)
-		Map.DropItemAt(x, y, "c_deployer", { bp = { frame = "f_landingpod_my" }, onetime = true }, true)
-	end,
 })
 
 local c_deployment = Comp:FindComponent("c_deployment")
