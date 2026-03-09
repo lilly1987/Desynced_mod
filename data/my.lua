@@ -1,23 +1,13 @@
-for key, visual in pairs(data.visuals) do
-    if visual.sockets then
-        for i, socket in ipairs(visual.sockets) do
-						socket[2] = "Large"   -- 원하는 값으로 변경
-        end
-    end
-end
-
 local new_unlocks = { 
-"f_bot_1s_as_my", 
-"f_bot_1s_adw_my" ,
-"f_carrier_bot_my" ,
-"f_bot_2m_as_my" ,
-"f_landingpod_my" ,
-"c_power_cell_my" ,
+-- "f_bot_1s_as_my", 
+-- "f_bot_1s_adw_my" ,
+-- "f_carrier_bot_my" ,
+-- "f_bot_2m_as_my" ,
+-- "f_landingpod_my" ,
+-- "c_power_cell_my" ,
 -- "c_deployment_my" ,
 }
-for _, v in ipairs(new_unlocks) do
-    table.insert(data.techs.t_robot_tech_basic.unlocks, v)
-end
+
 function MyMake(faction,x,y)
 	for i = 1, 64 do
 			local car = Map.CreateEntity(faction, "f_bot_1s_as_my")
@@ -69,12 +59,14 @@ function FreeplaySpawnPlayer(faction, loc)
 
 	return lander, bots
 end
+
 MyFrame = {
 	texture = "Main/textures/icons/frame/replace.png",
 	minimap_color = { 0.8, 0.8, 0.8 },
 	shield_type = "alloy",
 }
 function MyFrame:RegisterFrame(id, frame)
+	table.insert(new_unlocks,id)
 	frame["component_boost"]= 1000
 	frame["health_points"]= 10000 -- 10만 안됨)
 	frame["visibility_range"]= 128
@@ -262,6 +254,7 @@ function MyComp:FindComponent(id)
     return comp
 end
 function MyComp:RegisterComponent(id, comp)
+	table.insert(new_unlocks,id)
 	comp.id = id
 	comp.base_id = self.base_id or self.id or id
 	if not comp.name then comp.name = id end
@@ -439,3 +432,14 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_my",{
 	--shoot_target = "ground", -- set to "air" or "ground" to limit, otherwise can shoot both
 })
 
+for _, v in ipairs(new_unlocks) do
+    table.insert(data.techs.t_robot_tech_basic.unlocks, v)
+end
+
+for key, visual in pairs(data.visuals) do
+    if visual.sockets then
+        for i, socket in ipairs(visual.sockets) do
+						socket[2] = "Large"   -- 원하는 값으로 변경
+        end
+    end
+end
