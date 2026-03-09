@@ -63,6 +63,14 @@ Frame:RegisterFrame("f_carrier_bot_my", {
 -- local c_deploy_construction = Comp:RegisterComponent("c_deploy_construction", {})
 -- function c_deploy_construction:on_update(comp, cause)
 
+function MyMake(faction,x,y)
+	for i = 1, 64 do
+			local car = Map.CreateEntity(faction, "f_carrier_bot_my")
+			car:Place(x, y)
+			car:PlayEffect("fx_digital_in")
+	end
+end
+
 function Comp:FindComponent(id)
     local comp = data.components[id]
     if not comp then
@@ -152,11 +160,7 @@ function c_deploy_construction:on_update(comp, cause)
 				-- car:Place(x, y)
 				-- car:PlayEffect("fx_digital_in")
 				
-				for i = 1, 64 do
-						local car = Map.CreateEntity(faction, "f_carrier_bot_my")
-						car:Place(x, y)
-						car:PlayEffect("fx_digital_in")
-				end
+				MyMake(faction,x, y)
 				
 			end
 		end
