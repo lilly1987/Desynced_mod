@@ -5,6 +5,19 @@ for key, visual in pairs(data.visuals) do
         end
     end
 end
+
+local new_unlocks = { 
+"f_bot_1s_as_my", 
+"f_bot_1s_adw_my" ,
+"f_carrier_bot_my" ,
+"f_bot_2m_as_my" ,
+"f_landingpod_my" ,
+"c_power_cell_my" ,
+-- "c_deployment_my" ,
+}
+for _, v in ipairs(new_unlocks) do
+    table.insert(data.techs.t_robot_tech_basic.unlocks, v)
+end
 function Comp:FindComponent(id)
     local comp = data.components[id]
     if not comp then
@@ -75,13 +88,18 @@ function MyFrame:MyRegisterFrame(id, frame)
 	frame["visibility_range"]= 128
 	frame["slots"]= { storage = 20, }
 	frame["power"]= 0
-	-- frame["production_recipe"]= CreateProductionRecipe({ }, { c_carrier_factory = 1} ),
+	if frame.production_recipe ~= nil then
+			frame["production_recipe"] = CreateProductionRecipe({}, { c_carrier_factory = 1 })
+	end
+	if frame.construction_recipe ~= nil then
+			frame["construction_recipe"] = CreateConstructionRecipe({}, 1)
+	end
 	data.frames[id] = setmetatable(frame, { __index = self })
 	return frame
 end
 
 MyFrame:MyRegisterFrame("f_bot_1s_as_my", {
-	size = "Unit", race = "robot", index = 1012, name = "Scout",
+	size = "Unit", race = "robot", index = 112, name = "Scout",
 	texture = "Main/textures/icons/frame/bot_1s_ad.png",
 	desc = "Advanced high-speed starter bot with a single small socket",
 	minimap_color = { 0.9, 0.9, 0.8 },
@@ -123,7 +141,7 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 }
 
 MyFrame:MyRegisterFrame("f_bot_1s_adw_my", { -- Engineer
-	size = "Unit", race = "robot", index = 1011, name = "Engineer",
+	size = "Unit", race = "robot", index = 111, name = "Engineer",
 	texture = "Main/textures/icons/frame/bot_1s_adw.png",
 	desc = "Engineer unit with excellent production speed and extensive upgradeability",
 	minimap_color = { 0.9, 0.9, 0.8 },
@@ -163,7 +181,7 @@ data.visuals.v_bot_1s_adw_my = { -- Engineer
 }
 
 MyFrame:MyRegisterFrame("f_carrier_bot_my", {
-	size = "Unit", race = "robot", index = 1001, name = "Runner",
+	size = "Unit", race = "robot", index = 101, name = "Runner",
 	texture = "Main/textures/icons/frame/carrier_bot.png",
 	desc = "A small cargo bot for moving items",
 	minimap_color = { 0.9, 0.9, 0.8 },
@@ -201,8 +219,8 @@ data.visuals.v_carrier_bot_my = { -- Runner
 	},
 }
 
-MyFrame:MyRegisterFrame("f_bot_2m_as_my", {
-	size = "Unit", race = "robot", index = 1013, name = "Command Center",
+MyFrame:MyRegisterFrame("f_bot_2m_as_my", { -- 본부 이동
+	size = "Unit", race = "robot", index = 113, name = "Command Center",
 	texture = "Main/textures/icons/frame/bot_2m_ad.png",
 	minimap_color = { 0.9, 0.9, 0.8 },
 	slot_type = "garage",
@@ -221,8 +239,8 @@ MyFrame:MyRegisterFrame("f_bot_2m_as_my", {
 	},
 })
 
-MyFrame:MyRegisterFrame("f_landingpod_my", {
-	size = "Special", race = "robot", index = 1001, name = "Command Center",
+MyFrame:MyRegisterFrame("f_landingpod_my", { -- 본부 건물
+	size = "Special", race = "robot", index = 101, name = "Command Center",
 	minimap_color = { 0.8, 0.8, 0.8 },
 	visibility_range = 128,
 	slots = { storage = 20, },
@@ -324,8 +342,19 @@ function c_deploy_construction:on_update(comp, cause)
 	end)
 end
 
+Comp:RegisterComponent("c_higrade_capacitor_my", {
+	attachment_size = "Hidden", race = "robot", index = 1015, name = "Hi-Grade Capacitor",
+	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
+	visual = "v_generic_i",
+	desc = "Stores excess power from your logistics network making it available when needed",
+	power_storage = 100000,
+	drain_rate = 500,
+	charge_rate = 4000,
+	get_ui = battery_get_ui,
+	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
+})
 Comp:RegisterComponent("c_power_cell_my", {
-	attachment_size = "hidden", race = "robot", index = 1011, name = "Power Cell",
+	attachment_size = "hidden", race = "robot", index = 111, name = "Power Cell",
 	texture = "Main/textures/icons/components/powercell.png",
 	desc = "Transmits <hl>500</> power per second over a small area",
 	visual = "v_generic_i",
