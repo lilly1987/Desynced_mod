@@ -1,3 +1,12 @@
+
+for key, visual in pairs(data.visuals) do
+    if visual.sockets then
+        for i, socket in ipairs(visual.sockets) do
+						socket[2] = "Large"   -- 원하는 값으로 변경
+        end
+    end
+end
+
 Frame:RegisterFrame("f_bot_1s_as_my", {
 	size = "Unit", race = "robot", index = 1012, name = "Scout",
 	texture = "Main/textures/icons/frame/bot_1s_ad.png",
