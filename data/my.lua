@@ -235,7 +235,7 @@ MyFrame:MyRegisterFrame("f_bot_2m_as_my", { -- 본부 이동
 	visual = "v_bot_2m_as",
 	production_recipe = CreateProductionRecipe({ icchip = 10, uframe = 20, fused_electrodes = 20 }, { c_robotics_factory = 80 }),
 	components = { 
-	{ "c_higrade_capacitor", "hidden" } 
+	{ "c_higrade_capacitor_my", "hidden" } 
 	},
 })
 
@@ -256,8 +256,6 @@ MyFrame:MyRegisterFrame("f_landingpod_my", { -- 본부 건물
 	end,
 })
 
--- local c_deploy_construction = Comp:FindComponent("c_deploy_construction")
--- function c_deploy_construction:on_update(comp, cause)
 Comp:FindComponent("c_deploy_construction").on_update = function(self, comp, cause)
 
 	local ed = comp.extra_data
@@ -266,7 +264,7 @@ Comp:FindComponent("c_deploy_construction").on_update = function(self, comp, cau
 	if cause & CC_FINISH_WORK ~= CC_FINISH_WORK then
 		-- Duration is 10 ticks via Deployer component and 30 via Lander Deployment component
 		comp:PlayWorkEffect("fx_transfer") -- active effect indicates construction is progressing
-		return comp:SetStateStartWork(bp and 10 or 30, false, true)
+		return comp:SetStateStartWork(bp and 1 or 3, false, true)
 	end
 
 	local lander = not bp and ed.lander
@@ -343,28 +341,27 @@ Comp:FindComponent("c_deploy_construction").on_update = function(self, comp, cau
 		end
 	end)
 end
-
 Comp:RegisterComponent("c_higrade_capacitor_my", {
-	attachment_size = "Hidden", race = "robot", index = 1015, name = "Hi-Grade Capacitor",
+	attachment_size = "Hidden", race = "robot", index = 115, name = "Hi-Grade Capacitor",
 	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
 	visual = "v_generic_i",
 	desc = "Stores excess power from your logistics network making it available when needed",
 	power_storage = 100000,
 	drain_rate = 500,
 	charge_rate = 4000,
-	get_ui = battery_get_ui,
+	-- get_ui = battery_get_ui,
 	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
 })
 Comp:RegisterComponent("c_power_cell_my", {
 	attachment_size = "hidden", race = "robot", index = 111, name = "Power Cell",
 	texture = "Main/textures/icons/components/powercell.png",
-	desc = "Transmits <hl>500</> power per second over a small area",
+	desc = "Transmits <hl>100000000</> power per second over a small area",
 	visual = "v_generic_i",
 	power = 100000000,
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	transfer_radius = 128,
 	registers = { { read_only = true, tip = "Power Production" } },
-	get_ui = true,
+	-- get_ui = true,
 })
 Comp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{
 	attachment_size = "Hidden", race = "robot", index = 1042, name = "Deployment",
@@ -379,13 +376,13 @@ Comp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{
 })
 
 Comp:RegisterComponent("c_higrade_capacitor_my", {
-	attachment_size = "Hidden", race = "robot", index = 1015, name = "Hi-Grade Capacitor",
+	attachment_size = "Hidden", race = "robot", index = 115, name = "Hi-Grade Capacitor",
 	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
 	visual = "v_generic_i",
 	desc = "Stores excess power from your logistics network making it available when needed",
-	power_storage = 10000,
-	drain_rate = 50,
-	charge_rate = 400,
-	get_ui = battery_get_ui,
+	power_storage = 100000000,
+	drain_rate = 100000000,
+	charge_rate = 100000000,
+	-- get_ui = battery_get_ui,
 	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
 })
