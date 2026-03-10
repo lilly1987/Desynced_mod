@@ -8,7 +8,10 @@ package.includes = {
 	-- "utilities.lua", 
 	-- "visuals.lua", 
 	-- "tech_robots.lua",
-	"my.lua",
+	-- "ItemSlot.lua",
+	-- "Inventory.lua",
+	-- "SocketList.lua",
+	"myData.lua",
 }
 
 -- called when mod is initializing

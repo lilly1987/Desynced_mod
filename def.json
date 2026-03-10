@@ -8,10 +8,14 @@
     "description": "My",
     "packages": {
         "Data": {
-            "name": "protossModData",
-            "entry": "data/data.lua",
+            "name": "My Mod Data",
+            "entry": "data.lua",
             "dependencies": [ "Main/Data" ],
             "type": "Addon"
+        },
+        "UI": {
+            "name": "My Mod UI",
+            "entry": "ui.lua"
         }
     }
 }

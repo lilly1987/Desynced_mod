@@ -759,6 +759,12 @@ for key, visual in pairs(data.visuals) do
     end
 end
 
+for key, value in pairs(data.items) do
+    if value.stack_size ~= nil then
+        value.stack_size = value.stack_size * 2
+    end
+end
+
 data.items.metalore.mining_recipe.c_adv_miner_my = 1
 data.items.crystal.mining_recipe.c_adv_miner_my = 1
 data.items.silica.mining_recipe.c_adv_miner_my = 1
