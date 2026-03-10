@@ -3,7 +3,7 @@ local my_component_boost = 900 -- +%
 local my_num_hp = 10000 -- 최대 10000
 local my_num_power = 50000 --2147483647
 local my_num_power2 = 100000000 --2147483647
-local my_components = {
+local my_components = { -- 넣을것
 			{ "c_higrade_capacitor_my", "hidden" } ,
 			{ "c_repairer_small_aoe_my", "hidden" },
 			{ "c_portablecrane_my", "hidden" },
@@ -14,6 +14,13 @@ function MyComponents(key,cnt,components)
 		table.insert(components,{ key, "hidden" })
 	end
 	return components
+end
+function MySockets(cnt,sockets)
+	sockets=sockets or {}
+	for i = 1, cnt do
+		table.insert(sockets,{ "", "Large" })
+	end
+	return sockets
 end
 function MyMake(faction,x,y)
 	for i = 1, 16 do
@@ -105,11 +112,11 @@ function MyFrame:RegisterFrame(id, frame)
 	if frame.movement_speed ~= nil then
 			frame["movement_speed"] = 128
 	end	
-	if frame.components ~= nil then
+	if frame.components ~= nil and not frame.MyComponentsSkip then
 		for key, value in pairs(my_components) do 
 			table.insert(frame.components,value)
 		end
-	else
+	elseif not frame.MyComponentsSkip then
 		frame.components=my_components
 	end
 	data.frames[id] = setmetatable(frame, { __index = self })
@@ -149,17 +156,9 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD/Ver2/Bot_1S_AD.Bot_1S_AD'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets = {
+	sockets =MySockets(12-5, {
 		{ "Small1", "Large"    },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-	},
+	}),
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
 	destroy_effect = "fx_digital",
@@ -274,20 +273,7 @@ MyFrame:RegisterFrame("f_carrier_bot_my", { -- Runner 12
 
 data.visuals.v_carrier_bot_my = { -- Runner
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Carrier_A.Bot_Carrier_A'",
-	sockets = {
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-	},
+	sockets =MySockets(12),
 }
 
 MyFrame:RegisterFrame("f_bot_2m_as_my", { -- 본부 이동
@@ -305,6 +291,7 @@ MyFrame:RegisterFrame("f_bot_2m_as_my", { -- 본부 이동
 	trigger_channels = "bot",
 	visual = "v_bot_2m_as",
 	production_recipe = CreateProductionRecipe({ icchip = 10, uframe = 20, fused_electrodes = 20 }, { c_robotics_factory = 80 }),
+	MyComponentsSkip=true,
 	components = { 
 	{ "c_higrade_capacitor_my2", "hidden" } 
 	},
@@ -460,7 +447,7 @@ function MyComp:RegisterComponent(id, comp)
 end
 
 MyComp:RegisterComponent("c_power_cell_my", {
-	attachment_size = "hidden", race = "robot", index = 111, name = "Power Cell",
+	attachment_size = "Hidden", race = "robot", index = 111, name = "Power Cell",
 	texture = "Main/textures/icons/components/powercell.png",
 	desc = "Transmits <hl>100000000</> power per second over a small area",
 	visual = "v_generic_i",
@@ -591,7 +578,7 @@ MyComp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{
 })
 
 MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_energy",{
-	attachment_size = "hidden", race = "robot", index = 131, name = "Turret",
+	attachment_size = "Hidden", race = "robot", index = 131, name = "Turret",
 	texture = "Main/textures/icons/components/component_standardTurret_01_m.png",
 	desc = "Medium sized turret with good damage and range",
 	power = 0,
@@ -624,7 +611,7 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_energy",{
 	--shoot_target = "ground", -- set to "air" or "ground" to limit, otherwise can shoot both
 })
 MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_plasma",{
-	attachment_size = "hidden", race = "robot", index = 131, name = "Turret",
+	attachment_size = "Hidden", race = "robot", index = 131, name = "Turret",
 	texture = "Main/textures/icons/components/component_standardTurret_01_m.png",
 	desc = "Medium sized turret with good damage and range",
 	power = 0,
@@ -657,7 +644,7 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_plasma",{
 	--shoot_target = "ground", -- set to "air" or "ground" to limit, otherwise can shoot both
 })
 MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_physical",{
-	attachment_size = "hidden", race = "robot", index = 131, name = "Turret",
+	attachment_size = "Hidden", race = "robot", index = 131, name = "Turret",
 	texture = "Main/textures/icons/components/component_standardTurret_01_m.png",
 	desc = "Medium sized turret with good damage and range",
 	power = 0,
@@ -730,7 +717,7 @@ MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor
 })
 
 MyComp:FindComponent("c_repairer_small_aoe"):RegisterComponent("c_repairer_small_aoe_my",  {
-	attachment_size = "hidden", race = "robot", index = 143, name = "Small AOE Repair Component",
+	attachment_size = "Hidden", race = "robot", index = 143, name = "Small AOE Repair Component",
 	texture = "Main/textures/icons/components/Component_Repairer_01_S_aoe.png",
 	visual = "v_repairer_AoE_01_s",
 	production_recipe = CreateProductionRecipe({ c_repairer = 1, circuit_board = 5, hdframe = 1 }, { c_assembler = 50 }),
@@ -741,7 +728,7 @@ MyComp:FindComponent("c_repairer_small_aoe"):RegisterComponent("c_repairer_small
 	repair = 2,   -- repair health per use
 })
 MyComp:FindComponent("c_repairkit"):RegisterComponent("c_repairkit_my", {
-	attachment_size = "hidden", race = "robot", index = 143, name = "Repair Kit",
+	attachment_size = "Hidden", race = "robot", index = 143, name = "Repair Kit",
 	desc = "Can repair the unit or building it is equipped on",
 	texture = "Main/textures/icons/components/repairkit.png",
 	visual = "v_generic_i",
@@ -756,7 +743,7 @@ MyComp:FindComponent("c_repairkit"):RegisterComponent("c_repairkit_my", {
 })
 
 MyComp:FindComponent("c_portablecrane"):RegisterComponent("c_portablecrane_my", {
-	attachment_size = "hidden", race = "robot", index = 123, name = "Portable Transporter",
+	attachment_size = "Hidden", race = "robot", index = 123, name = "Portable Transporter",
 	visual = "v_generic_i",
 	texture = "Main/textures/icons/components/portable_transporter.png",
 	power = 0,
