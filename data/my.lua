@@ -1,7 +1,12 @@
 local new_unlocks = { }
+local my_component_boost = 900 -- +%
 local my_num_hp = 10000 -- 최대 10000
 local my_num_power = 50000 --2147483647
 local my_num_power2 = 100000000 --2147483647
+local my_components = {
+			{ "c_higrade_capacitor_my", "hidden" } ,
+			{ "c_repairer_small_aoe_my", "hidden" },
+}
 
 function MyMake(faction,x,y)
 	for i = 1, 16 do
@@ -77,7 +82,7 @@ MyFrame = {
 function MyFrame:RegisterFrame(id, frame)
 	table.insert(new_unlocks,id)
 	frame["start_disconnected"]= false
-	frame["component_boost"]= 1000
+	frame["component_boost"]= my_component_boost
 	frame["health_points"]= my_num_hp -- 10만 안됨)
 	frame["visibility_range"]= 128
 	frame["slots"]= { storage = 20, }
@@ -94,13 +99,11 @@ function MyFrame:RegisterFrame(id, frame)
 			frame["movement_speed"] = 128
 	end	
 	if frame.components ~= nil then
-			table.insert(frame.components,{ "c_repairer_my", "hidden" })
-			table.insert(frame.components,{ "c_higrade_capacitor_my", "hidden" })
+		for key, value in pairs(my_components) do 
+			table.insert(frame.components,value)
+		end
 	else
-		frame.components={
-			{ "c_higrade_capacitor_my", "hidden" } ,
-			{ "c_repairer_my", "hidden" },
-		}
+		frame.components=my_components
 	end
 	data.frames[id] = setmetatable(frame, { __index = self })
 	return frame
@@ -755,29 +758,18 @@ MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor
 	miner_range = 128,
 })
 
-MyComp:FindComponent("c_repairer"):RegisterComponent("c_repairer_my", {
-	attachment_size = "hidden", race = "robot", index = 142, name = "Repair Component",
-	texture = "Main/textures/icons/components/Component_Repairer_01_M.png",
-	desc = "Allows repair of damaged units and buildings",
-	power = -2,
-	visual = "v_repairer_01_m",
-	activation = "OnFirstRegisterChange",
-	registers = {
-		{ type = "entity", tip = "Preferred Repair Target", ui_icon = "icon_context", click_action = true, filter = 'entity' },
-		{ read_only = true, tip = "Current Repair Target", click_action = true },
-	},
-	production_recipe = CreateProductionRecipe({ circuit_board = 5, reinforced_plate = 10 }, { c_assembler = 50 }),
-	action_tooltip = "Repair Frame",
-	on_add = on_add_charge,
-	on_remove = on_remove_clear_extra_data,
-	trigger_radius = 5,
-	trigger_channels = "bot|building|bug",
+MyComp:FindComponent("c_repairer_small_aoe"):RegisterComponent("c_repairer_small_aoe_my",  {
+	attachment_size = "hidden", race = "robot", index = 143, name = "Small AOE Repair Component",
+	texture = "Main/textures/icons/components/Component_Repairer_01_S_aoe.png",
+	visual = "v_repairer_AoE_01_s",
+	production_recipe = CreateProductionRecipe({ c_repairer = 1, circuit_board = 5, hdframe = 1 }, { c_assembler = 50 }),
 
 	-- internal variable
-	repair = 1,   -- repair health per use
-	duration = 5, -- charge duration
-	repair_fx = "fx_heal_unit",
+	power = -5,
+	trigger_radius = 128,
+	repair = 2,   -- repair health per use
 })
+
 MyComp:FindComponent("c_repairkit"):RegisterComponent("c_repairkit_my", {
 	attachment_size = "Internal", race = "robot", index = 143, name = "Repair Kit",
 	desc = "Can repair the unit or building it is equipped on",
