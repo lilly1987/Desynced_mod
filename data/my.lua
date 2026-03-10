@@ -86,7 +86,9 @@ function MyFrame:RegisterFrame(id, frame)
 	frame["health_points"]= 10000 -- 10만 안됨)
 	frame["visibility_range"]= 128
 	frame["slots"]= { storage = 20, }
-	frame["power"]= 0
+	if frame["power"] ~= nil and frame["power"] < 0 then
+		frame["power"]= 0
+	end
 	if frame.production_recipe ~= nil then
 			frame["production_recipe"] = CreateProductionRecipe({}, { c_carrier_factory = 1 })
 	end
@@ -117,12 +119,13 @@ MyFrame:RegisterFrame("f_bot_1s_as_my", { -- Scout
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_as_my",
 	components = { 
-		-- { "c_higrade_capacitor", "hidden" } ,
+		{ "c_higrade_capacitor_my", "hidden" } ,
+		
 		{ "c_turret_energy", "hidden" } ,
 		{ "c_turret_plasma", "hidden" } ,
 		{ "c_turret_physical", "hidden" } ,
 		{ "c_uplink", "hidden" } ,
-		{ "c_repairer_aoe", "hidden" } ,
+		{ "c_repairer_my", "hidden" } ,
 	},
 })
 
@@ -468,7 +471,9 @@ function MyComp:RegisterComponent(id, comp)
 			comp["construction_recipe"] = CreateConstructionRecipe({}, 1)
 	end
 	comp["component_boost"]= 1000
-	comp["power"]= 0
+	if frame["power"] ~= nil and frame["power"] < 0 then
+		frame["power"]= 0
+	end
 	-- comp["attachment_size"]= "Internal"
 	
 	--for k,v in pairs(comp) do if Tool.Hash(v) == Tool.Hash(self[k]) and k ~= "base_id" then print("COMPONENT INFO: Inherited component contains duplicated field value: " .. tostring(id) .. " (" .. tostring(k) .. " = " .. tostring(v):gsub("\n", "") .. ")") end end
@@ -495,6 +500,17 @@ MyComp:RegisterComponent("c_higrade_capacitor_my", {
 	power_storage = 100000000,
 	drain_rate = 100000000,
 	charge_rate = 100000000,
+	-- get_ui = battery_get_ui,
+	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
+})
+MyComp:RegisterComponent("c_higrade_capacitor_my10000", {
+	attachment_size = "Hidden", race = "robot", index = 115, name = "Hi-Grade Capacitor",
+	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
+	visual = "v_generic_i",
+	desc = "Stores excess power from your logistics network making it available when needed",
+	power_storage = 10000,
+	drain_rate = 10000,
+	charge_rate = 10000,
 	-- get_ui = battery_get_ui,
 	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
 })
@@ -711,7 +727,7 @@ MyComp:FindComponent("c_adv_miner"):RegisterComponent("c_adv_miner_my",{
 	on_remove = on_remove_clear_extra_data_keep_resimulated,
 })
 MyComp:FindComponent("c_extractor"):RegisterComponent("c_extractor_my", {
-	attachment_size = "Medium", race = "human", index = 3001, name = "Laser Extractor",
+	attachment_size = "Medium", race = "human", index = 301, name = "Laser Extractor",
 	texture = "Main/textures/icons/components/Component_LaserExtractor_01_M.png",
 	desc = "Laser that mines <hl>laterite</> and <hl>obsidian</>",
 	power = 0,
@@ -722,7 +738,7 @@ MyComp:FindComponent("c_extractor"):RegisterComponent("c_extractor_my", {
 	miner_range = 128,
 })
 MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor_my", {
-	attachment_size = "Small", race = "blight", index = 2001, name = "Blight Extractor",
+	attachment_size = "Small", race = "blight", index = 201, name = "Blight Extractor",
 	texture = "Main/textures/icons/components/component_blightextractor_01_s.png",
 	desc = "Extracts blight gas when placed inside a blighted area",
 	power = 0,
@@ -735,7 +751,29 @@ MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor
 	miner_range = 128,
 })
 
+MyComp:FindComponent("c_repairer"):RegisterComponent("c_repairer_my", {
+	attachment_size = "hidden", race = "robot", index = 1042, name = "Repair Component",
+	texture = "Main/textures/icons/components/Component_Repairer_01_M.png",
+	desc = "Allows repair of damaged units and buildings",
+	power = -2,
+	visual = "v_repairer_01_m",
+	activation = "OnFirstRegisterChange",
+	registers = {
+		{ type = "entity", tip = "Preferred Repair Target", ui_icon = "icon_context", click_action = true, filter = 'entity' },
+		{ read_only = true, tip = "Current Repair Target", click_action = true },
+	},
+	production_recipe = CreateProductionRecipe({ circuit_board = 5, reinforced_plate = 10 }, { c_assembler = 50 }),
+	action_tooltip = "Repair Frame",
+	on_add = on_add_charge,
+	on_remove = on_remove_clear_extra_data,
+	trigger_radius = 5,
+	trigger_channels = "bot|building|bug",
 
+	-- internal variable
+	repair = 1,   -- repair health per use
+	duration = 5, -- charge duration
+	repair_fx = "fx_heal_unit",
+})
 
 
 for _, v in ipairs(new_unlocks) do
