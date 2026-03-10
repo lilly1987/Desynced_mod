@@ -147,6 +147,7 @@ MyFrame:RegisterFrame("f_bot_1s_as_my", { -- Scout
 		{ "c_turret_physical", "hidden" } ,
 		{ "c_uplink", "hidden" } ,
 		{ "c_virus_cure", "hidden" } ,
+		{ "c_small_scanner", "hidden" } ,
 		-- { "c_repairer_my", "hidden" } ,
 	},
 })
