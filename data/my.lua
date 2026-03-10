@@ -6,8 +6,15 @@ local my_num_power2 = 100000000 --2147483647
 local my_components = {
 			{ "c_higrade_capacitor_my", "hidden" } ,
 			{ "c_repairer_small_aoe_my", "hidden" },
+			{ "c_portablecrane_my", "hidden" },
 }
-
+function MyComponents(key,cnt)
+	local components={}
+	for i = 1, cnt do
+		table.insert(components,{ key, "hidden" })
+	end
+	return components
+end
 function MyMake(faction,x,y)
 	for i = 1, 16 do
 			local car = Map.CreateEntity(faction, "f_bot_1s_as_my")-- Scout
@@ -132,6 +139,7 @@ MyFrame:RegisterFrame("f_bot_1s_as_my", { -- Scout
 		{ "c_turret_plasma", "hidden" } ,
 		{ "c_turret_physical", "hidden" } ,
 		{ "c_uplink", "hidden" } ,
+		{ "c_virus_cure", "hidden" } ,
 		-- { "c_repairer_my", "hidden" } ,
 	},
 })
@@ -390,10 +398,6 @@ local f_building_my = {  -- 제작기 일괄
 }
 for key, value in pairs(f_building_my) do -- 제작기 일괄
 	print(key, value)
-	local components={}
-	for i = 1, 10 do
-		table.insert(components,{ key, "hidden" })
-	end
 	f_building_12:RegisterFrame(key.."_my",{
 		size = "Small", race = "robot", index = 101, name = value,
 		desc = "Basic 1x1 Building with Good Inventory space, but supports only one Small Component",
@@ -405,7 +409,7 @@ for key, value in pairs(f_building_my) do -- 제작기 일괄
 		texture = "Main/textures/icons/frame/building_1x1_d.png",
 		trigger_channels = "building",
 		visual = "v_base1",
-		components =components,
+		components =MyComponents(key,10),
 	})
 end
 
@@ -769,7 +773,6 @@ MyComp:FindComponent("c_repairer_small_aoe"):RegisterComponent("c_repairer_small
 	trigger_radius = 128,
 	repair = 2,   -- repair health per use
 })
-
 MyComp:FindComponent("c_repairkit"):RegisterComponent("c_repairkit_my", {
 	attachment_size = "Internal", race = "robot", index = 143, name = "Repair Kit",
 	desc = "Can repair the unit or building it is equipped on",
@@ -783,6 +786,16 @@ MyComp:FindComponent("c_repairkit"):RegisterComponent("c_repairkit_my", {
 	repair = 1,
 	duration = 10,
 	repair_fx = "fx_heal_unit",
+})
+
+MyComp:FindComponent("c_portablecrane"):RegisterComponent("c_portablecrane_my", {
+	attachment_size = "Internal", race = "robot", index = 123, name = "Portable Transporter",
+	visual = "v_generic_i",
+	texture = "Main/textures/icons/components/portable_transporter.png",
+	power = 0,
+	desc = "Enables automatic transfer of inventory directly between adjacent units and buildings",
+	production_recipe = CreateProductionRecipe({ circuit_board = 5, wire = 1 }, { c_assembler = 50 }),
+	range = 128,
 })
 
 
