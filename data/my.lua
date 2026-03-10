@@ -19,12 +19,12 @@ function MyMake(faction,x,y)
 			car:Place(x, y-10)
 			car:PlayEffect("fx_digital_in")
 	end
-	for i = 1, 4 do
+	for i = 1, 16 do
 			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor")
 			car:Place(x-10, y-10)
 			car:PlayEffect("fx_digital_in")
 	end
-	for i = 1, 4 do
+	for i = 1, 16 do
 			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_blight")
 			car:Place(x+10, y-10)
 			car:PlayEffect("fx_digital_in")
@@ -473,17 +473,6 @@ function MyComp:RegisterComponent(id, comp)
 	return comp
 end
 
-MyComp:RegisterComponent("c_higrade_capacitor_my", {
-	attachment_size = "Hidden", race = "robot", index = 115, name = "Hi-Grade Capacitor",
-	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
-	visual = "v_generic_i",
-	desc = "Stores excess power from your logistics network making it available when needed",
-	power_storage = 100000000,
-	drain_rate = 500,
-	charge_rate = 4000,
-	-- get_ui = battery_get_ui,
-	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
-})
 MyComp:RegisterComponent("c_power_cell_my", {
 	attachment_size = "hidden", race = "robot", index = 111, name = "Power Cell",
 	texture = "Main/textures/icons/components/powercell.png",
@@ -506,6 +495,7 @@ MyComp:RegisterComponent("c_higrade_capacitor_my", {
 	-- get_ui = battery_get_ui,
 	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
 })
+
 MyComp:FindComponent("c_deploy_construction").on_update = function(self, comp, cause)
 
 	local ed = comp.extra_data
@@ -602,6 +592,7 @@ MyComp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{
 	registers = { { tip = "Deploy Base", click_action = true, ui_icon = "icon_new", filter = 'coord' } },
 	deployment_frame = "f_landingpod_my",
 })
+
 MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_energy",{
 	attachment_size = "hidden", race = "robot", index = 131, name = "Turret",
 	texture = "Main/textures/icons/components/component_standardTurret_01_m.png",
@@ -701,6 +692,7 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_physical",{
 	shoot_while_moving = true,
 	--shoot_target = "ground", -- set to "air" or "ground" to limit, otherwise can shoot both
 })
+
 MyComp:FindComponent("c_adv_miner"):RegisterComponent("c_adv_miner_my",{
 	attachment_size = "Small", race = "robot", index = 103, name = "Laser Mining Tool",
 	texture = "Main/textures/icons/components/Component_Miner_02_S.png",
@@ -719,23 +711,25 @@ MyComp:FindComponent("c_extractor"):RegisterComponent("c_extractor_my", {
 	attachment_size = "Medium", race = "human", index = 3001, name = "Laser Extractor",
 	texture = "Main/textures/icons/components/Component_LaserExtractor_01_M.png",
 	desc = "Laser that mines <hl>laterite</> and <hl>obsidian</>",
-	power = -20,
+	power = 0,
 	visual = "v_laserextractor_01_m",
 	miner_effect = "fx_extractor",
 	production_recipe = CreateProductionRecipe({ micropro = 1, transformer = 1, smallreactor = 1 }, { c_advanced_assembler = 40, c_human_factory_robots = 30 }),
 	on_remove = on_remove_clear_extra_data_keep_resimulated,
+	miner_range = 128,
 })
 MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor_my", {
 	attachment_size = "Small", race = "blight", index = 2001, name = "Blight Extractor",
 	texture = "Main/textures/icons/components/component_blightextractor_01_s.png",
 	desc = "Extracts blight gas when placed inside a blighted area",
-	power = -10,
+	power = 0,
 	visual = "v_blightextractor_s",
-	slots = { gas = 1 },
+	slots = { gas = 4 },
 	production_recipe = CreateProductionRecipe({ reinforced_plate = 5, crystal_powder = 10 }, { c_assembler = 40, c_human_factory = 40 }),
 	extracts = "blight_extraction",
-	extraction_time = 75,
+	extraction_time = 1,
 	activation = "Always",
+	miner_range = 128,
 })
 
 for _, v in ipairs(new_unlocks) do
@@ -755,7 +749,7 @@ data.items.crystal.mining_recipe.c_adv_miner_my = 1
 data.items.silica.mining_recipe.c_adv_miner_my = 1
 data.items.blight_crystal.mining_recipe.c_adv_miner_my = 1
 
-data.items.laterite.mining_recipe.c_extractor_my = 1
-data.items.obsidian.mining_recipe.c_extractor_my = 1
+data.items.laterite.mining_recipe.c_extractor_my = 1 -- 홍토
+data.items.obsidian.mining_recipe.c_extractor_my = 1 -- 흑요석
 
 data.items.blight_extraction.extracted_by.c_blight_extractor_my=true
