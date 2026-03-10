@@ -127,7 +127,7 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 	destroy_effect = "fx_digital",
 }
 
-MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer
+MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer 10+2
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
 	texture = "Main/textures/icons/frame/bot_1s_adw.png",
 	desc = "Engineer unit with excellent production speed and extensive upgradeability",
@@ -149,7 +149,16 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
 		
-		{ "c_adv_miner", "hidden" },
+		{ "c_adv_miner_my", "hidden" },
+		{ "c_adv_miner_my", "hidden" },
+		{ "c_adv_miner_my", "hidden" },
+		{ "c_adv_miner_my", "hidden" },
+		{ "c_adv_miner_my", "hidden" },
+		{ "c_adv_miner_my", "hidden" },
+		{ "c_adv_miner_my", "hidden" },
+		{ "c_adv_miner_my", "hidden" },
+		{ "c_adv_miner_my", "hidden" },
+		{ "c_adv_miner_my", "hidden" },
 	},
 })
 
@@ -169,7 +178,7 @@ data.visuals.v_bot_1s_adw_my = { -- Engineer
 	destroy_effect = "fx_digital",
 }
 
-MyFrame:RegisterFrame("f_carrier_bot_my", { -- Runner
+MyFrame:RegisterFrame("f_carrier_bot_my", { -- Runner 12
 	size = "Unit", race = "robot", index = 101, name = "Runner",
 	texture = "Main/textures/icons/frame/carrier_bot.png",
 	desc = "A small cargo bot for moving items",
@@ -370,6 +379,10 @@ function MyComp:RegisterComponent(id, comp)
 	if comp.construction_recipe ~= nil then
 			comp["construction_recipe"] = CreateConstructionRecipe({}, 1)
 	end
+	comp["component_boost"]= 1000
+	comp["power"]= 0
+	-- comp["attachment_size"]= "Internal"
+	
 	--for k,v in pairs(comp) do if Tool.Hash(v) == Tool.Hash(self[k]) and k ~= "base_id" then print("COMPONENT INFO: Inherited component contains duplicated field value: " .. tostring(id) .. " (" .. tostring(k) .. " = " .. tostring(v):gsub("\n", "") .. ")") end end
 	data.components[id] = setmetatable(comp, { __index = self })
 	return comp
@@ -616,6 +629,28 @@ MyComp:FindComponent("c_adv_miner"):RegisterComponent("c_adv_miner_my",{
 	miner_effect = "fx_miner",
 	miner_range = 128,
 	on_remove = on_remove_clear_extra_data_keep_resimulated,
+})
+MyComp:FindComponent("c_extractor"):RegisterComponent("c_extractor_my", {
+	attachment_size = "Medium", race = "human", index = 3001, name = "Laser Extractor",
+	texture = "Main/textures/icons/components/Component_LaserExtractor_01_M.png",
+	desc = "Laser that mines <hl>laterite</> and <hl>obsidian</>",
+	power = -20,
+	visual = "v_laserextractor_01_m",
+	miner_effect = "fx_extractor",
+	production_recipe = CreateProductionRecipe({ micropro = 1, transformer = 1, smallreactor = 1 }, { c_advanced_assembler = 40, c_human_factory_robots = 30 }),
+	on_remove = on_remove_clear_extra_data_keep_resimulated,
+})
+MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor_my", {
+	attachment_size = "Small", race = "blight", index = 2001, name = "Blight Extractor",
+	texture = "Main/textures/icons/components/component_blightextractor_01_s.png",
+	desc = "Extracts blight gas when placed inside a blighted area",
+	power = -10,
+	visual = "v_blightextractor_s",
+	slots = { gas = 1 },
+	production_recipe = CreateProductionRecipe({ reinforced_plate = 5, crystal_powder = 10 }, { c_assembler = 40, c_human_factory = 40 }),
+	extracts = "blight_extraction",
+	extraction_time = 75,
+	activation = "Always",
 })
 
 for _, v in ipairs(new_unlocks) do
