@@ -1,6 +1,6 @@
-local SocketBox_layout1<const> =
+local SocketBox_layout<const> =
 [[
-	<Canvas dragtype=COMPONENT width=32 height=32>
+	<Canvas dragtype=COMPONENT width=38 height=38>
 		<Image id=race_img image=component_bg dock=fill/>
 		<Image id=image dock=fill margin=3 hide_no_image=true/>
 		<Box id=framebox bg=component_base dock=fill blocking=false>
@@ -9,12 +9,12 @@ local SocketBox_layout1<const> =
 	</Canvas>
 ]]
 
-local ComponentBlock_layout1<const> =
+local ComponentBlock_layout<const> =
 [[
 	<Box padding=5 margin_bottom=2>
 		<HorizontalList child_align=top>
 			<Canvas width=24 id=cnvs on_drop={cnvs_on_drop} tooltip={cnvs_tooltip}>
-				<Image id=hlimg color=ui_bg width=22 height=56/>
+				<Image id=hlimg color=ui_bg width=22 height=38/>
 				<Text id=sizetext textalign=center width=0 x=11 y=36/>
 				<Image id=progressbg image="Main/skin/Assets/component_progress.png" width=20 height=20 x=1 y=2 color=#808080A0 hidden=true/>
 				<ProgressCircle id=progress image="Main/skin/Assets/component_progress.png" width=20 height=20 x=1 y=2 hidden=true/>
@@ -25,7 +25,7 @@ local ComponentBlock_layout1<const> =
 	</Box>
 ]]
 
-local ComponentColumn_layout1<const> =
+local ComponentColumn_layout<const> =
 [[
 <VerticalList valign=bottom>
 	<HorizontalList halign=right margin_bottom=4>
@@ -48,8 +48,8 @@ local ComponentColumn_layout1<const> =
 ]]
 
 local ComponentBlock<const> = {}
-UI.Register("ComponentBlock", ComponentBlock_layout1, ComponentBlock)
-UI.Register("ComponentColumn", ComponentColumn_layout1, ComponentBlock)
+UI.Register("ComponentBlock", ComponentBlock_layout, ComponentBlock, true)
+UI.Register("ComponentColumn", ComponentColumn_layout, ComponentBlock, true)
 
 function ComponentBlock:construct()
 	local sz = self.socket_size
@@ -98,7 +98,7 @@ function ComponentBlock:cnvs_on_drop(cnvs, payload, cursor)
 end
 
 local SocketBox<const> = {}
-UI.Register("SocketBox", SocketBox_layout1, SocketBox)
+UI.Register("SocketBox", SocketBox_layout, SocketBox, true)
 
 local sockimg<const> = {
 	Large    = "icon_l_socket",
@@ -294,7 +294,7 @@ function SocketBox:on_drop(payload, cursor)
 end
 
 local SocketList = {}
-UI.Register("SocketList", "<Wrap child_padding=3 wrapsize=756/>", SocketList)
+UI.Register("SocketList", "<Wrap child_padding=3 wrapsize=756/>", SocketList, true)
 
 function SocketList:construct()
 	local entity = self.entity

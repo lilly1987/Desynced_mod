@@ -1,6 +1,6 @@
-local ItemSlotBase_layout<const> = [[
-	<Image id=bg width=56 height=56 image=item_default/>
-	<Image id=image width=52 height=52 dock=top margin_top=2/>
+local ItemSlotBase_layout_my<const> = [[
+	<Image id=bg width=37 height=37 image=item_default/>
+	<Image id=image width=34 height=34 dock=top margin_top=2/>
 	<Image id=lockimg image=item_lock halign=left hidden=true/>
 	<Box id=numbox bg=label_left color=ui_bg dock=top-left margin_top=39 height=16 blocking=false hidden=true>
 		<Text id=numtxt size=10 valign=center margin_left=2 margin_right=3 margin_bottom=1/>
@@ -8,21 +8,21 @@ local ItemSlotBase_layout<const> = [[
 	<Box id=resbox bg=label_right color=ui_light dock=top-right margin_right=2 margin_top=39 height=16 blocking=false hidden=true>
 		<Text id=restxt size=10 valign=center color=ui_bg margin_left=3 margin_right=2 margin_bottom=1/>
 	</Box>
-	<Box id=cmpbox bg=component_base width=56 height=56 blocking=false hidden=true>
+	<Box id=cmpbox bg=component_base width=37 height=37 blocking=false hidden=true>
 		<Text id=cmptxt dock=bottom x=-16 y=-2/>
 	</Box>
 ]]
 
-local ItemSlot_layout<const> = [[
-	<Canvas margin=2 width=56 height=56 dragtype=ITEM>
-		]] .. ItemSlotBase_layout .. [[
+local ItemSlot_layout_my<const> = [[
+	<Canvas margin=2 width=37 height=37 dragtype=ITEM>
+		]] .. ItemSlotBase_layout_my .. [[
 	</Canvas>
 ]]
 
-local ItemSlotWithBar_layout<const> = [[
-	<Canvas margin=2 width=56 height=72 dragtype=ITEM>
-		<Image id=progressbg width=56 height=72 image=item_disabled/>
-		]] .. ItemSlotBase_layout .. [[
+local ItemSlotWithBar_layout_my<const> = [[
+	<Canvas margin=2 width=37 height=72 dragtype=ITEM>
+		<Image id=progressbg width=37 height=72 image=item_disabled/>
+		]] .. ItemSlotBase_layout_my .. [[
 		<Progress id=resspacebar width=50 height=10 dock=bottom margin_bottom=3 bg=false color=ui_dark/>
 		<Progress id=progressbar width=50 height=10 dock=bottom margin_bottom=3 bg=false color=ui_light/>
 		<Progress id=reservebar  width=50 height=10 dock=bottom margin_bottom=3 bg=false color=ui_light bar=progress_mask/>
@@ -42,8 +42,8 @@ local function docked_progressbar_update(progressbar)
 end
 
 local ItemSlot = {}
-UI.Register("ItemSlot", ItemSlot_layout, ItemSlot)
-UI.Register("ItemSlotWithBar", ItemSlotWithBar_layout, ItemSlot)
+UI.Register("ItemSlot", ItemSlot_layout_my, ItemSlot)
+UI.Register("ItemSlotWithBar", ItemSlotWithBar_layout_my, ItemSlot)
 
 function ItemSlot:UpdateInfo()
 	local slot, bg, image, progressbg = self.slot, self.bg, self.image, self.progressbg

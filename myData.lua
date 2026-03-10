@@ -99,7 +99,7 @@ function MyFrame:RegisterFrame(id, frame)
 	frame["component_boost"]= my_component_boost
 	frame["health_points"]= my_num_hp -- 10만 안됨)
 	frame["visibility_range"]= 128
-	frame["slots"]= { storage = 20, }
+	frame["slots"]= { storage = 20, gas = 4  }
 	if frame["power"] ~= nil and frame["power"] < 0 then
 		frame["power"]= 0
 	end
@@ -356,6 +356,7 @@ local f_building_my = {  -- 제작기 일괄
 	c_advanced_refinery="Advanced Refinery",
 	c_advanced_assembler="Advanced Assembler",
 	c_adv_alien_factory="Advanced Alien Factory",
+	c_data_analyzer="Data Analyzer",
 }
 for key, value in pairs(f_building_my) do -- 제작기 일괄
 	print(key, value)
@@ -401,6 +402,33 @@ data.visuals.v_base12 = {
 	sockets =MySockets(11, {
 		{ "small1", "Large" },
 	}),
+	destroy_effect = "fx_digital",
+	place_effect = "fx_digital_in",
+}
+
+MyFrame:RegisterFrame("f_building1x1f_my", {
+	size = "Small", race = "robot", index = 111, name = "Storage Block (20)",
+	desc = "A simple storage building. Automatically transfer items here through the logistics network by setting the Store register of other units to this building.",
+	minimap_color = { 0.8, 0.8, 0.8 },
+	visibility_range = 10,
+	-- slotsMySkip=true,
+	slots = { storage = 8 },
+	health_points = 100, --150
+	construction_recipe = CreateConstructionRecipe({ metalbar = 10, crystal = 10 }, 55),
+	texture = "Main/textures/icons/frame/building_1x1_f.png",
+	trigger_channels = "building",
+	visual = "v_base1x1_12",
+	components = {
+		{ "c_portable_relay_my", "auto" },
+	},
+	
+})
+
+data.visuals.v_base1x1_12 = {
+	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_F.Building_1x1_F'",
+	placement = "Max",
+	tile_size = { 1, 1},
+	sockets =MySockets(12),
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 }
@@ -744,6 +772,14 @@ MyComp:FindComponent("c_portablecrane"):RegisterComponent("c_portablecrane_my", 
 	desc = "Enables automatic transfer of inventory directly between adjacent units and buildings",
 	production_recipe = CreateProductionRecipe({ circuit_board = 5, wire = 1 }, { c_assembler = 50 }),
 	range = 128,
+})
+MyComp:FindComponent("c_portable_relay"):RegisterComponent("c_portable_relay_my", {
+	attachment_size = "Internal", race = "robot", index = 112, name = "Portable Power Field",
+	desc = "Creates or expands your logistics network with a small area, transferring power to nearby units and buildings. Produces no power on its own. Most useful on a moveable unit given its short range.",
+	texture = "Main/textures/icons/components/powerrelay.png",
+	visual = "v_generic_i",
+	transfer_radius = 128,
+	production_recipe = CreateProductionRecipe({ crystal = 1, metalbar = 5 }, { c_assembler = 60 }),
 })
 
 
