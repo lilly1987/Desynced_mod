@@ -82,7 +82,7 @@ function MyFrame:RegisterFrame(id, frame)
 	return frame
 end
 
-MyFrame:RegisterFrame("f_bot_1s_as_my", {
+MyFrame:RegisterFrame("f_bot_1s_as_my", { -- Scout
 	size = "Unit", race = "robot", index = 112, name = "Scout",
 	texture = "Main/textures/icons/frame/bot_1s_ad.png",
 	desc = "Advanced high-speed starter bot with a single small socket",
@@ -99,7 +99,10 @@ MyFrame:RegisterFrame("f_bot_1s_as_my", {
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_as_my",
 	components = { 
-		-- { "c_higrade_capacitor", "hidden" } 
+		-- { "c_higrade_capacitor", "hidden" } ,
+		{ "c_turret_energy", "hidden" } ,
+		{ "c_turret_plasma", "hidden" } ,
+		{ "c_turret_physical", "hidden" } ,
 	},
 })
 
@@ -145,6 +148,8 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
+		
+		{ "c_adv_miner", "hidden" },
 	},
 })
 
@@ -164,7 +169,7 @@ data.visuals.v_bot_1s_adw_my = { -- Engineer
 	destroy_effect = "fx_digital",
 }
 
-MyFrame:RegisterFrame("f_carrier_bot_my", {
+MyFrame:RegisterFrame("f_carrier_bot_my", { -- Runner
 	size = "Unit", race = "robot", index = 101, name = "Runner",
 	texture = "Main/textures/icons/frame/carrier_bot.png",
 	desc = "A small cargo bot for moving items",
@@ -240,7 +245,7 @@ MyFrame:RegisterFrame("f_landingpod_my", { -- 본부 건물
 	end,
 })
 
-local f_building_12=MyFrame:RegisterFrame("f_building_12", {
+local f_building_12=MyFrame:RegisterFrame("f_building_12", { -- 12
 	size = "Small", race = "robot", index = 101, name = "Building 1x1 12",
 	desc = "Basic 1x1 Building with Good Inventory space, but supports only one Small Component",
 	minimap_color = { 0.8, 0.8, 0.8 },
@@ -267,7 +272,7 @@ local f_building_12=MyFrame:RegisterFrame("f_building_12", {
 	},
 })
 
-local f_building_my = { 
+local f_building_my = {  -- 제작기 일괄
 	c_fabricator="Fabricator",
 	c_assembler="Assembler",
 	c_refinery="Refinery",
@@ -276,7 +281,7 @@ local f_building_my = {
 	c_advanced_assembler="Advanced Assembler",
 	c_adv_alien_factory="Advanced Alien Factory",
 }
-for key, value in pairs(f_building_my) do
+for key, value in pairs(f_building_my) do -- 제작기 일괄
 	print(key, value)
 	local components={}
 	for i = 1, 10 do
@@ -489,7 +494,7 @@ MyComp:FindComponent("c_deploy_construction").on_update = function(self, comp, c
 	end)
 end
 MyComp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{
-	attachment_size = "Hidden", race = "robot", index = 1042, name = "Deployment",
+	attachment_size = "Hidden", race = "robot", index = 142, name = "Deployment",
 	texture = "Main/textures/icons/hidden/integrated_deployer.png",
 	desc = "Initial planetary colonization support package, cannot deploy while frame is active",
 	visual = "v_generic_i",
@@ -499,11 +504,11 @@ MyComp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{
 	registers = { { tip = "Deploy Base", click_action = true, ui_icon = "icon_new", filter = 'coord' } },
 	deployment_frame = "f_landingpod_my",
 })
-MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_my",{
-	attachment_size = "hidden", race = "robot", index = 1031, name = "Turret",
+MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_energy",{
+	attachment_size = "hidden", race = "robot", index = 131, name = "Turret",
 	texture = "Main/textures/icons/components/component_standardTurret_01_m.png",
 	desc = "Medium sized turret with good damage and range",
-	power = -10,
+	power = 0,
 	visual = "v_turret_m",
 	activation = "OnFirstRegisterChange|OnTrustChange",
 	action_tooltip = action_tooltip_set_target,
@@ -517,13 +522,13 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_my",{
 	on_remove = on_remove_clear_extra_data,
 	get_ui = true,
 
-	trigger_radius = 7,
-	attack_radius = 7,
+	trigger_radius = 128,
+	attack_radius = 128,
 
 	trigger_channels = "bot|building|bug",
 
 	-- internal variable
-	damage = 72,   -- damage per shot -- 8
+	damage = 100,   -- damage per shot -- 8
 	damage_type = "energy_damage",
 	duration = 6, -- charge duration -- 2
 	shoot_fx = "fx_turret_laser",  -- fx_turret_1
@@ -531,6 +536,86 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_my",{
 	shoot_socket = "fx",
 	shoot_while_moving = true,
 	--shoot_target = "ground", -- set to "air" or "ground" to limit, otherwise can shoot both
+})
+MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_plasma",{
+	attachment_size = "hidden", race = "robot", index = 131, name = "Turret",
+	texture = "Main/textures/icons/components/component_standardTurret_01_m.png",
+	desc = "Medium sized turret with good damage and range",
+	power = 0,
+	visual = "v_turret_m",
+	activation = "OnFirstRegisterChange|OnTrustChange",
+	action_tooltip = action_tooltip_set_target,
+	registers = {
+		{ type = "entity", tip = "Preferred Target", ui_icon = "icon_target", click_action = true, filter = 'entity' },
+		{ read_only = true, tip = "Current Target", click_action = true },
+	},
+	production_recipe = CreateProductionRecipe({  c_adv_portable_turret = 1, wire = 10, hdframe = 5 }, { c_assembler = 5 }),
+	-- production_recipe = CreateProductionRecipe({ circuit_board = 1, energized_plate = 5, crystal = 10 }, { c_assembler = 5 }),
+	on_add = on_add_charge,
+	on_remove = on_remove_clear_extra_data,
+	get_ui = true,
+
+	trigger_radius = 128,
+	attack_radius = 128,
+
+	trigger_channels = "bot|building|bug",
+
+	-- internal variable
+	damage = 100,   -- damage per shot -- 8
+	damage_type = "plasma_damage",
+	duration = 6, -- charge duration -- 2
+	shoot_fx = "fx_turret_laser",  -- fx_turret_1
+	shoot_speed = 1,
+	shoot_socket = "fx",
+	shoot_while_moving = true,
+	--shoot_target = "ground", -- set to "air" or "ground" to limit, otherwise can shoot both
+})
+MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_physical",{
+	attachment_size = "hidden", race = "robot", index = 131, name = "Turret",
+	texture = "Main/textures/icons/components/component_standardTurret_01_m.png",
+	desc = "Medium sized turret with good damage and range",
+	power = 0,
+	visual = "v_turret_m",
+	activation = "OnFirstRegisterChange|OnTrustChange",
+	action_tooltip = action_tooltip_set_target,
+	registers = {
+		{ type = "entity", tip = "Preferred Target", ui_icon = "icon_target", click_action = true, filter = 'entity' },
+		{ read_only = true, tip = "Current Target", click_action = true },
+	},
+	production_recipe = CreateProductionRecipe({  c_adv_portable_turret = 1, wire = 10, hdframe = 5 }, { c_assembler = 5 }),
+	-- production_recipe = CreateProductionRecipe({ circuit_board = 1, energized_plate = 5, crystal = 10 }, { c_assembler = 5 }),
+	on_add = on_add_charge,
+	on_remove = on_remove_clear_extra_data,
+	get_ui = true,
+
+	trigger_radius = 128,
+	attack_radius = 128,
+
+	trigger_channels = "bot|building|bug",
+
+	-- internal variable
+	damage = 100,   -- damage per shot -- 8
+	damage_type = "physical_damage",
+	duration = 6, -- charge duration -- 2
+	shoot_fx = "fx_turret_laser",  -- fx_turret_1
+	shoot_speed = 1,
+	shoot_socket = "fx",
+	shoot_while_moving = true,
+	--shoot_target = "ground", -- set to "air" or "ground" to limit, otherwise can shoot both
+})
+MyComp:FindComponent("c_adv_miner"):RegisterComponent("c_adv_miner_my",{
+	attachment_size = "Small", race = "robot", index = 103, name = "Laser Mining Tool",
+	texture = "Main/textures/icons/components/Component_Miner_02_S.png",
+	desc = "Laser Mining Tool - extracts metal and crystal with high efficiency (2x)",
+	power = 0,
+	visual = "v_miner_adv_s",
+	disregard_tooltip = true,
+	-- production_recipe = false,
+	production_recipe = CreateProductionRecipe({ fused_electrodes = 2, icchip = 2, optic_cable = 5 }, { c_assembler = 50 }),
+	activation = "OnFirstRegisterChange",
+	miner_effect = "fx_miner",
+	miner_range = 128,
+	on_remove = on_remove_clear_extra_data_keep_resimulated,
 })
 
 for _, v in ipairs(new_unlocks) do
