@@ -349,26 +349,26 @@ local f_building_12=MyFrame:RegisterFrame("f_building_12", { -- 12
 })
 
 local f_building_my = {  -- 제작기 일괄
-	c_fabricator="Fabricator",
-	c_assembler="Assembler",
-	c_refinery="Refinery",
-	c_robotics_factory="Robotics Assembler",
-	c_advanced_refinery="Advanced Refinery",
-	c_advanced_assembler="Advanced Assembler",
-	c_adv_alien_factory="Advanced Alien Factory",
-	c_data_analyzer="Data Analyzer",
+	c_fabricator={"Fabricator","Main/textures/icons/components/Component_Fabricator_01_S.png",},
+	c_assembler={"Assembler","Main/textures/icons/components/Component_Assembler_01_M.png",},
+	c_refinery={"Refinery","Main/textures/icons/components/Component_Refinery_01_M.png",},
+	c_robotics_factory={"Robotics Assembler","Main/textures/icons/components/component_roboticsfactory_01_m.png",},
+	c_advanced_refinery={"Advanced Refinery","Main/textures/icons/components/component_adv_refinery_01_l.png",},
+	c_advanced_assembler={"Advanced Assembler","Main/textures/icons/components/component_adv_assembler_01_l.png",},
+	c_adv_alien_factory={"Advanced Alien Factory","Main/textures/icons/components/Component_AdvancedAlienFactory_01_M.png",},
+	c_data_analyzer={"Data Analyzer","Main/textures/icons/components/Component_DataAnalyzer_01_L.png"},
 }
 for key, value in pairs(f_building_my) do -- 제작기 일괄
 	print(key, value)
 	f_building_12:RegisterFrame(key.."_my",{
-		size = "Small", race = "robot", index = 101, name = value,
+		size = "Small", race = "robot", index = 101, name = value[1],
 		desc = "Basic 1x1 Building with Good Inventory space, but supports only one Small Component",
 		minimap_color = { 0.8, 0.8, 0.8 },
 		visibility_range = 128,
 		slots = { storage = 20 },
 		health_points = 10000, --150
 		construction_recipe = CreateConstructionRecipe({ metalbar = 10, crystal = 5 }, 35),
-		texture = "Main/textures/icons/frame/building_1x1_d.png",
+		texture = value[2],
 		trigger_channels = "building",
 		visual = "v_base2",
 		components =MyComponents(key,10),
