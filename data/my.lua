@@ -471,8 +471,8 @@ function MyComp:RegisterComponent(id, comp)
 			comp["construction_recipe"] = CreateConstructionRecipe({}, 1)
 	end
 	comp["component_boost"]= 1000
-	if frame["power"] ~= nil and frame["power"] < 0 then
-		frame["power"]= 0
+	if comp["power"] ~= nil and comp["power"] < 0 then
+		comp["power"]= 0
 	end
 	-- comp["attachment_size"]= "Internal"
 	
