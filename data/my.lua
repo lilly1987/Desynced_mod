@@ -36,15 +36,19 @@ function FreeplaySpawnPlayer(faction, loc)
 	lander.disconnected = false
 
 	local bots = {}
-	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_as_my")
+	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_as_my") -- Scout
 	local radar = bots[#bots]:AddComponent("c_scout_radar", 2)
 	radar:SetRegister(1, { id = "v_unsolved" })
-	bots[#bots]:Place(loc.x-2, loc.y+3)
+	bots[#bots]:Place(loc.x-3, loc.y)
 	-- bots[#bots].disconnected = false
 
 	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my")
+	bots[#bots]:Place(loc.x-3, loc.y-4)
+	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor")
+	bots[#bots]:Place(loc.x, loc.y-4)
+	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my_blight")
+	bots[#bots]:Place(loc.x+3, loc.y-4)
 	-- bots[2]:AddComponent("c_adv_miner", 1)
-	bots[#bots]:Place(loc.x+3, loc.y+4)
 	-- bots[2].disconnected = false
 
 	-- bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw")
@@ -54,7 +58,7 @@ function FreeplaySpawnPlayer(faction, loc)
 	
 	bots[#bots+1] = Map.CreateEntity(faction, "f_carrier_bot_my")
 	-- bots[3]:AddComponent("c_adv_miner", 1)
-	bots[#bots]:Place(loc.x+1, loc.y+2)
+	bots[#bots]:Place(loc.x+3, loc.y)
 	-- bots[3].disconnected = false
 
 	return lander, bots
@@ -161,6 +165,74 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer 10+2
 		{ "c_adv_miner_my", "hidden" },
 	},
 })
+MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
+	size = "Unit", race = "robot", index = 111, name = "Engineer",
+	texture = "Main/textures/icons/frame/bot_1s_adw.png",
+	desc = "Engineer unit with excellent production speed and extensive upgradeability",
+	minimap_color = { 0.9, 0.9, 0.8 },
+	slot_type = "garage",
+	visibility_range = 7,
+	slots = { storage = 2, },
+	movement_speed = 2,
+	component_boost = 200,
+	start_disconnected = true,
+	health_points = 200, -- 120
+	power = -4,
+	flags = "AnimateRoot",
+	trigger_channels = "bot",
+	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
+	visual = "v_bot_1s_adw_my",
+	components = {
+		--{ "c_moduleefficiency", "hidden" },
+		-- { "c_higrade_capacitor", "hidden" },
+		--{ "c_internal_crane", "hidden" },
+		
+		{ "c_extractor_my", "hidden" },
+		{ "c_extractor_my", "hidden" },
+		{ "c_extractor_my", "hidden" },
+		{ "c_extractor_my", "hidden" },
+		{ "c_extractor_my", "hidden" },
+		{ "c_extractor_my", "hidden" },
+		{ "c_extractor_my", "hidden" },
+		{ "c_extractor_my", "hidden" },
+		{ "c_extractor_my", "hidden" },
+		{ "c_extractor_my", "hidden" },
+	},
+})
+MyFrame:RegisterFrame("f_bot_1s_adw_my_blight", { -- Engineer 10+2
+	size = "Unit", race = "robot", index = 111, name = "Engineer",
+	texture = "Main/textures/icons/frame/bot_1s_adw.png",
+	desc = "Engineer unit with excellent production speed and extensive upgradeability",
+	minimap_color = { 0.9, 0.9, 0.8 },
+	slot_type = "garage",
+	visibility_range = 7,
+	slots = { storage = 2, },
+	movement_speed = 2,
+	component_boost = 200,
+	start_disconnected = true,
+	health_points = 200, -- 120
+	power = -4,
+	flags = "AnimateRoot",
+	trigger_channels = "bot",
+	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
+	visual = "v_bot_1s_adw_my",
+	components = {
+		--{ "c_moduleefficiency", "hidden" },
+		-- { "c_higrade_capacitor", "hidden" },
+		--{ "c_internal_crane", "hidden" },
+		
+		{ "c_blight_extractor_my", "hidden" },
+		{ "c_blight_extractor_my", "hidden" },
+		{ "c_blight_extractor_my", "hidden" },
+		{ "c_blight_extractor_my", "hidden" },
+		{ "c_blight_extractor_my", "hidden" },
+		{ "c_blight_extractor_my", "hidden" },
+		{ "c_blight_extractor_my", "hidden" },
+		{ "c_blight_extractor_my", "hidden" },
+		{ "c_blight_extractor_my", "hidden" },
+		{ "c_blight_extractor_my", "hidden" },
+	},
+})
 
 data.visuals.v_bot_1s_adw_my = { -- Engineer
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
@@ -168,7 +240,7 @@ data.visuals.v_bot_1s_adw_my = { -- Engineer
 	light_color = bot_light_color,
 	sockets = {
 		{ "Small1", "Large"    },
-		-- { "",       "Large" },
+		{ "",       "Large" },
 		-- { "",       "Large" },
 		-- { "",       "Large" },
 		-- { "",       "Large" },
