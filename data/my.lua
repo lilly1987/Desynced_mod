@@ -240,6 +240,108 @@ MyFrame:RegisterFrame("f_landingpod_my", { -- 본부 건물
 	end,
 })
 
+MyFrame:RegisterFrame("f_building_c_refinery", {
+	size = "Small", race = "robot", index = 101, name = "Refinery",
+	desc = "Basic 1x1 Building with Good Inventory space, but supports only one Small Component",
+	minimap_color = { 0.8, 0.8, 0.8 },
+	visibility_range = 128,
+	slots = { storage = 20 },
+	health_points = 10000, --150
+	construction_recipe = CreateConstructionRecipe({ metalbar = 10, crystal = 5 }, 35),
+	texture = "Main/textures/icons/frame/building_1x1_d.png",
+	trigger_channels = "building",
+	visual = "v_base2",
+	components = {
+		{ "c_refinery", "hidden" },
+		{ "c_refinery", "hidden" },
+		{ "c_refinery", "hidden" },
+		{ "c_refinery", "hidden" },
+		{ "c_refinery", "hidden" },
+		{ "c_refinery", "hidden" },
+		{ "c_refinery", "hidden" },
+		{ "c_refinery", "hidden" },
+		{ "c_refinery", "hidden" },
+		{ "c_refinery", "hidden" },
+		-- { "c_fabricator", "hidden" },
+		-- { "c_fabricator", "hidden" },
+	},
+})
+MyFrame:RegisterFrame("f_building_c_assembler", {
+	size = "Small", race = "robot", index = 101, name = "Assembler",
+	desc = "Basic 1x1 Building with Good Inventory space, but supports only one Small Component",
+	minimap_color = { 0.8, 0.8, 0.8 },
+	visibility_range = 128,
+	slots = { storage = 20 },
+	health_points = 10000, --150
+	construction_recipe = CreateConstructionRecipe({ metalbar = 10, crystal = 5 }, 35),
+	texture = "Main/textures/icons/frame/building_1x1_d.png",
+	trigger_channels = "building",
+	visual = "v_base2",
+	components = {
+		{ "c_assembler", "hidden" },
+		{ "c_assembler", "hidden" },
+		{ "c_assembler", "hidden" },
+		{ "c_assembler", "hidden" },
+		{ "c_assembler", "hidden" },
+		{ "c_assembler", "hidden" },
+		{ "c_assembler", "hidden" },
+		{ "c_assembler", "hidden" },
+		{ "c_assembler", "hidden" },
+		{ "c_assembler", "hidden" },
+		-- { "c_fabricator", "hidden" },
+		-- { "c_fabricator", "hidden" },
+	},
+})
+MyFrame:RegisterFrame("f_building_c_fabricator", {
+	size = "Small", race = "robot", index = 101, name = "Fabricator",
+	desc = "Basic 1x1 Building with Good Inventory space, but supports only one Small Component",
+	minimap_color = { 0.8, 0.8, 0.8 },
+	visibility_range = 128,
+	slots = { storage = 20 },
+	health_points = 10000, --150
+	construction_recipe = CreateConstructionRecipe({ metalbar = 10, crystal = 5 }, 35),
+	texture = "Main/textures/icons/frame/building_1x1_d.png",
+	trigger_channels = "building",
+	visual = "v_base2",
+	components = {
+		{ "c_fabricator", "hidden" },
+		{ "c_fabricator", "hidden" },
+		{ "c_fabricator", "hidden" },
+		{ "c_fabricator", "hidden" },
+		{ "c_fabricator", "hidden" },
+		{ "c_fabricator", "hidden" },
+		{ "c_fabricator", "hidden" },
+		{ "c_fabricator", "hidden" },
+		{ "c_fabricator", "hidden" },
+		{ "c_fabricator", "hidden" },
+		-- { "c_fabricator", "hidden" },
+		-- { "c_fabricator", "hidden" },
+	},
+})
+
+data.visuals.v_base2 = {
+	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
+	placement = "Max",
+	tile_size = { 1, 1},
+	sockets = {
+		{ "small1", "Large" },
+		{ "",       "Large" },
+	},
+	destroy_effect = "fx_digital",
+	place_effect = "fx_digital_in",
+}
+data.visuals.v_base1 = {
+	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
+	placement = "Max",
+	tile_size = { 1, 1},
+	sockets = {
+		{ "small1", "Large" },
+		-- { "",       "Large" },
+	},
+	destroy_effect = "fx_digital",
+	place_effect = "fx_digital_in",
+}
+
 MyComp = {
 	slot_type = "storage",
 	stack_size = 1,
