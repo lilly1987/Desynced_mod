@@ -9,19 +9,29 @@ local new_unlocks = {
 }
 
 function MyMake(faction,x,y)
-	for i = 1, 64 do
-			local car = Map.CreateEntity(faction, "f_bot_1s_as_my")
-			car:Place(x, y)
+	for i = 1, 16 do
+			local car = Map.CreateEntity(faction, "f_bot_1s_as_my")-- Scout
+			car:Place(x-10, y)
 			car:PlayEffect("fx_digital_in")
 	end
 	for i = 1, 64 do
 			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my")
-			car:Place(x, y)
+			car:Place(x, y-10)
 			car:PlayEffect("fx_digital_in")
 	end
-	for i = 1, 64 do
+	for i = 1, 4 do
+			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor")
+			car:Place(x-10, y-10)
+			car:PlayEffect("fx_digital_in")
+	end
+	for i = 1, 4 do
+			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_blight")
+			car:Place(x+10, y-10)
+			car:PlayEffect("fx_digital_in")
+	end
+	for i = 1, 16 do
 			local car = Map.CreateEntity(faction, "f_carrier_bot_my")
-			car:Place(x, y)
+			car:Place(x+10, y)
 			car:PlayEffect("fx_digital_in")
 	end
 end
@@ -43,9 +53,9 @@ function FreeplaySpawnPlayer(faction, loc)
 	-- bots[#bots].disconnected = false
 
 	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my")
-	bots[#bots]:Place(loc.x-3, loc.y-4)
-	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor")
 	bots[#bots]:Place(loc.x, loc.y-4)
+	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor")
+	bots[#bots]:Place(loc.x-3, loc.y-4)
 	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my_blight")
 	bots[#bots]:Place(loc.x+3, loc.y-4)
 	-- bots[2]:AddComponent("c_adv_miner", 1)
@@ -81,6 +91,9 @@ function MyFrame:RegisterFrame(id, frame)
 	end
 	if frame.construction_recipe ~= nil then
 			frame["construction_recipe"] = CreateConstructionRecipe({}, 1)
+	end
+	if frame.movement_speed ~= nil then
+			frame["movement_speed"] = 128
 	end
 	data.frames[id] = setmetatable(frame, { __index = self })
 	return frame
@@ -736,3 +749,13 @@ for key, visual in pairs(data.visuals) do
         end
     end
 end
+
+data.items.metalore.mining_recipe.c_adv_miner_my = 1
+data.items.crystal.mining_recipe.c_adv_miner_my = 1
+data.items.silica.mining_recipe.c_adv_miner_my = 1
+data.items.blight_crystal.mining_recipe.c_adv_miner_my = 1
+
+data.items.laterite.mining_recipe.c_extractor_my = 1
+data.items.obsidian.mining_recipe.c_extractor_my = 1
+
+data.items.blight_extraction.extracted_by.c_blight_extractor_my=true
