@@ -156,7 +156,7 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD/Ver2/Bot_1S_AD.Bot_1S_AD'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets =MySockets(12-5, {
+	sockets =MySockets(12-5-1, {
 		{ "Small1", "Large"    },
 	}),
 	--	placement = "Max",
@@ -238,13 +238,9 @@ data.visuals.v_bot_1s_adw_my = { -- Engineer
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets = {
+	sockets =MySockets(1, {
 		{ "Small1", "Large"    },
-		{ "",       "Large" },
-		-- { "",       "Large" },
-		-- { "",       "Large" },
-		-- { "",       "Large" },
-	},
+	}),
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
 	destroy_effect = "fx_digital",
@@ -313,6 +309,17 @@ MyFrame:RegisterFrame("f_landingpod_my", { -- 본부 건물
 		Map.DropItemAt(x, y, "c_deployer", { bp = { frame = "f_landingpod_my" }, onetime = true }, true)
 	end,
 })
+data.visuals.v_base2x2_as = {
+	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_2x2_AD/Ver2/Building_2x2_AD.Building_2x2_AD'",
+	placement = "Max",
+	tile_size = { 3, 3},
+	sockets =MySockets( 10,{
+		{ "Medium1", "Medium"  },
+		{ "Medium2", "Medium"  },
+	}),
+	destroy_effect = "fx_digital",
+	place_effect = "fx_digital_in",
+}
 
 local f_building_12=MyFrame:RegisterFrame("f_building_12", { -- 12
 	size = "Small", race = "robot", index = 101, name = "Building 1x1 12",
@@ -362,7 +369,7 @@ for key, value in pairs(f_building_my) do -- 제작기 일괄
 		construction_recipe = CreateConstructionRecipe({ metalbar = 10, crystal = 5 }, 35),
 		texture = "Main/textures/icons/frame/building_1x1_d.png",
 		trigger_channels = "building",
-		visual = "v_base1",
+		visual = "v_base2",
 		components =MyComponents(key,10),
 	})
 end
@@ -371,10 +378,9 @@ data.visuals.v_base2 = {
 	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
 	placement = "Max",
 	tile_size = { 1, 1},
-	sockets = {
+	sockets =MySockets(1, {
 		{ "small1", "Large" },
-		{ "",       "Large" },
-	},
+	}),
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 }
@@ -382,10 +388,9 @@ data.visuals.v_base1 = {
 	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
 	placement = "Max",
 	tile_size = { 1, 1},
-	sockets = {
+	sockets = MySockets(0, {
 		{ "small1", "Large" },
-		-- { "",       "Large" },
-	},
+	}),
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 }
@@ -393,20 +398,9 @@ data.visuals.v_base12 = {
 	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
 	placement = "Max",
 	tile_size = { 1, 1},
-	sockets = {
+	sockets =MySockets(11, {
 		{ "small1", "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-		{ "",       "Large" },
-	},
+	}),
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 }
