@@ -1,12 +1,7 @@
-local new_unlocks = { 
--- "f_bot_1s_as_my", 
--- "f_bot_1s_adw_my" ,
--- "f_carrier_bot_my" ,
--- "f_bot_2m_as_my" ,
--- "f_landingpod_my" ,
--- "c_power_cell_my" ,
--- "c_deployment_my" ,
-}
+local new_unlocks = { }
+local my_num_hp = 10000 -- 최대 10000
+local my_num_power = 50000 --2147483647
+local my_num_power2 = 100000000 --2147483647
 
 function MyMake(faction,x,y)
 	for i = 1, 16 do
@@ -83,7 +78,7 @@ function MyFrame:RegisterFrame(id, frame)
 	table.insert(new_unlocks,id)
 	frame["start_disconnected"]= false
 	frame["component_boost"]= 1000
-	frame["health_points"]= 10000 -- 10만 안됨)
+	frame["health_points"]= my_num_hp -- 10만 안됨)
 	frame["visibility_range"]= 128
 	frame["slots"]= { storage = 20, }
 	if frame["power"] ~= nil and frame["power"] < 0 then
@@ -97,6 +92,15 @@ function MyFrame:RegisterFrame(id, frame)
 	end
 	if frame.movement_speed ~= nil then
 			frame["movement_speed"] = 128
+	end	
+	if frame.components ~= nil then
+			table.insert(frame.components,{ "c_repairer_my", "hidden" })
+			table.insert(frame.components,{ "c_higrade_capacitor_my", "hidden" })
+	else
+		frame.components={
+			{ "c_higrade_capacitor_my", "hidden" } ,
+			{ "c_repairer_my", "hidden" },
+		}
 	end
 	data.frames[id] = setmetatable(frame, { __index = self })
 	return frame
@@ -119,13 +123,13 @@ MyFrame:RegisterFrame("f_bot_1s_as_my", { -- Scout
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_as_my",
 	components = { 
-		{ "c_higrade_capacitor_my", "hidden" } ,
+		-- { "c_higrade_capacitor_my", "hidden" } ,
 		
 		{ "c_turret_energy", "hidden" } ,
 		{ "c_turret_plasma", "hidden" } ,
 		{ "c_turret_physical", "hidden" } ,
 		{ "c_uplink", "hidden" } ,
-		{ "c_repairer_my", "hidden" } ,
+		-- { "c_repairer_my", "hidden" } ,
 	},
 })
 
@@ -324,7 +328,7 @@ MyFrame:RegisterFrame("f_bot_2m_as_my", { -- 본부 이동
 	visual = "v_bot_2m_as",
 	production_recipe = CreateProductionRecipe({ icchip = 10, uframe = 20, fused_electrodes = 20 }, { c_robotics_factory = 80 }),
 	components = { 
-	{ "c_higrade_capacitor_my", "hidden" } 
+	{ "c_higrade_capacitor_my2", "hidden" } 
 	},
 })
 
@@ -497,20 +501,20 @@ MyComp:RegisterComponent("c_higrade_capacitor_my", {
 	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
 	visual = "v_generic_i",
 	desc = "Stores excess power from your logistics network making it available when needed",
-	power_storage = 100000000,
-	drain_rate = 100000000,
-	charge_rate = 100000000,
+	power_storage = my_num_power,
+	drain_rate = my_num_power,
+	charge_rate = my_num_power,
 	-- get_ui = battery_get_ui,
 	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
 })
-MyComp:RegisterComponent("c_higrade_capacitor_my10000", {
+MyComp:RegisterComponent("c_higrade_capacitor_my2", {
 	attachment_size = "Hidden", race = "robot", index = 115, name = "Hi-Grade Capacitor",
 	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
 	visual = "v_generic_i",
 	desc = "Stores excess power from your logistics network making it available when needed",
-	power_storage = 10000,
-	drain_rate = 10000,
-	charge_rate = 10000,
+	power_storage = my_num_power2,
+	drain_rate = my_num_power2,
+	charge_rate = my_num_power2,
 	-- get_ui = battery_get_ui,
 	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
 })
@@ -752,7 +756,7 @@ MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor
 })
 
 MyComp:FindComponent("c_repairer"):RegisterComponent("c_repairer_my", {
-	attachment_size = "hidden", race = "robot", index = 1042, name = "Repair Component",
+	attachment_size = "hidden", race = "robot", index = 142, name = "Repair Component",
 	texture = "Main/textures/icons/components/Component_Repairer_01_M.png",
 	desc = "Allows repair of damaged units and buildings",
 	power = -2,
@@ -772,6 +776,20 @@ MyComp:FindComponent("c_repairer"):RegisterComponent("c_repairer_my", {
 	-- internal variable
 	repair = 1,   -- repair health per use
 	duration = 5, -- charge duration
+	repair_fx = "fx_heal_unit",
+})
+MyComp:FindComponent("c_repairkit"):RegisterComponent("c_repairkit_my", {
+	attachment_size = "Internal", race = "robot", index = 143, name = "Repair Kit",
+	desc = "Can repair the unit or building it is equipped on",
+	texture = "Main/textures/icons/components/repairkit.png",
+	visual = "v_generic_i",
+	production_recipe = CreateProductionRecipe({ circuit_board = 1, crystal = 5 }, { c_assembler = 50 }),
+	activation = "Always",
+	power = -2,
+	on_add = on_add_charge,
+	on_remove = on_remove_clear_extra_data,
+	repair = 1,
+	duration = 10,
 	repair_fx = "fx_heal_unit",
 })
 
