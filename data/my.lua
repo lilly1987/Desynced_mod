@@ -8,8 +8,8 @@ local my_components = {
 			{ "c_repairer_small_aoe_my", "hidden" },
 			{ "c_portablecrane_my", "hidden" },
 }
-function MyComponents(key,cnt)
-	local components={}
+function MyComponents(key,cnt,components)
+	components=components or {}
 	for i = 1, cnt do
 		table.insert(components,{ key, "hidden" })
 	end
@@ -182,22 +182,11 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components = {
+	components =MyComponents("c_adv_miner_my",10, {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
-		
-		{ "c_adv_miner_my", "hidden" },
-		{ "c_adv_miner_my", "hidden" },
-		{ "c_adv_miner_my", "hidden" },
-		{ "c_adv_miner_my", "hidden" },
-		{ "c_adv_miner_my", "hidden" },
-		{ "c_adv_miner_my", "hidden" },
-		{ "c_adv_miner_my", "hidden" },
-		{ "c_adv_miner_my", "hidden" },
-		{ "c_adv_miner_my", "hidden" },
-		{ "c_adv_miner_my", "hidden" },
-	},
+	}),
 })
 MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
@@ -216,22 +205,11 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components = {
+	components =MyComponents("c_extractor_my",10, {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
-		
-		{ "c_extractor_my", "hidden" },
-		{ "c_extractor_my", "hidden" },
-		{ "c_extractor_my", "hidden" },
-		{ "c_extractor_my", "hidden" },
-		{ "c_extractor_my", "hidden" },
-		{ "c_extractor_my", "hidden" },
-		{ "c_extractor_my", "hidden" },
-		{ "c_extractor_my", "hidden" },
-		{ "c_extractor_my", "hidden" },
-		{ "c_extractor_my", "hidden" },
-	},
+	}),
 })
 MyFrame:RegisterFrame("f_bot_1s_adw_my_blight", { -- Engineer 10+2
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
@@ -250,22 +228,11 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_blight", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components = {
+	components = MyComponents("c_blight_extractor_my",10, {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
-		
-		{ "c_blight_extractor_my", "hidden" },
-		{ "c_blight_extractor_my", "hidden" },
-		{ "c_blight_extractor_my", "hidden" },
-		{ "c_blight_extractor_my", "hidden" },
-		{ "c_blight_extractor_my", "hidden" },
-		{ "c_blight_extractor_my", "hidden" },
-		{ "c_blight_extractor_my", "hidden" },
-		{ "c_blight_extractor_my", "hidden" },
-		{ "c_blight_extractor_my", "hidden" },
-		{ "c_blight_extractor_my", "hidden" },
-	},
+	}),
 })
 
 data.visuals.v_bot_1s_adw_my = { -- Engineer
@@ -774,7 +741,7 @@ MyComp:FindComponent("c_repairer_small_aoe"):RegisterComponent("c_repairer_small
 	repair = 2,   -- repair health per use
 })
 MyComp:FindComponent("c_repairkit"):RegisterComponent("c_repairkit_my", {
-	attachment_size = "Internal", race = "robot", index = 143, name = "Repair Kit",
+	attachment_size = "hidden", race = "robot", index = 143, name = "Repair Kit",
 	desc = "Can repair the unit or building it is equipped on",
 	texture = "Main/textures/icons/components/repairkit.png",
 	visual = "v_generic_i",
@@ -789,7 +756,7 @@ MyComp:FindComponent("c_repairkit"):RegisterComponent("c_repairkit_my", {
 })
 
 MyComp:FindComponent("c_portablecrane"):RegisterComponent("c_portablecrane_my", {
-	attachment_size = "Internal", race = "robot", index = 123, name = "Portable Transporter",
+	attachment_size = "hidden", race = "robot", index = 123, name = "Portable Transporter",
 	visual = "v_generic_i",
 	texture = "Main/textures/icons/components/portable_transporter.png",
 	power = 0,
