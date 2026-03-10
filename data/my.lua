@@ -81,6 +81,7 @@ MyFrame = {
 }
 function MyFrame:RegisterFrame(id, frame)
 	table.insert(new_unlocks,id)
+	frame["start_disconnected"]= false
 	frame["component_boost"]= 1000
 	frame["health_points"]= 10000 -- 10만 안됨)
 	frame["visibility_range"]= 128
@@ -120,6 +121,8 @@ MyFrame:RegisterFrame("f_bot_1s_as_my", { -- Scout
 		{ "c_turret_energy", "hidden" } ,
 		{ "c_turret_plasma", "hidden" } ,
 		{ "c_turret_physical", "hidden" } ,
+		{ "c_uplink", "hidden" } ,
+		{ "c_repairer_aoe", "hidden" } ,
 	},
 })
 
@@ -188,7 +191,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
 	slots = { storage = 2, },
 	movement_speed = 2,
 	component_boost = 200,
-	start_disconnected = true,
+	start_disconnected = false,
 	health_points = 200, -- 120
 	power = -4,
 	flags = "AnimateRoot",
@@ -222,7 +225,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_blight", { -- Engineer 10+2
 	slots = { storage = 2, },
 	movement_speed = 2,
 	component_boost = 200,
-	start_disconnected = true,
+	start_disconnected = false,
 	health_points = 200, -- 120
 	power = -4,
 	flags = "AnimateRoot",
@@ -731,6 +734,9 @@ MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor
 	activation = "Always",
 	miner_range = 128,
 })
+
+
+
 
 for _, v in ipairs(new_unlocks) do
     table.insert(data.techs.t_robot_tech_basic.unlocks, v)
