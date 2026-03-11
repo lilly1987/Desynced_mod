@@ -358,6 +358,7 @@ local f_building_my = {  -- 제작기 일괄
 	c_advanced_assembler={"Advanced Assembler","Main/textures/icons/components/component_adv_assembler_01_l.png",},
 	c_adv_alien_factory={"Advanced Alien Factory","Main/textures/icons/components/Component_AdvancedAlienFactory_01_M.png",},
 	c_data_analyzer={"Data Analyzer","Main/textures/icons/components/Component_DataAnalyzer_01_L.png"},
+	c_human_factory_robots={"Hybrid Human Factory","Main/textures/icons/components/Component_Amalgamator_01_L.png",},
 }
 for key, value in pairs(f_building_my) do -- 제작기 일괄
 	print(key, value)
@@ -421,6 +422,7 @@ MyFrame:RegisterFrame("f_building1x1f_my", {
 	visual = "v_base1x1_12",
 	components = {
 		{ "c_portable_relay_my", "auto" },
+		{ "c_uplink", "auto" },
 	},
 	
 })
@@ -797,8 +799,18 @@ for key, visual in pairs(data.visuals) do
 end
 
 for key, value in pairs(data.items) do
-    if value.stack_size ~= nil then
+    if value.stack_size ~= nil and value.stack_size then
         value.stack_size = value.stack_size * 2
+    end
+end
+for key, value in pairs(data.techs) do
+    if value.uplink_recipe ~= nil and value.uplink_recipe then
+        value.uplink_recipe.ticks = 1
+    end
+end
+for key, value in pairs(data.frames) do
+    if value.construction_recipe ~= nil and value.construction_recipe then
+        value.construction_recipe.ticks = 1
     end
 end
 
