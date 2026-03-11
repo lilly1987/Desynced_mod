@@ -122,6 +122,50 @@ function MyFrame:RegisterFrame(id, frame)
 	data.frames[id] = setmetatable(frame, { __index = self })
 	return frame
 end
+function MyFrame:FindFrame(id)
+    local frame = data.frames[id]
+    if not frame then
+        print("Frame INFO: Frame not found: " .. tostring(id))
+        return nil
+    end
+    return frame
+end
+
+MyComp = {
+	slot_type = "storage",
+	stack_size = 1,
+	texture = "Main/textures/icons/frame/replace.png"
+}
+function MyComp:RegisterComponent(id, comp)
+	table.insert(new_unlocks,id)
+	comp.id = id
+	comp.base_id = self.base_id or self.id or id
+	if not comp.name then comp.name = id end
+	if comp.production_recipe ~= nil then
+			comp["production_recipe"] = CreateProductionRecipe({}, { c_carrier_factory = 1 })
+	end
+	if comp.construction_recipe ~= nil then
+			comp["construction_recipe"] = CreateConstructionRecipe({}, 1)
+	end
+	comp["component_boost"]= 1000
+	if comp["power"] ~= nil and comp["power"] < 0 then
+		comp["power"]= 0
+	end
+	-- comp["attachment_size"]= "Internal"
+	
+	--for k,v in pairs(comp) do if Tool.Hash(v) == Tool.Hash(self[k]) and k ~= "base_id" then print("COMPONENT INFO: Inherited component contains duplicated field value: " .. tostring(id) .. " (" .. tostring(k) .. " = " .. tostring(v):gsub("\n", "") .. ")") end end
+	data.components[id] = setmetatable(comp, { __index = self })
+	return comp
+end
+function MyComp:FindComponent(id)
+    local comp = data.components[id]
+    if not comp then
+        print("COMPONENT INFO: Component not found: " .. tostring(id))
+        return nil
+    end
+    return comp
+end
+
 
 MyFrame:RegisterFrame("f_bot_1s_as_my", { -- Scout
 	size = "Unit", race = "robot", index = 112, name = "Scout",
@@ -350,39 +394,43 @@ local f_building_12=MyFrame:RegisterFrame("f_building_12", { -- 12
 })
 
 local f_building_my = {  -- 제작기 일괄
-	c_fabricator={"Fabricator","Main/textures/icons/components/Component_Fabricator_01_S.png",},
-	c_assembler={"Assembler","Main/textures/icons/components/Component_Assembler_01_M.png",},
-	c_refinery={"Refinery","Main/textures/icons/components/Component_Refinery_01_M.png",},
-	c_robotics_factory={"Robotics Assembler","Main/textures/icons/components/component_roboticsfactory_01_m.png",},
-	c_advanced_refinery={"Advanced Refinery","Main/textures/icons/components/component_adv_refinery_01_l.png",},
-	c_advanced_assembler={"Advanced Assembler","Main/textures/icons/components/component_adv_assembler_01_l.png",},
-	c_adv_alien_factory={"Advanced Alien Factory","Main/textures/icons/components/Component_AdvancedAlienFactory_01_M.png",},
-	c_data_analyzer={"Data Analyzer","Main/textures/icons/components/Component_DataAnalyzer_01_L.png"},
-	c_human_factory_robots={"Hybrid Human Factory","Main/textures/icons/components/Component_Amalgamator_01_L.png",},
+	'c_fabricator',
+	'c_assembler',
+	'c_refinery',
+	'c_robotics_factory',
+	'c_advanced_refinery',
+	'c_advanced_assembler',
+	'c_adv_alien_factory',
+	'c_data_analyzer',
+	'c_human_factory_robots',
+	'c_virus_decomposer',
 }
 for key, value in pairs(f_building_my) do -- 제작기 일괄
 	print(key, value)
-	f_building_12:RegisterFrame(key.."_my",{
-		size = "Small", race = "robot", index = 101, name = value[1],
-		desc = "Basic 1x1 Building with Good Inventory space, but supports only one Small Component",
-		minimap_color = { 0.8, 0.8, 0.8 },
-		visibility_range = 128,
-		slots = { storage = 20 },
-		health_points = 10000, --150
-		construction_recipe = CreateConstructionRecipe({ metalbar = 10, crystal = 5 }, 35),
-		texture = value[2],
-		trigger_channels = "building",
-		visual = "v_base2",
-		components =MyComponents(key,10),
-	})
+	comp=MyComp:FindComponent(value)
+	if comp then
+		f_building_12:RegisterFrame(value.."_my",{
+			size = "Small", race = "robot", index = 101, name = comp.name,
+			desc = comp.desc,
+			minimap_color = { 0.8, 0.8, 0.8 },
+			visibility_range = 128,
+			slots = { storage = 20 },
+			health_points = 10000, --150
+			construction_recipe = CreateConstructionRecipe({ metalbar = 10, crystal = 5 }, 35),
+			texture = comp.texture,
+			trigger_channels = "building",
+			visual = "v_base2",
+			components =MyComponents(value,10),
+		})
+	end
 end
 
 data.visuals.v_base2 = {
 	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
 	placement = "Max",
 	tile_size = { 1, 1},
-	sockets =MySockets(1, {
-		{ "small1", "Large" },
+	sockets =MySockets(2, {
+		-- { "small1", "Large" },
 	}),
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
@@ -436,40 +484,6 @@ data.visuals.v_base1x1_12 = {
 	place_effect = "fx_digital_in",
 }
 
-MyComp = {
-	slot_type = "storage",
-	stack_size = 1,
-	texture = "Main/textures/icons/frame/replace.png"
-}
-function MyComp:FindComponent(id)
-    local comp = data.components[id]
-    if not comp then
-        print("COMPONENT INFO: Component not found: " .. tostring(id))
-        return nil
-    end
-    return comp
-end
-function MyComp:RegisterComponent(id, comp)
-	table.insert(new_unlocks,id)
-	comp.id = id
-	comp.base_id = self.base_id or self.id or id
-	if not comp.name then comp.name = id end
-	if comp.production_recipe ~= nil then
-			comp["production_recipe"] = CreateProductionRecipe({}, { c_carrier_factory = 1 })
-	end
-	if comp.construction_recipe ~= nil then
-			comp["construction_recipe"] = CreateConstructionRecipe({}, 1)
-	end
-	comp["component_boost"]= 1000
-	if comp["power"] ~= nil and comp["power"] < 0 then
-		comp["power"]= 0
-	end
-	-- comp["attachment_size"]= "Internal"
-	
-	--for k,v in pairs(comp) do if Tool.Hash(v) == Tool.Hash(self[k]) and k ~= "base_id" then print("COMPONENT INFO: Inherited component contains duplicated field value: " .. tostring(id) .. " (" .. tostring(k) .. " = " .. tostring(v):gsub("\n", "") .. ")") end end
-	data.components[id] = setmetatable(comp, { __index = self })
-	return comp
-end
 
 MyComp:RegisterComponent("c_power_cell_my", {
 	attachment_size = "Hidden", race = "robot", index = 111, name = "Power Cell",
