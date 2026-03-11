@@ -99,7 +99,7 @@ function MyFrame:RegisterFrame(id, frame)
 	frame["component_boost"]= my_component_boost
 	frame["health_points"]= my_num_hp -- 10만 안됨)
 	frame["visibility_range"]= 128
-	frame["slots"]= { storage = 20, gas = 4  }
+	frame["slots"]= { storage = 20, gas = 2 , anomaly = 2 , virus = 2}
 	if frame["power"] ~= nil and frame["power"] < 0 then
 		frame["power"]= 0
 	end
@@ -447,8 +447,13 @@ local f_building_my = {  -- 제작기 일괄
 	'c_advanced_assembler',
 	'c_adv_alien_factory',
 	'c_data_analyzer',
-	'c_human_factory_robots',
 	'c_virus_decomposer',
+	'c_human_datacomplex', -- 역병 분석기
+	'c_human_factory_robots',
+	'c_human_science_analyzer_robots',
+	'c_human_refinery', -- 인류 정제기
+	'c_human_aicenter', -- 멀티모달 AI 센터
+	'c_human_factory', -- 인류의 공장
 }
 for key, value in pairs(f_building_my) do -- 제작기 일괄
 	print(key, value)
