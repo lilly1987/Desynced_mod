@@ -166,6 +166,20 @@ function MyComp:FindComponent(id)
     return comp
 end
 
+MyVisual = {
+}
+function MyVisual:RegisterVisual(id, visual)
+    data.visuals[id] = setmetatable(visual, { __index = self })
+    return visual
+end
+function MyVisual:FindVisual(id)
+    local visual = data.visuals[id]
+    if not visual then
+        print("Visual INFO: Visual not found: " .. tostring(id))
+        return nil
+    end
+    return visual
+end
 
 MyFrame:RegisterFrame("f_bot_1s_as_my", { -- Scout
 	size = "Unit", race = "robot", index = 112, name = "Scout",
@@ -392,6 +406,37 @@ local f_building_12=MyFrame:RegisterFrame("f_building_12", { -- 12
 		-- { "c_fabricator", "hidden" },
 	},
 })
+local v_base2=MyVisual:RegisterVisual("v_base2", {
+	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
+	placement = "Max",
+	tile_size = { 1, 1},
+	sockets =MySockets(2, {
+		-- { "small1", "Large" },
+	}),
+	destroy_effect = "fx_digital",
+	place_effect = "fx_digital_in",
+})
+data.visuals.v_base1 = {
+	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
+	placement = "Max",
+	tile_size = { 1, 1},
+	sockets = MySockets(0, {
+		{ "small1", "Large" },
+	}),
+	destroy_effect = "fx_digital",
+	place_effect = "fx_digital_in",
+}
+data.visuals.v_base12 = {
+	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
+	placement = "Max",
+	tile_size = { 1, 1},
+	sockets =MySockets(11, {
+		{ "small1", "Large" },
+	}),
+	destroy_effect = "fx_digital",
+	place_effect = "fx_digital_in",
+}
+
 
 local f_building_my = {  -- 제작기 일괄
 	'c_fabricator',
@@ -419,42 +464,24 @@ for key, value in pairs(f_building_my) do -- 제작기 일괄
 			construction_recipe = CreateConstructionRecipe({ metalbar = 10, crystal = 5 }, 35),
 			texture = comp.texture,
 			trigger_channels = "building",
-			visual = "v_base2",
+			visual = "v_base2"..value,--
 			components =MyComponents(value,10),
 		})
+		
+		if comp.visual then
+			local baseVis = MyVisual:FindVisual(comp.visual)
+			if baseVis and baseVis.mesh then
+				v_base2:RegisterVisual("v_base2"..value,{
+					mesh = baseVis.mesh,
+				})
+			else
+				print("Visual INFO: unable to find visual '"..tostring(comp.visual).."' for component '"..tostring(value).."'")
+			end
+		else
+			print("Visual INFO: component '"..tostring(value).."' has no visual field")
+		end
 	end
 end
-
-data.visuals.v_base2 = {
-	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
-	placement = "Max",
-	tile_size = { 1, 1},
-	sockets =MySockets(2, {
-		-- { "small1", "Large" },
-	}),
-	destroy_effect = "fx_digital",
-	place_effect = "fx_digital_in",
-}
-data.visuals.v_base1 = {
-	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
-	placement = "Max",
-	tile_size = { 1, 1},
-	sockets = MySockets(0, {
-		{ "small1", "Large" },
-	}),
-	destroy_effect = "fx_digital",
-	place_effect = "fx_digital_in",
-}
-data.visuals.v_base12 = {
-	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
-	placement = "Max",
-	tile_size = { 1, 1},
-	sockets =MySockets(11, {
-		{ "small1", "Large" },
-	}),
-	destroy_effect = "fx_digital",
-	place_effect = "fx_digital_in",
-}
 
 MyFrame:RegisterFrame("f_building1x1f_my", {
 	size = "Small", race = "robot", index = 111, name = "Storage Block (20)",
