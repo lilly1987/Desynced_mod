@@ -41,9 +41,10 @@ function MyComponents(key,cnt,components)
 	end
 	return components
 end
-function MySockets(cnt,sockets)
+function MySockets(max_cnt,sockets)
 	sockets=sockets or {}
-	for i = 1, cnt do
+	max_cnt=max_cnt or my_num_sockets
+	for i = 1, max_cnt - #sockets do
 		table.insert(sockets,{ "", "Large" })
 	end
 	return sockets
@@ -247,7 +248,7 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD/Ver2/Bot_1S_AD.Bot_1S_AD'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets =MySockets(my_num_sockets-1, {
+	sockets =MySockets(my_num_sockets - my_num_components, {
 		{ "Small1", "Large"    },
 	}),
 	--	placement = "Max",
@@ -329,7 +330,7 @@ data.visuals.v_bot_1s_adw_my = { -- Engineer
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets =MySockets(my_num_sockets, {
+	sockets =MySockets(my_num_sockets - my_num_components, {
 		{ "Small1", "Large"    },
 	}),
 	--	placement = "Max",
@@ -360,7 +361,7 @@ MyFrame:RegisterFrame("f_carrier_bot_my", { -- Runner 12
 
 data.visuals.v_carrier_bot_my = { -- Runner
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Carrier_A.Bot_Carrier_A'",
-	sockets =MySockets(my_num_sockets),
+	sockets =MySockets(),
 }
 
 MyFrame:RegisterFrame("f_bot_2m_as_my", { -- 본부 이동
@@ -404,7 +405,7 @@ data.visuals.v_base2x2_as = {
 	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_2x2_AD/Ver2/Building_2x2_AD.Building_2x2_AD'",
 	placement = "Max",
 	tile_size = { 3, 3},
-	sockets =MySockets( 10,{
+	sockets =MySockets( my_num_sockets,{
 		{ "Medium1", "Medium"  },
 		{ "Medium2", "Medium"  },
 	}),
@@ -452,7 +453,7 @@ data.visuals.v_base1 = {
 	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
 	placement = "Max",
 	tile_size = { 1, 1},
-	sockets = MySockets(0, {
+	sockets = MySockets(1, {
 		{ "small1", "Large" },
 	}),
 	destroy_effect = "fx_digital",
@@ -462,7 +463,7 @@ data.visuals.v_base12 = {
 	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_D.Building_1x1_D'",
 	placement = "Max",
 	tile_size = { 1, 1},
-	sockets =MySockets(11, {
+	sockets =MySockets(my_num_sockets, {
 		{ "small1", "Large" },
 	}),
 	destroy_effect = "fx_digital",
@@ -560,7 +561,7 @@ data.visuals.v_base1x1_12 = {
 	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_1x1_F.Building_1x1_F'",
 	placement = "Max",
 	tile_size = { 1, 1},
-	sockets =MySockets(12),
+	sockets =MySockets(),
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 }
@@ -587,7 +588,7 @@ data.visuals.v_large_power_relay_my = {
 	mesh = "StaticMesh'/Game/Meshes/BaseBuildings/Component_PowerRelay_01_L.Component_PowerRelay_01_L'",
 	placement = "Max",
 	tile_size = { 1, 1},
-	sockets =MySockets(12),
+	sockets =MySockets(),
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 }
