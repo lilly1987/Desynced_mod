@@ -3,11 +3,12 @@ local new_unlocks = { }
 local my_num_hp = 10000 -- 최대 10000
 local my_num_power = 10000 --2147483647  -- 배터리
 local my_num_power2 = 100000000 --2147483647  -- 배터리 발전기
-local my_num_sockets_def = 3 --2147483647
-local my_num_sockets = 12-my_num_sockets_def --2147483647
+local my_num_sockets_max = 12
+local my_num_sockets_def = 0 --2147483647
+local my_num_sockets = my_num_sockets_max-my_num_sockets_def --2147483647
 local my_num_components = 6 --2147483647
-local my_num_components_Engineer = 9 --2147483647
-local my_num_components_building = 8 --2147483647
+local my_num_components_Engineer = my_num_sockets_max -my_num_sockets_def --2147483647
+local my_num_components_building = my_num_sockets_max -my_num_sockets_def - 1 --2147483647
 
 local my_component_boost = 900 -- +%
 local my_miner_range = 32 --2147483647
@@ -23,9 +24,9 @@ local my_components = { -- 공용 넣을것
 			{ "c_repairer_small_aoe_my", "hidden" },
 			{ "c_repairkit_my", "hidden" },			
 			
-			{ "c_turret_energy", "hidden" }, -- 자리 차지
-			{ "c_turret_plasma", "hidden" }, -- 자리 차지
-			{ "c_turret_physical", "hidden" }, -- 자리 차지 
+			{ "c_turret_energy", "hidden" }, -- 
+			{ "c_turret_plasma", "hidden" }, -- 
+			{ "c_turret_physical", "hidden" }, --
 			
 			{ "c_portablecrane_my", "hidden" },
 			
@@ -76,6 +77,7 @@ function MyMake(faction,x,y) --본부
 	{"d","d","d","d","s"},
 	{"d","d","d","d","b"},
 	{"","","c","",""},
+	{"","","","","r"},
 	}
 	local t={
 		c="center",
@@ -84,7 +86,7 @@ function MyMake(faction,x,y) --본부
 		d={entity="f_bot_1s_adw_my2",cnt=10},
 		-- v3={entity="f_bot_1s_adw_my_extractor",cnt=10},
 		b={entity="f_bot_1s_adw_my_blight",cnt=10},
-		v5={entity="f_carrier_bot_my",cnt=100},
+		r={entity="f_carrier_bot_my",cnt=100},
 	}
 	-- 중심점 찾기
 	local cx, cy = 0, 0
@@ -877,6 +879,7 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_energy",{
 	visual = "v_turret_m",
 	activation = "OnFirstRegisterChange|OnTrustChange",
 	action_tooltip = action_tooltip_set_target,
+	-- registers = false,
 	registers = {
 		{ type = "entity", tip = "Preferred Target", ui_icon = "icon_target", click_action = true, filter = 'entity' },
 		{ read_only = true, tip = "Current Target", click_action = true },
@@ -885,7 +888,8 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_energy",{
 	-- production_recipe = CreateProductionRecipe({ circuit_board = 1, energized_plate = 5, crystal = 10 }, { c_assembler = 5 }),
 	on_add = on_add_charge,
 	on_remove = on_remove_clear_extra_data,
-	get_ui = true,
+	-- get_ui = true,
+	get_ui = false,
 
 	trigger_radius = my_Turret_radius,
 	attack_radius = my_Turret_radius,
@@ -918,7 +922,8 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_plasma",{
 	-- production_recipe = CreateProductionRecipe({ circuit_board = 1, energized_plate = 5, crystal = 10 }, { c_assembler = 5 }),
 	on_add = on_add_charge,
 	on_remove = on_remove_clear_extra_data,
-	get_ui = true,
+	-- get_ui = true,
+	get_ui = false,
 
 	trigger_radius = my_Turret_radius,
 	attack_radius = my_Turret_radius,
@@ -951,7 +956,8 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_physical",{
 	-- production_recipe = CreateProductionRecipe({ circuit_board = 1, energized_plate = 5, crystal = 10 }, { c_assembler = 5 }),
 	on_add = on_add_charge,
 	on_remove = on_remove_clear_extra_data,
-	get_ui = true,
+	-- get_ui = true,
+	get_ui = false,
 
 	trigger_radius = my_Turret_radius,
 	attack_radius = my_Turret_radius,
@@ -1096,6 +1102,10 @@ MyComp:FindComponent("c_large_power_relay"):RegisterComponent("c_large_power_rel
 	production_recipe = CreateProductionRecipe({ c_power_relay = 1, ldframe = 10, refined_crystal = 10 }, { c_assembler = 60 }),
 })
 
+-- local c_uplink=MyComp:FindComponent("c_uplink")
+-- c_uplink.get_ui = false
+-- c_uplink.registers = {}
+-- c_uplink.is_missing_ingredient_register = {}
 
 for _, v in ipairs(new_unlocks) do -- 잠금 해제
     table.insert(data.techs.t_robot_tech_basic.unlocks, v)
