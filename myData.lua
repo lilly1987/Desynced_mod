@@ -3,9 +3,10 @@ local new_unlocks = { }
 local my_num_hp = 10000 -- 최대 10000
 local my_num_power = 10000 --2147483647  -- 배터리
 local my_num_power2 = 100000000 --2147483647  -- 배터리 발전기
-local my_num_sockets_def = 4 --2147483647
+local my_num_sockets_def = 3 --2147483647
 local my_num_sockets = 12-my_num_sockets_def --2147483647
 local my_num_components = 6 --2147483647
+local my_num_components_Engineer = 9 --2147483647
 local my_num_components_building = 8 --2147483647
 
 local my_component_boost = 900 -- +%
@@ -72,21 +73,18 @@ function MySockets(max_cnt,sockets)
 end
 function MyMake(faction,x,y) --본부
 	local p={
-	{"v2","v2","","","s"},
-	{"v2","v2","","",""},
-	{"v2","v2","","",""},
-	{"v2","v2","","",""},
-	{"","","c","v6","v5"},
+	{"d","d","d","d","s"},
+	{"d","d","d","d","b"},
+	{"","","c","",""},
 	}
 	local t={
 		c="center",
 		s={entity="f_bot_1s_as_my",cnt=10},
 		-- v2={entity="f_bot_1s_adw_my",cnt=10},
-		v2={entity="f_bot_1s_adw_my2",cnt=10},
+		d={entity="f_bot_1s_adw_my2",cnt=10},
 		-- v3={entity="f_bot_1s_adw_my_extractor",cnt=10},
-		v4={entity="f_bot_1s_adw_my_blight",cnt=10},
+		b={entity="f_bot_1s_adw_my_blight",cnt=10},
 		v5={entity="f_carrier_bot_my",cnt=100},
-		v6={entity="c_fabricator_my",cnt=1},
 	}
 	-- 중심점 찾기
 	local cx, cy = 0, 0
@@ -170,7 +168,7 @@ function MyMake(faction,x,y) --본부
 end
 function FreeplaySpawnPlayer(faction, loc)
 	-- lander bot
-	local lander = Map.CreateEntity(faction, "f_bot_2m_as_my")
+	local lander = Map.CreateEntity(faction, "f_bot_2m_as_my") -- 본부 이동
 	lander:AddComponent("c_deployment_my", "hidden")
 	lander:AddComponent("c_power_cell_my", "hidden")
 	-- lander:AddItem("c_fabricator", 1)
@@ -367,7 +365,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my2", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my2",
-	components =MyComponents("c_extractor_my2",8, {
+	components =MyComponents("c_extractor_my2",my_num_components_Engineer, {
 	-- components = {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
@@ -378,8 +376,8 @@ data.visuals.v_bot_1s_adw_my2 = { -- Engineer
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets =MySockets(my_num_sockets - 8, {
-		{ "Small1", "Large"    },
+	sockets =MySockets(my_num_sockets - my_num_components_Engineer, {
+		-- { "Small1", "Large"    },
 	}),
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
@@ -403,7 +401,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components = MyComponents("c_adv_miner_my",my_num_components, {
+	components = MyComponents("c_adv_miner_my",my_num_components_Engineer, {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
@@ -426,7 +424,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components = MyComponents("c_extractor_my",my_num_components, {
+	components = MyComponents("c_extractor_my",my_num_components_Engineer, {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
@@ -449,7 +447,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_blight", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components = MyComponents("c_blight_extractor_my",my_num_components, {
+	components = MyComponents("c_blight_extractor_my",my_num_components_Engineer, {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
@@ -460,8 +458,8 @@ data.visuals.v_bot_1s_adw_my = { -- Engineer
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets =MySockets(my_num_sockets - my_num_components, {
-		{ "Small1", "Large"    },
+	sockets =MySockets(my_num_sockets - my_num_components_Engineer, {
+		-- { "Small1", "Large"    },
 	}),
 	--	placement = "Max",
 	move_effect = "fx_move_bot",
@@ -492,7 +490,7 @@ MyFrame:RegisterFrame("f_carrier_bot_my", { -- Runner 12
 
 data.visuals.v_carrier_bot_my = { -- Runner 운반 로봇
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Carrier_A.Bot_Carrier_A'",
-	sockets =MySockets(),
+	sockets =MySockets(my_num_sockets-1),
 }
 
 MyFrame:RegisterFrame("f_bot_2m_as_my", { -- 본부 이동
@@ -714,8 +712,8 @@ local f_building_my = {  -- 건물 제작기 일괄
 	'c_human_factory_robots',
 	'c_human_science_analyzer_robots',
 	'c_human_refinery', -- 인류 정제기
-	'c_human_aicenter', -- 멀티모달 AI 센터
-	'c_human_factory', -- 인류의 공장
+	'c_human_refinery', -- 멀티모달 AI 센터
+	'c_human_refinery', -- 인류의 공장
 }
 for key, value in pairs(f_building_my) do -- 제작기 일괄
 	print(key, value)
