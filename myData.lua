@@ -6,6 +6,7 @@ local my_num_power2 = 100000000 --2147483647  -- 배터리 발전기
 local my_num_sockets_def = 3 --2147483647
 local my_num_sockets = 12-my_num_sockets_def --2147483647
 local my_num_components = 6 --2147483647
+local my_num_components_building = 8 --2147483647
 
 local my_component_boost = 900 -- +%
 local my_miner_range = 32 --2147483647
@@ -341,7 +342,7 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD/Ver2/Bot_1S_AD.Bot_1S_AD'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets =MySockets(my_num_sockets - my_num_components, {
+	sockets =MySockets(my_num_sockets - 2, {
 		{ "Small1", "Large"    },
 	}),
 	--	placement = "Max",
@@ -601,7 +602,7 @@ data.visuals.v_base12 = {
 }
 
 
-local f_building_my = {  -- 제작기 일괄
+local f_building_my = {  -- 건물 제작기 일괄
 	'c_fabricator',
 	'c_assembler',
 	'c_refinery',
@@ -633,7 +634,7 @@ for key, value in pairs(f_building_my) do -- 제작기 일괄
 			texture = comp.texture,
 			trigger_channels = "building",
 			visual = "v_base2"..value,--
-			components =MyComponents(value,my_num_components,{
+			components =MyComponents(value,my_num_components_building,{
 				{ "c_uplink", "hidden" }, -- 자리 차지
 			}),
 		})
