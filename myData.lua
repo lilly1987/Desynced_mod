@@ -3,7 +3,7 @@ local new_unlocks = { }
 local my_num_hp = 10000 -- 최대 10000
 local my_num_power = 10000 --2147483647  -- 배터리
 local my_num_power2 = 100000000 --2147483647  -- 배터리 발전기
-local my_num_sockets = 12-7 --2147483647
+local my_num_sockets = 12-8 --2147483647
 local my_num_components = 2 --2147483647
 
 local my_component_boost = 900 -- +%
@@ -26,9 +26,10 @@ local my_components = { -- 공용 넣을것
 			
 			{ "c_portablecrane_my", "hidden" },
 			
-			{ "c_adv_miner_my", "hidden" },
-			{ "c_extractor_my", "hidden" },
-			{ "c_blight_extractor_my", "hidden" },
+			-- { "c_adv_miner_my", "hidden" },
+			-- { "c_extractor_my", "hidden" },
+			-- { "c_blight_extractor_my", "hidden" },
+			{ "c_extractor_my2", "hidden" },
 			
 		{ "c_uplink", "hidden" },
 			
@@ -36,10 +37,19 @@ local my_components = { -- 공용 넣을것
 
 -- data.brushes["component_bg_my"]={ "my/my.png", slice = 0.3 }
 -- utilities.lua
-function GetComponentRaceBG(race,bg)
-	return race and comp_race_image[race] or "component_bg"
+-- function GetComponentRaceBG(race,bg)
+	-- return race and comp_race_image[race] or "component_bg"
+-- end
+function MySetMining_recipe(key)
+	data.items.metalore.mining_recipe[key] = 1
+	data.items.crystal.mining_recipe[key] = 1
+	data.items.silica.mining_recipe[key] = 1
+	data.items.blight_crystal.mining_recipe[key] = 1
+	
+	data.items.laterite.mining_recipe[key] = 1 -- 홍토
+	data.items.obsidian.mining_recipe[key] = 1 -- 흑요석
+	data.items.blight_extraction.extracted_by[key]=true
 end
-
 function MyComponents(key,cnt,components)
 	components=components or {}
 	for i = 1, cnt do
@@ -927,7 +937,7 @@ data.items.crystal.mining_recipe.c_adv_miner_my = 1
 data.items.silica.mining_recipe.c_adv_miner_my = 1
 data.items.blight_crystal.mining_recipe.c_adv_miner_my = 1
 MyComp:FindComponent("c_extractor"):RegisterComponent("c_extractor_my", {
-	attachment_size = "Medium", race = "human", index = 301, name = "Laser Extractor",
+	attachment_size = "Small", race = "human", index = 301, name = "Laser Extractor",
 	texture = "Main/textures/icons/components/Component_LaserExtractor_01_M.png",
 	desc = "Laser that mines <hl>laterite</> and <hl>obsidian</>",
 	power = 0,
@@ -953,6 +963,36 @@ MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor
 	miner_range = my_miner_range,
 })
 data.items.blight_extraction.extracted_by.c_blight_extractor_my=true
+MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_plasma_bloom_comp_my", {
+	attachment_size = "Large", race = "alien", index = 5005, name = "Plasma Bloom Component",
+	texture = "Main/textures/icons/components/Component_PlasmaBloom_01_M.png",
+	desc = "Alien food production",
+	slots = { anomaly = 2 },
+	visual = "v_PlasmaBloom_01_l",
+	production_effect = "fx_alien_liquid",
+	--effect = "fx_alien_feeder",
+	effect_socket = "fx",
+	power = -30,
+	extracts = "blight_plasma",
+	extraction_time = 1,
+	production_recipe = CreateProductionRecipe({ shaped_obsidian = 10, energized_artifact = 1, hdframe = 20 }, { c_adv_alien_factory = 150, }),
+})
+-- data.items.blight_plasma.extracted_by.c_plasma_bloom_comp_my=true
+MyComp:FindComponent("c_extractor"):RegisterComponent("c_extractor_my2", {
+	attachment_size = "Small", race = "human", index = 301, name = "Laser Extractor",
+	texture = "Main/textures/icons/components/Component_LaserExtractor_01_M.png",
+	desc = "Laser that mines <hl>laterite</> and <hl>obsidian</>",
+	power = 0,
+	visual = "v_laserextractor_01_m",
+	miner_effect = "fx_extractor",
+	production_recipe = CreateProductionRecipe({ micropro = 1, transformer = 1, smallreactor = 1 }, { c_advanced_assembler = 40, c_human_factory_robots = 30 }),
+	on_remove = on_remove_clear_extra_data_keep_resimulated,
+	miner_range = my_miner_range,
+	extracts = "blight_extraction",
+	extraction_time = 1,
+	activation = "Always",
+})
+MySetMining_recipe("c_extractor_my2")
 
 MyComp:FindComponent("c_repairer_small_aoe"):RegisterComponent("c_repairer_small_aoe_my",  {
 	attachment_size = "Hidden", race = "robot", index = 143, name = "Small AOE Repair Component",

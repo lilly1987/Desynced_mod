@@ -1,6 +1,6 @@
 local SocketBox_layout<const> =
 [[
-	<Canvas dragtype=COMPONENT width=38 height=38>
+	<Canvas dragtype=COMPONENT width=48 height=48>
 		<Image id=race_img image=component_bg dock=fill/>
 		<Image id=image dock=fill margin=3 hide_no_image=true/>
 		<Box id=framebox bg=component_base dock=fill blocking=false>
@@ -14,7 +14,7 @@ local ComponentBlock_layout<const> =
 	<Box padding=5 margin_bottom=2>
 		<HorizontalList child_align=top>
 			<Canvas width=24 id=cnvs on_drop={cnvs_on_drop} tooltip={cnvs_tooltip}>
-				<Image id=hlimg color=ui_bg width=22 height=38/>
+				<Image id=hlimg color=ui_bg width=22 height=56/>
 				<Text id=sizetext textalign=center width=0 x=11 y=36/>
 				<Image id=progressbg image="Main/skin/Assets/component_progress.png" width=20 height=20 x=1 y=2 color=#808080A0 hidden=true/>
 				<ProgressCircle id=progress image="Main/skin/Assets/component_progress.png" width=20 height=20 x=1 y=2 hidden=true/>
@@ -48,8 +48,8 @@ local ComponentColumn_layout<const> =
 ]]
 
 local ComponentBlock<const> = {}
-UI.Register("ComponentBlock", ComponentBlock_layout, ComponentBlock, true)
-UI.Register("ComponentColumn", ComponentColumn_layout, ComponentBlock, true)
+UI.Register("ComponentBlock", ComponentBlock_layout, ComponentBlock)
+UI.Register("ComponentColumn", ComponentColumn_layout, ComponentBlock)
 
 function ComponentBlock:construct()
 	local sz = self.socket_size
@@ -98,7 +98,7 @@ function ComponentBlock:cnvs_on_drop(cnvs, payload, cursor)
 end
 
 local SocketBox<const> = {}
-UI.Register("SocketBox", SocketBox_layout, SocketBox, true)
+UI.Register("SocketBox", SocketBox_layout, SocketBox)
 
 local sockimg<const> = {
 	Large    = "icon_l_socket",
@@ -294,7 +294,7 @@ function SocketBox:on_drop(payload, cursor)
 end
 
 local SocketList = {}
-UI.Register("SocketList", "<Wrap child_padding=3 wrapsize=756/>", SocketList, true)
+UI.Register("SocketList", "<Wrap child_padding=3 wrapsize=756/>", SocketList)
 
 function SocketList:construct()
 	local entity = self.entity

@@ -10,11 +10,12 @@
         "Data": {
             "name": "My Mod Data",
             "entry": "data.lua",
-            "dependencies": [ "Main/Data" ],
+            "dependencies": [ "Main/Data","Main/UI","My/UI" ],
             "type": "Addon"
         },
         "UI": {
             "name": "My Mod UI",
+            "dependencies": [ "Main/UI" ],
             "entry": "ui.lua"
         }
     }
