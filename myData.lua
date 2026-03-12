@@ -364,14 +364,26 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my2", { -- Engineer 10+2
 	flags = "AnimateRoot",
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
-	visual = "v_bot_1s_adw_my",
-	components =MyComponents("c_extractor_my2",my_num_components, {
+	visual = "v_bot_1s_adw_my2",
+	components =MyComponents("c_extractor_my2",10, {
 	-- components = {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
 	}),
 })
+data.visuals.v_bot_1s_adw_my2 = { -- Engineer
+	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
+	light_radius = 5,
+	light_color = bot_light_color,
+	sockets =MySockets(my_num_sockets - 10, {
+		{ "Small1", "Large"    },
+	}),
+	--	placement = "Max",
+	move_effect = "fx_move_bot",
+	destroy_effect = "fx_digital",
+}
+
 MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer 10+2
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
 	texture = "Main/textures/icons/frame/bot_1s_adw.png",
