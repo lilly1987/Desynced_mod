@@ -1,13 +1,35 @@
 local new_unlocks = { }
 local my_component_boost = 900 -- +%
 local my_num_hp = 10000 -- 최대 10000
-local my_num_power = 50000 --2147483647
-local my_num_power2 = 100000000 --2147483647
-local my_components = { -- 넣을것
-			{ "c_higrade_capacitor_my", "hidden" } ,
+local my_num_power = 50000 --2147483647  -- 배터리
+local my_num_power2 = 100000000 --2147483647  -- 배터리 발전기
+local my_miner_range = 32 --2147483647
+local my_Turret_radius = 32 --2147483647
+local my_visibility_range = 32 --2147483647
+local my_movement_speed = 512 --2147483647
+
+local my_components = { -- 공용 넣을것
+			{ "c_higrade_capacitor_my", "hidden" } ,  -- 배터리
+			{ "c_integrated_power_cell_my", "hidden" } ,  -- 
+			{ "c_large_power_relay_my", "hidden" },
+			
 			{ "c_repairer_small_aoe_my", "hidden" },
+			{ "c_repairkit_my", "hidden" },			
+			
+			{ "c_turret_energy", "hidden" },
+			{ "c_turret_plasma", "hidden" },
+			{ "c_turret_physical", "hidden" },
+			
 			{ "c_portablecrane_my", "hidden" },
+			
+			{ "c_adv_miner_my", "hidden" },
+			{ "c_extractor_my", "hidden" },
+			{ "c_blight_extractor_my", "hidden" },
+			
+		{ "c_uplink", "hidden" },
+			
 }
+
 function MyComponents(key,cnt,components)
 	components=components or {}
 	for i = 1, cnt do
@@ -22,28 +44,28 @@ function MySockets(cnt,sockets)
 	end
 	return sockets
 end
-function MyMake(faction,x,y)
+function MyMake(faction,x,y) --본부
 	for i = 1, 16 do
 			local car = Map.CreateEntity(faction, "f_bot_1s_as_my")-- Scout
 			car:Place(x-10, y)
 			car:PlayEffect("fx_digital_in")
 	end
 	for i = 1, 64 do
-			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my")
+			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my") -- 4
 			car:Place(x, y-10)
 			car:PlayEffect("fx_digital_in")
 	end
 	for i = 1, 16 do
-			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor")
+			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor") -- 2
 			car:Place(x-10, y-10)
 			car:PlayEffect("fx_digital_in")
 	end
-	for i = 1, 16 do
-			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_blight")
+	for i = 1, 8 do
+			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_blight") --
 			car:Place(x+10, y-10)
 			car:PlayEffect("fx_digital_in")
 	end
-	for i = 1, 16 do
+	for i = 1, 64 do
 			local car = Map.CreateEntity(faction, "f_carrier_bot_my")
 			car:Place(x+10, y)
 			car:PlayEffect("fx_digital_in")
@@ -96,9 +118,18 @@ MyFrame = {
 function MyFrame:RegisterFrame(id, frame)
 	table.insert(new_unlocks,id)
 	frame["start_disconnected"]= false
-	frame["component_boost"]= my_component_boost
-	frame["health_points"]= my_num_hp -- 10만 안됨)
-	frame["visibility_range"]= 128
+	if frame["component_boost"] ~= nil and frame["component_boost"] < my_component_boost then
+		frame["component_boost"]= my_component_boost
+	end
+	if frame["health_points"] ~= nil and frame["health_points"] < my_num_hp then
+		frame["health_points"]= my_num_hp
+	end
+	if frame["visibility_range"] ~= nil and frame["visibility_range"] < my_visibility_range then
+		frame["visibility_range"]= my_visibility_range
+	end
+	if frame["movement_speed"] ~= nil and frame["movement_speed"] < my_movement_speed then
+		frame["movement_speed"]= my_movement_speed
+	end
 	frame["slots"]= { storage = 20, gas = 2 , anomaly = 2 , virus = 2}
 	if frame["power"] ~= nil and frame["power"] < 0 then
 		frame["power"]= 0
@@ -109,9 +140,6 @@ function MyFrame:RegisterFrame(id, frame)
 	if frame.construction_recipe ~= nil then
 			frame["construction_recipe"] = CreateConstructionRecipe({}, 1)
 	end
-	if frame.movement_speed ~= nil then
-			frame["movement_speed"] = 128
-	end	
 	if frame.components ~= nil and not frame.MyComponentsSkip then
 		for key, value in pairs(my_components) do 
 			table.insert(frame.components,value)
@@ -470,7 +498,7 @@ for key, value in pairs(f_building_my) do -- 제작기 일괄
 			texture = comp.texture,
 			trigger_channels = "building",
 			visual = "v_base2"..value,--
-			components =MyComponents(value,10),
+			components =MyComponents(value,2,{}),
 		})
 		
 		if comp.visual then
@@ -501,10 +529,27 @@ MyFrame:RegisterFrame("f_building1x1f_my", {
 	trigger_channels = "building",
 	visual = "v_base1x1_12",
 	components = {
-		{ "c_portable_relay_my", "auto" },
+		-- { "c_portable_relay_my", "auto" },
 		{ "c_uplink", "auto" },
 	},
 	
+})
+MyFrame:RegisterFrame("f_beacon_my", {
+	size = "Small", race = "robot", index = 1002, name = "Large Beacon",
+	health_points = 1,
+	minimap_color = { 0.5, 0.3, 1 },
+	visibility_range = 15,
+	slots = { storage = 2, },
+	texture = "Main/textures/icons/frame/deployment_beacon_1.png",
+	construction_recipe = CreateConstructionRecipe({ beacon_frame = 5, circuit_board = 1 }, 15),
+	trigger_channels = "building",
+	visual = "v_beacon_l",
+	power = -5,
+	components = {
+		{ "c_internal_crane2", "hidden" },
+		{ "c_portable_relay_my", "auto" },
+	},
+	no_foundations = true,
 })
 
 data.visuals.v_base1x1_12 = {
@@ -516,18 +561,53 @@ data.visuals.v_base1x1_12 = {
 	place_effect = "fx_digital_in",
 }
 
+MyFrame:RegisterFrame("f_large_power_relay_my", {
+	size = "Small", race = "robot", index = 111, name = "Large Power Field",
+	desc = "A simple storage building. Automatically transfer items here through the logistics network by setting the Store register of other units to this building.",
+	minimap_color = { 0.8, 0.8, 0.8 },
+	visibility_range = 10,
+	-- slotsMySkip=true,
+	slots = { storage = 8 },
+	health_points = 100, --150
+	construction_recipe = CreateConstructionRecipe({ metalbar = 10, crystal = 10 }, 55),
+	texture = "Main/textures/icons/components/component_powerrelay_01_l.png",
+	trigger_channels = "building",
+	visual = "v_large_power_relay_my",
+	components = {
+		{ "c_large_power_relay_my", "auto" },
+		{ "c_uplink", "auto" },
+	},
+	
+})
+data.visuals.v_large_power_relay_my = {
+	mesh = "StaticMesh'/Game/Meshes/BaseBuildings/Component_PowerRelay_01_L.Component_PowerRelay_01_L'",
+	placement = "Max",
+	tile_size = { 1, 1},
+	sockets =MySockets(12),
+	destroy_effect = "fx_digital",
+	place_effect = "fx_digital_in",
+}
 
-MyComp:RegisterComponent("c_power_cell_my", {
+local c_power_cell_my = MyComp:RegisterComponent("c_power_cell_my", { -- 발전기
 	attachment_size = "Hidden", race = "robot", index = 111, name = "Power Cell",
 	texture = "Main/textures/icons/components/powercell.png",
 	desc = "Transmits <hl>100000000</> power per second over a small area",
 	visual = "v_generic_i",
-	power = 100000000,
+	power = my_num_power2,
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
-	transfer_radius = 128,
+	transfer_radius = 32,
 	registers = { { read_only = true, tip = "Power Production" } },
 	-- get_ui = true,
 })
+c_power_cell_my:RegisterComponent("c_integrated_power_cell_my", {
+	attachment_size = "Hidden", race = "robot", index = 1012, name = "Integrated Power Cell",
+	desc = "Power system built directly into structure",
+	texture = "Main/textures/icons/hidden/integrated_power_cell.png",
+	power = my_num_power2,
+	transfer_radius = 32,
+	production_recipe = false,
+})
+
 MyComp:RegisterComponent("c_higrade_capacitor_my", {
 	attachment_size = "Hidden", race = "robot", index = 115, name = "Hi-Grade Capacitor",
 	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
@@ -539,7 +619,7 @@ MyComp:RegisterComponent("c_higrade_capacitor_my", {
 	-- get_ui = battery_get_ui,
 	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
 })
-MyComp:RegisterComponent("c_higrade_capacitor_my2", {
+MyComp:RegisterComponent("c_higrade_capacitor_my2", { -- 배터리
 	attachment_size = "Hidden", race = "robot", index = 115, name = "Hi-Grade Capacitor",
 	texture = "Main/textures/icons/hidden/higrade_capacitor.png",
 	visual = "v_generic_i",
@@ -551,7 +631,7 @@ MyComp:RegisterComponent("c_higrade_capacitor_my2", {
 	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
 })
 
-MyComp:FindComponent("c_deploy_construction").on_update = function(self, comp, cause)
+MyComp:FindComponent("c_deploy_construction").on_update = function(self, comp, cause) --본부
 
 	local ed = comp.extra_data
 	local bp = ed.bp
@@ -636,7 +716,7 @@ MyComp:FindComponent("c_deploy_construction").on_update = function(self, comp, c
 		end
 	end)
 end
-MyComp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{
+MyComp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{ --본부
 	attachment_size = "Hidden", race = "robot", index = 142, name = "Deployment",
 	texture = "Main/textures/icons/hidden/integrated_deployer.png",
 	desc = "Initial planetary colonization support package, cannot deploy while frame is active",
@@ -666,8 +746,8 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_energy",{
 	on_remove = on_remove_clear_extra_data,
 	get_ui = true,
 
-	trigger_radius = 128,
-	attack_radius = 128,
+	trigger_radius = my_Turret_radius,
+	attack_radius = my_Turret_radius,
 
 	trigger_channels = "bot|building|bug",
 
@@ -699,8 +779,8 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_plasma",{
 	on_remove = on_remove_clear_extra_data,
 	get_ui = true,
 
-	trigger_radius = 128,
-	attack_radius = 128,
+	trigger_radius = my_Turret_radius,
+	attack_radius = my_Turret_radius,
 
 	trigger_channels = "bot|building|bug",
 
@@ -732,8 +812,8 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_physical",{
 	on_remove = on_remove_clear_extra_data,
 	get_ui = true,
 
-	trigger_radius = 128,
-	attack_radius = 128,
+	trigger_radius = my_Turret_radius,
+	attack_radius = my_Turret_radius,
 
 	trigger_channels = "bot|building|bug",
 
@@ -759,7 +839,7 @@ MyComp:FindComponent("c_adv_miner"):RegisterComponent("c_adv_miner_my",{
 	production_recipe = CreateProductionRecipe({ fused_electrodes = 2, icchip = 2, optic_cable = 5 }, { c_assembler = 50 }),
 	activation = "OnFirstRegisterChange",
 	miner_effect = "fx_miner",
-	miner_range = 128,
+	miner_range = my_miner_range,
 	on_remove = on_remove_clear_extra_data_keep_resimulated,
 })
 MyComp:FindComponent("c_extractor"):RegisterComponent("c_extractor_my", {
@@ -771,7 +851,7 @@ MyComp:FindComponent("c_extractor"):RegisterComponent("c_extractor_my", {
 	miner_effect = "fx_extractor",
 	production_recipe = CreateProductionRecipe({ micropro = 1, transformer = 1, smallreactor = 1 }, { c_advanced_assembler = 40, c_human_factory_robots = 30 }),
 	on_remove = on_remove_clear_extra_data_keep_resimulated,
-	miner_range = 128,
+	miner_range = my_miner_range,
 })
 MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor_my", {
 	attachment_size = "Small", race = "blight", index = 201, name = "Blight Extractor",
@@ -784,7 +864,7 @@ MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor
 	extracts = "blight_extraction",
 	extraction_time = 1,
 	activation = "Always",
-	miner_range = 128,
+	miner_range = my_miner_range,
 })
 
 MyComp:FindComponent("c_repairer_small_aoe"):RegisterComponent("c_repairer_small_aoe_my",  {
@@ -795,7 +875,7 @@ MyComp:FindComponent("c_repairer_small_aoe"):RegisterComponent("c_repairer_small
 
 	-- internal variable
 	power = -5,
-	trigger_radius = 128,
+	trigger_radius = 32,
 	repair = 2,   -- repair health per use
 })
 MyComp:FindComponent("c_repairkit"):RegisterComponent("c_repairkit_my", {
@@ -813,26 +893,33 @@ MyComp:FindComponent("c_repairkit"):RegisterComponent("c_repairkit_my", {
 	repair_fx = "fx_heal_unit",
 })
 
-MyComp:FindComponent("c_portablecrane"):RegisterComponent("c_portablecrane_my", {
+MyComp:FindComponent("c_portablecrane"):RegisterComponent("c_portablecrane_my", { -- 휴대용 운송기
 	attachment_size = "Hidden", race = "robot", index = 123, name = "Portable Transporter",
 	visual = "v_generic_i",
 	texture = "Main/textures/icons/components/portable_transporter.png",
 	power = 0,
 	desc = "Enables automatic transfer of inventory directly between adjacent units and buildings",
 	production_recipe = CreateProductionRecipe({ circuit_board = 5, wire = 1 }, { c_assembler = 50 }),
-	range = 128,
+	range = 512,
 })
-MyComp:FindComponent("c_portable_relay"):RegisterComponent("c_portable_relay_my", {
+MyComp:FindComponent("c_portable_relay"):RegisterComponent("c_portable_relay_my", { -- 전력망
 	attachment_size = "Internal", race = "robot", index = 112, name = "Portable Power Field",
 	desc = "Creates or expands your logistics network with a small area, transferring power to nearby units and buildings. Produces no power on its own. Most useful on a moveable unit given its short range.",
 	texture = "Main/textures/icons/components/powerrelay.png",
 	visual = "v_generic_i",
-	transfer_radius = 128,
+	transfer_radius = 32,
 	production_recipe = CreateProductionRecipe({ crystal = 1, metalbar = 5 }, { c_assembler = 60 }),
+})
+MyComp:FindComponent("c_large_power_relay"):RegisterComponent("c_large_power_relay_my", { -- 전력망
+	attachment_size = "Hidden", race = "human", index = 3011, name = "Large Power Field",
+	texture = "Main/textures/icons/components/component_powerrelay_01_l.png",
+	visual = "v_power_relay_01_l",
+	transfer_radius = 32,
+	production_recipe = CreateProductionRecipe({ c_power_relay = 1, ldframe = 10, refined_crystal = 10 }, { c_assembler = 60 }),
 })
 
 
-for _, v in ipairs(new_unlocks) do
+for _, v in ipairs(new_unlocks) do -- 잠금 해제
     table.insert(data.techs.t_robot_tech_basic.unlocks, v)
 end
 
@@ -843,7 +930,6 @@ for key, visual in pairs(data.visuals) do
         end
     end
 end
-
 for key, value in pairs(data.items) do
     if value.stack_size ~= nil and value.stack_size then
         value.stack_size = value.stack_size * 2
