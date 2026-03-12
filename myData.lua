@@ -11,9 +11,9 @@ local my_num_components_Engineer = my_num_sockets_max -my_num_sockets_def --2147
 local my_num_components_building = my_num_sockets_max -my_num_sockets_def - 1 --2147483647
 
 local my_component_boost = 900 -- +%
-local my_miner_range = 32 --2147483647
+local my_miner_range = 4 --2147483647
 local my_Turret_radius = 32 --2147483647
-local my_visibility_range = 32 --2147483647
+local my_visibility_range = 128 --2147483647
 local my_movement_speed = 512 --2147483647
 
 local my_components = { -- 공용 넣을것
@@ -597,7 +597,6 @@ MyComp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{ --본
 	deployment_frame = "f_landingpod_my",
 })
 
-
 local f_building_12=MyFrame:RegisterFrame("f_building_12", { -- 12
 	size = "Small", race = "robot", index = 101, name = "Building 1x1 12",
 	desc = "Basic 1x1 Building with Good Inventory space, but supports only one Small Component",
@@ -1052,7 +1051,7 @@ MyComp:FindComponent("c_portablecrane"):RegisterComponent("c_portablecrane_my", 
 	power = 0,
 	desc = "Enables automatic transfer of inventory directly between adjacent units and buildings",
 	production_recipe = CreateProductionRecipe({ circuit_board = 5, wire = 1 }, { c_assembler = 50 }),
-	range = 128,-- 128 초과 안됨?
+	range = 64,-- 128 초과 안됨?
 })
 MyComp:FindComponent("c_portable_relay"):RegisterComponent("c_portable_relay_my", { -- 전력망
 	attachment_size = "Internal", race = "robot", index = 112, name = "Portable Power Field",
@@ -1074,6 +1073,23 @@ MyComp:FindComponent("c_large_power_relay"):RegisterComponent("c_large_power_rel
 -- c_uplink.get_ui = false
 -- c_uplink.registers = {}
 -- c_uplink.is_missing_ingredient_register = {}
+
+MyFrame:FindFrame("f_building_sim"):RegisterFrame("f_building_sim_my", {
+	size = "Special", race = "robot", index = 102, name = "Re-Simulator",
+	desc = "Reconstructs objects on a simulation level, charged via datacubes",
+	minimap_color = { 0.8, 0.8, 0.8 },
+	visibility_range = 30,
+	health_points = 3000, -- 400
+	slots = { storage = 4, },
+	construction_recipe = CreateConstructionRecipe({ circuit_board = 50, hdframe = 50, silicon = 50, crystal_powder = 50 }, 300),
+	texture = "Main/textures/icons/frame/3x3_SIM.png",
+	trigger_channels = "building",
+	visual = "v_building_sim",
+	components = {
+		{ "c_resimulator", "hidden" },
+	},
+})
+
 
 for _, v in ipairs(new_unlocks) do -- 잠금 해제
     table.insert(data.techs.t_robot_tech_basic.unlocks, v)
