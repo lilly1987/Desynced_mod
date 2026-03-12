@@ -3,7 +3,7 @@ local new_unlocks = { }
 local my_num_hp = 10000 -- 최대 10000
 local my_num_power = 10000 --2147483647  -- 배터리
 local my_num_power2 = 100000000 --2147483647  -- 배터리 발전기
-local my_num_sockets_def = 3 --2147483647
+local my_num_sockets_def = 4 --2147483647
 local my_num_sockets = 12-my_num_sockets_def --2147483647
 local my_num_components = 6 --2147483647
 local my_num_components_building = 8 --2147483647
@@ -524,7 +524,7 @@ MyFrame:RegisterFrame("f_landingpod_my", { -- 본부 건물
 	health_points = 10000, -- 500
 	texture = "Main/textures/icons/frame/building_2x2_ad.png",
 	trigger_channels = "building",
-	visual = "v_base2x2_as",
+	visual = "v_base2x2_as_my",
 	components = {
 		{ "c_carrier_factory", "hidden" },
 	},
@@ -532,17 +532,115 @@ MyFrame:RegisterFrame("f_landingpod_my", { -- 본부 건물
 		Map.DropItemAt(x, y, "c_deployer", { bp = { frame = "f_landingpod_my" }, onetime = true }, true)
 	end,
 })
-data.visuals.v_base2x2_as = {
+data.visuals.v_base2x2_as_my = {
 	mesh = "StaticMesh'/Game/Meshes/RobotBuildings/Building_2x2_AD/Ver2/Building_2x2_AD.Building_2x2_AD'",
 	placement = "Max",
 	tile_size = { 3, 3},
-	sockets =MySockets( my_num_sockets,{
+	sockets =MySockets( my_num_sockets-1,{
 		{ "Medium1", "Medium"  },
 		{ "Medium2", "Medium"  },
 	}),
 	destroy_effect = "fx_digital",
 	place_effect = "fx_digital_in",
 }
+
+MyComp:FindComponent("c_deploy_construction").on_update = function(self, comp, cause) --본부
+
+	local ed = comp.extra_data
+	local bp = ed.bp
+
+	if cause & CC_FINISH_WORK ~= CC_FINISH_WORK then
+		-- Duration is 10 ticks via Deployer component and 30 via Lander Deployment component
+		comp:PlayWorkEffect("fx_transfer") -- active effect indicates construction is progressing
+		return comp:SetStateStartWork(bp and 1 or 3, false, true)
+	end
+
+	local lander = not bp and ed.lander
+	local frame_id = lander and lander:FindComponent("c_deployment", true).def.deployment_frame or (bp and bp.frame)
+	local temp = comp.owner
+	local faction, loc, rotation = temp.faction, temp.placed_location, temp.rotation
+	local x, y = loc.x, loc.y
+	if not faction:CanPlace(frame_id, x, y, rotation, bp and bp.visual or nil) then
+		-- Try again after 5 ticks
+		faction:OrderEntitiesToMoveAway(temp)
+		return comp:SetStateStartWork(TICKS_PER_SECOND)
+	end
+
+	-- Deployment is completing, signal c_deploy_construction:on_remove to not do anything anymore
+	comp.extra_data = nil
+
+	Map.Defer(function()
+		if not temp.exists then return end
+		local built = CreateFrameOrBlueprint(faction, (bp or data.frames[frame_id]), true, nil, nil, true, temp)
+		if not built then error("failed to spawn frame") end
+		--built:PlayEffect("fx_ui_BUILD_COMPLETE")
+
+		-- spawn foundations around entity if it's a building
+		CreateFoundationsForEntity(built, x, y, rotation)
+
+		if lander then
+			local lander_components = lander.components
+
+			-- If behavior was running before deployment, continue it for MakeBlueprintFromEntity below (will be immediately destroyed afterwards anyway)
+			for _,v in ipairs(lander_components) do
+				if v.base_id == "c_behavior" and v.has_extra_data and v.extra_data.debug == "c_deployment" then
+					DebugBehavior(v, "CONTINUE")
+				end
+			end
+
+			local lander_bp = MakeBlueprintFromEntity(lander) -- copy settings
+
+			-- move components and items from lander to building
+			for _,v in ipairs(lander_components) do
+				if v.base_id ~= "c_deployment" and v.id ~= "c_small_fusion_reactor" then
+					local comp_hidden, comp_id, comp_extra = v.is_hidden, v.id, (v.has_extra_data and v.extra_data or nil)
+					if comp_extra then v.extra_data = nil end
+					local newcomp = comp_hidden and built:AddComponent(comp_id, "hidden", comp_extra) or built:AddComponent(comp_id, comp_extra)
+					if not newcomp then built:AddItem(comp_id, comp_extra) end
+				end
+			end
+			for _,v in ipairs(lander.slots) do
+				if v.stack > 0 then
+					local item_extra = v.has_extra_data and v.extra_data or nil
+					if item_extra then v.extra_data = nil end
+					built:AddItem(v.id, v.stack, item_extra)
+				end
+			end
+
+			ApplyBlueprintToEntity(built, lander_bp) -- apply settings (register, logistics, locks)
+
+			-- destroy the deploy entity without dropping items
+			lander:Destroy(false)
+
+			if frame_id == "f_landingpod" or frame_id == "f_landingpod_my" then
+				FactionCount("built_landingpod", true, faction)
+
+				-- spawn 2 carriers
+				-- local car = Map.CreateEntity(faction, "f_carrier_bot")
+				-- car:Place(x, y)
+				-- car:PlayEffect("fx_digital_in")
+				-- car = Map.CreateEntity(faction, "f_carrier_bot")
+				-- car:Place(x, y)
+				-- car:PlayEffect("fx_digital_in")
+				
+				MyMake(faction,x, y)
+				
+			end
+		end
+	end)
+end
+MyComp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{ --본부
+	attachment_size = "Hidden", race = "robot", index = 142, name = "Deployment",
+	texture = "Main/textures/icons/hidden/integrated_deployer.png",
+	desc = "Initial planetary colonization support package, cannot deploy while frame is active",
+	visual = "v_generic_i",
+	activation = "OnFirstRegisterChange",
+	action_tooltip = "Deploy",
+	required_resources = { "crystal", "metalore" },
+	registers = { { tip = "Deploy Base", click_action = true, ui_icon = "icon_new", filter = 'coord' } },
+	deployment_frame = "f_landingpod_my",
+})
+
 
 local f_building_12=MyFrame:RegisterFrame("f_building_12", { -- 12
 	size = "Small", race = "robot", index = 101, name = "Building 1x1 12",
@@ -644,6 +742,9 @@ for key, value in pairs(f_building_my) do -- 제작기 일괄
 			if baseVis and baseVis.mesh then
 				v_base2:RegisterVisual("v_base2"..value,{
 					mesh = baseVis.mesh,
+					sockets =MySockets(my_num_sockets-my_num_components_building-1, {
+						-- { "small1", "Large" },
+					}),
 				})
 			else
 				print("Visual INFO: unable to find visual '"..tostring(comp.visual).."' for component '"..tostring(value).."'")
@@ -769,102 +870,6 @@ MyComp:RegisterComponent("c_higrade_capacitor_my2", { -- 배터리
 	--production_recipe = CreateProductionRecipe({ hdframe = 1, refined_crystal = 5 }, { c_assembler = 30 }),
 })
 
-MyComp:FindComponent("c_deploy_construction").on_update = function(self, comp, cause) --본부
-
-	local ed = comp.extra_data
-	local bp = ed.bp
-
-	if cause & CC_FINISH_WORK ~= CC_FINISH_WORK then
-		-- Duration is 10 ticks via Deployer component and 30 via Lander Deployment component
-		comp:PlayWorkEffect("fx_transfer") -- active effect indicates construction is progressing
-		return comp:SetStateStartWork(bp and 1 or 3, false, true)
-	end
-
-	local lander = not bp and ed.lander
-	local frame_id = lander and lander:FindComponent("c_deployment", true).def.deployment_frame or (bp and bp.frame)
-	local temp = comp.owner
-	local faction, loc, rotation = temp.faction, temp.placed_location, temp.rotation
-	local x, y = loc.x, loc.y
-	if not faction:CanPlace(frame_id, x, y, rotation, bp and bp.visual or nil) then
-		-- Try again after 5 ticks
-		faction:OrderEntitiesToMoveAway(temp)
-		return comp:SetStateStartWork(TICKS_PER_SECOND)
-	end
-
-	-- Deployment is completing, signal c_deploy_construction:on_remove to not do anything anymore
-	comp.extra_data = nil
-
-	Map.Defer(function()
-		if not temp.exists then return end
-		local built = CreateFrameOrBlueprint(faction, (bp or data.frames[frame_id]), true, nil, nil, true, temp)
-		if not built then error("failed to spawn frame") end
-		--built:PlayEffect("fx_ui_BUILD_COMPLETE")
-
-		-- spawn foundations around entity if it's a building
-		CreateFoundationsForEntity(built, x, y, rotation)
-
-		if lander then
-			local lander_components = lander.components
-
-			-- If behavior was running before deployment, continue it for MakeBlueprintFromEntity below (will be immediately destroyed afterwards anyway)
-			for _,v in ipairs(lander_components) do
-				if v.base_id == "c_behavior" and v.has_extra_data and v.extra_data.debug == "c_deployment" then
-					DebugBehavior(v, "CONTINUE")
-				end
-			end
-
-			local lander_bp = MakeBlueprintFromEntity(lander) -- copy settings
-
-			-- move components and items from lander to building
-			for _,v in ipairs(lander_components) do
-				if v.base_id ~= "c_deployment" and v.id ~= "c_small_fusion_reactor" then
-					local comp_hidden, comp_id, comp_extra = v.is_hidden, v.id, (v.has_extra_data and v.extra_data or nil)
-					if comp_extra then v.extra_data = nil end
-					local newcomp = comp_hidden and built:AddComponent(comp_id, "hidden", comp_extra) or built:AddComponent(comp_id, comp_extra)
-					if not newcomp then built:AddItem(comp_id, comp_extra) end
-				end
-			end
-			for _,v in ipairs(lander.slots) do
-				if v.stack > 0 then
-					local item_extra = v.has_extra_data and v.extra_data or nil
-					if item_extra then v.extra_data = nil end
-					built:AddItem(v.id, v.stack, item_extra)
-				end
-			end
-
-			ApplyBlueprintToEntity(built, lander_bp) -- apply settings (register, logistics, locks)
-
-			-- destroy the deploy entity without dropping items
-			lander:Destroy(false)
-
-			if frame_id == "f_landingpod" or frame_id == "f_landingpod_my" then
-				FactionCount("built_landingpod", true, faction)
-
-				-- spawn 2 carriers
-				-- local car = Map.CreateEntity(faction, "f_carrier_bot")
-				-- car:Place(x, y)
-				-- car:PlayEffect("fx_digital_in")
-				-- car = Map.CreateEntity(faction, "f_carrier_bot")
-				-- car:Place(x, y)
-				-- car:PlayEffect("fx_digital_in")
-				
-				MyMake(faction,x, y)
-				
-			end
-		end
-	end)
-end
-MyComp:FindComponent("c_deployment"):RegisterComponent("c_deployment_my",{ --본부
-	attachment_size = "Hidden", race = "robot", index = 142, name = "Deployment",
-	texture = "Main/textures/icons/hidden/integrated_deployer.png",
-	desc = "Initial planetary colonization support package, cannot deploy while frame is active",
-	visual = "v_generic_i",
-	activation = "OnFirstRegisterChange",
-	action_tooltip = "Deploy",
-	required_resources = { "crystal", "metalore" },
-	registers = { { tip = "Deploy Base", click_action = true, ui_icon = "icon_new", filter = 'coord' } },
-	deployment_frame = "f_landingpod_my",
-})
 
 MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_energy",{
 	attachment_size = "Hidden", race = "robot", index = 131, name = "Turret",
