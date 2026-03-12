@@ -23,6 +23,7 @@ local my_components = { -- 공용 넣을것
 			
 			{ "c_repairer_small_aoe_my", "hidden" },
 			{ "c_repairkit_my", "hidden" },			
+			{ "c_blight_shield_my", "hidden" },			
 			
 			{ "c_turret_energy", "hidden" }, -- 
 			{ "c_turret_plasma", "hidden" }, -- 
@@ -113,59 +114,12 @@ function MyMake(faction,x,y) --본부
 			end
 	end
 
-	
+	local f = Map.CreateEntity(faction, "f_building_12")-- Scout
+	f:Place(x+5, y+5)	
+	f:AddItem("circuit_board", 40)
+	f:AddItem("metalbar", 40)
+	f:AddItem("robot_datacube", 40)
 	-- for i = 1, 10 do
-			-- local car = Map.CreateEntity(faction, "f_bot_1s_as_my")-- Scout
-			-- car:Place(x+30, y+y1)
-			-- car:PlayEffect("fx_digital_in")
-	-- end
-	-- local y1=y-10*2
-	-- for i = 1, 10 do
-			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my") -- 4
-			-- car:Place(x+10, y+y1)
-			-- car:PlayEffect("fx_digital_in")
-	-- end
-	-- y1=y1+10
-	-- for i = 1, 10 do
-			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my") -- 4
-			-- car:Place(x+10, y+y1)
-			-- car:PlayEffect("fx_digital_in")
-	-- end
-	-- y1=y1+10
-	-- for i = 1, 10 do
-			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my") -- 4
-			-- car:Place(x+10, y+y1)
-			-- car:PlayEffect("fx_digital_in")
-	-- end
-	-- y1=y1+10
-	-- for i = 1, 10 do
-			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my") -- 4
-			-- car:Place(x+10, y+y1)
-			-- car:PlayEffect("fx_digital_in")
-	-- end
-	-- y1=y1+10
-	-- for i = 1, 10 do
-			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor") -- 2
-			-- car:Place(x+10, y+y1)
-			-- car:PlayEffect("fx_digital_in")
-	-- end
-	-- y1=y1+10
-	-- for i = 1, 10 do
-			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor") -- 2
-			-- car:Place(x+10, y+y1)
-			-- car:PlayEffect("fx_digital_in")
-	-- end
-	-- y1=y1+10
-	-- for i = 1, 10 do
-			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_blight") --
-			-- car:Place(x+10, y+y1)
-			-- car:PlayEffect("fx_digital_in")
-	-- end
-	-- y1=y1+10
-	-- for i = 1, 100 do
-			-- local car = Map.CreateEntity(faction, "f_carrier_bot_my")
-			-- car:Place(x-30, y+30)
-			-- car:PlayEffect("fx_digital_in")
 	-- end
 end
 function FreeplaySpawnPlayer(faction, loc)
@@ -333,6 +287,8 @@ MyFrame:RegisterFrame("f_bot_1s_as_my", { -- Scout
 		-- { "c_uplink", "hidden" } ,
 		{ "c_virus_cure", "hidden" } ,
 		{ "c_small_scanner", "hidden" } ,
+		{ "c_human_explorer_slot1", "hidden" } ,
+		{ "c_human_explorer_slot2", "hidden" } ,
 		-- { "c_repairer_my", "hidden" } ,
 	},
 })
@@ -342,7 +298,7 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD/Ver2/Bot_1S_AD.Bot_1S_AD'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets =MySockets(my_num_sockets - 2, {
+	sockets =MySockets(my_num_sockets - 4, {
 		{ "Small1", "Large"    },
 	}),
 	--	placement = "Max",
@@ -353,7 +309,7 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 MyFrame:RegisterFrame("f_bot_1s_adw_my2", { -- Engineer 10+2
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
 	texture = "Main/textures/icons/frame/bot_1s_adw.png",
-	desc = "Engineer unit with excellent production speed and extensive upgradeability",
+	desc = "Engineer All",
 	minimap_color = { 0.9, 0.9, 0.8 },
 	slot_type = "garage",
 	visibility_range = 7,
@@ -412,7 +368,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer 10+2
 MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
 	texture = "Main/textures/icons/frame/bot_1s_adw.png",
-	desc = "Engineer unit with excellent production speed and extensive upgradeability",
+	desc = "c_extractor_my",
 	minimap_color = { 0.9, 0.9, 0.8 },
 	slot_type = "garage",
 	visibility_range = 7,
@@ -435,7 +391,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
 MyFrame:RegisterFrame("f_bot_1s_adw_my_blight", { -- Engineer 10+2
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
 	texture = "Main/textures/icons/frame/bot_1s_adw.png",
-	desc = "Engineer unit with excellent production speed and extensive upgradeability",
+	desc = "c_blight_extractor_my",
 	minimap_color = { 0.9, 0.9, 0.8 },
 	slot_type = "garage",
 	visibility_range = 7,
@@ -899,11 +855,12 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_energy",{
 	-- internal variable
 	damage = 100,   -- damage per shot -- 8
 	damage_type = "energy_damage",
-	duration = 6, -- charge duration -- 2
+	duration = 1, -- charge duration -- 2
 	shoot_fx = "fx_turret_laser",  -- fx_turret_1
 	shoot_speed = 1,
 	shoot_socket = "fx",
 	shoot_while_moving = true,
+	blast = 2,
 	--shoot_target = "ground", -- set to "air" or "ground" to limit, otherwise can shoot both
 })
 MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_plasma",{
@@ -933,11 +890,12 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_plasma",{
 	-- internal variable
 	damage = 100,   -- damage per shot -- 8
 	damage_type = "plasma_damage",
-	duration = 6, -- charge duration -- 2
+	duration = 1, -- charge duration -- 2
 	shoot_fx = "fx_turret_laser",  -- fx_turret_1
 	shoot_speed = 1,
 	shoot_socket = "fx",
 	shoot_while_moving = true,
+	blast = 2,
 	--shoot_target = "ground", -- set to "air" or "ground" to limit, otherwise can shoot both
 })
 MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_physical",{
@@ -967,11 +925,12 @@ MyComp:FindComponent("c_turret"):RegisterComponent("c_turret_physical",{
 	-- internal variable
 	damage = 100,   -- damage per shot -- 8
 	damage_type = "physical_damage",
-	duration = 6, -- charge duration -- 2
+	duration = 1, -- charge duration -- 2
 	shoot_fx = "fx_turret_laser",  -- fx_turret_1
 	shoot_speed = 1,
 	shoot_socket = "fx",
 	shoot_while_moving = true,
+	blast = 2,
 	--shoot_target = "ground", -- set to "air" or "ground" to limit, otherwise can shoot both
 })
 
@@ -1075,6 +1034,15 @@ MyComp:FindComponent("c_repairkit"):RegisterComponent("c_repairkit_my", {
 	repair = 1,
 	duration = 10,
 	repair_fx = "fx_heal_unit",
+})
+MyComp:FindComponent("c_blight_shield"):RegisterComponent("c_blight_shield_my", {
+	attachment_size = "Hidden", race = "blight", index = 2001, name = "Blight Charger",
+	visual = "v_generic_i",
+	texture = "Main/textures/icons/components/blight_protection.png",
+	desc = "Allows units to move into blighted areas, provides <hl>50</> power from the blight",
+	production_recipe = CreateProductionRecipe({ circuit_board = 5, blight_crystal = 5 }, { c_assembler = 20, }),
+	activation = "Always",
+	adjust_extra_power = true,
 })
 
 MyComp:FindComponent("c_portablecrane"):RegisterComponent("c_portablecrane_my", { -- 휴대용 운송기
