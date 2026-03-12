@@ -34,6 +34,12 @@ local my_components = { -- 공용 넣을것
 			
 }
 
+-- data.brushes["component_bg_my"]={ "my/my.png", slice = 0.3 }
+-- utilities.lua
+function GetComponentRaceBG(race,bg)
+	return race and comp_race_image[race] or "component_bg"
+end
+
 function MyComponents(key,cnt,components)
 	components=components or {}
 	for i = 1, cnt do
@@ -916,6 +922,10 @@ MyComp:FindComponent("c_adv_miner"):RegisterComponent("c_adv_miner_my",{
 	miner_range = my_miner_range,
 	on_remove = on_remove_clear_extra_data_keep_resimulated,
 })
+data.items.metalore.mining_recipe.c_adv_miner_my = 1
+data.items.crystal.mining_recipe.c_adv_miner_my = 1
+data.items.silica.mining_recipe.c_adv_miner_my = 1
+data.items.blight_crystal.mining_recipe.c_adv_miner_my = 1
 MyComp:FindComponent("c_extractor"):RegisterComponent("c_extractor_my", {
 	attachment_size = "Medium", race = "human", index = 301, name = "Laser Extractor",
 	texture = "Main/textures/icons/components/Component_LaserExtractor_01_M.png",
@@ -927,6 +937,8 @@ MyComp:FindComponent("c_extractor"):RegisterComponent("c_extractor_my", {
 	on_remove = on_remove_clear_extra_data_keep_resimulated,
 	miner_range = my_miner_range,
 })
+data.items.laterite.mining_recipe.c_extractor_my = 1 -- 홍토
+data.items.obsidian.mining_recipe.c_extractor_my = 1 -- 흑요석
 MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor_my", {
 	attachment_size = "Small", race = "blight", index = 201, name = "Blight Extractor",
 	texture = "Main/textures/icons/components/component_blightextractor_01_s.png",
@@ -940,6 +952,7 @@ MyComp:FindComponent("c_blight_extractor"):RegisterComponent("c_blight_extractor
 	activation = "Always",
 	miner_range = my_miner_range,
 })
+data.items.blight_extraction.extracted_by.c_blight_extractor_my=true
 
 MyComp:FindComponent("c_repairer_small_aoe"):RegisterComponent("c_repairer_small_aoe_my",  {
 	attachment_size = "Hidden", race = "robot", index = 143, name = "Small AOE Repair Component",
@@ -1020,12 +1033,8 @@ for key, value in pairs(data.frames) do
     end
 end
 
-data.items.metalore.mining_recipe.c_adv_miner_my = 1
-data.items.crystal.mining_recipe.c_adv_miner_my = 1
-data.items.silica.mining_recipe.c_adv_miner_my = 1
-data.items.blight_crystal.mining_recipe.c_adv_miner_my = 1
 
-data.items.laterite.mining_recipe.c_extractor_my = 1 -- 홍토
-data.items.obsidian.mining_recipe.c_extractor_my = 1 -- 흑요석
 
-data.items.blight_extraction.extracted_by.c_blight_extractor_my=true
+
+
+
