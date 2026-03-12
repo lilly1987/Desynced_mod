@@ -3,8 +3,9 @@ local new_unlocks = { }
 local my_num_hp = 10000 -- 최대 10000
 local my_num_power = 10000 --2147483647  -- 배터리
 local my_num_power2 = 100000000 --2147483647  -- 배터리 발전기
-local my_num_sockets = 12-8 --2147483647
-local my_num_components = 2 --2147483647
+local my_num_sockets_def = 3 --2147483647
+local my_num_sockets = 12-my_num_sockets_def --2147483647
+local my_num_components = 4 --2147483647
 
 local my_component_boost = 900 -- +%
 local my_miner_range = 32 --2147483647
@@ -20,18 +21,21 @@ local my_components = { -- 공용 넣을것
 			{ "c_repairer_small_aoe_my", "hidden" },
 			{ "c_repairkit_my", "hidden" },			
 			
-			{ "c_turret_energy", "hidden" },
-			{ "c_turret_plasma", "hidden" },
-			{ "c_turret_physical", "hidden" },
+			{ "c_turret_energy", "hidden" }, -- 자리 차지
+			{ "c_turret_plasma", "hidden" }, -- 자리 차지
+			{ "c_turret_physical", "hidden" }, -- 자리 차지 
 			
 			{ "c_portablecrane_my", "hidden" },
 			
 			-- { "c_adv_miner_my", "hidden" },
 			-- { "c_extractor_my", "hidden" },
 			-- { "c_blight_extractor_my", "hidden" },
-			{ "c_extractor_my2", "hidden" },
+			-- { "c_extractor_my2", "hidden" }, -- 자리 차지
+			-- { "c_extractor_my2", "hidden" }, -- 자리 차지
+			-- { "c_extractor_my2", "hidden" }, -- 자리 차지
+			-- { "c_extractor_my2", "hidden" }, -- 자리 차지
 			
-		{ "c_uplink", "hidden" },
+		-- { "c_uplink", "hidden" }, -- 자리 차지
 			
 }
 
@@ -67,17 +71,18 @@ function MySockets(max_cnt,sockets)
 end
 function MyMake(faction,x,y) --본부
 	local p={
-	{"","","v5","",""},
-	{"","v2","","v4",""},
-	{"","v2","c","v3",""},
-	{"","v2","s","v3",""},
-	{"","v2","","",""},
+	{"v2","v2","","","s"},
+	{"v2","v2","","",""},
+	{"v2","v2","","",""},
+	{"v2","v2","","",""},
+	{"","","c","","v5"},
 	}
 	local t={
 		c="center",
 		s={entity="f_bot_1s_as_my",cnt=10},
-		v2={entity="f_bot_1s_adw_my",cnt=10},
-		v3={entity="f_bot_1s_adw_my_extractor",cnt=10},
+		-- v2={entity="f_bot_1s_adw_my",cnt=10},
+		v2={entity="f_bot_1s_adw_my2",cnt=10},
+		-- v3={entity="f_bot_1s_adw_my_extractor",cnt=10},
 		v4={entity="f_bot_1s_adw_my_blight",cnt=10},
 		v5={entity="f_carrier_bot_my",cnt=100},
 	}
@@ -178,10 +183,12 @@ function FreeplaySpawnPlayer(faction, loc)
 	bots[#bots]:Place(loc.x-3, loc.y)
 	-- bots[#bots].disconnected = false
 
-	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my")
+	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my2")
 	bots[#bots]:Place(loc.x, loc.y-4)
-	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor")
-	bots[#bots]:Place(loc.x-3, loc.y-4)
+	-- bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my")
+	-- bots[#bots]:Place(loc.x, loc.y-4)
+	-- bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor")
+	-- bots[#bots]:Place(loc.x-3, loc.y-4)
 	bots[#bots+1] = Map.CreateEntity(faction, "f_bot_1s_adw_my_blight")
 	bots[#bots]:Place(loc.x+3, loc.y-4)
 	-- bots[2]:AddComponent("c_adv_miner", 1)
@@ -341,6 +348,30 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 	destroy_effect = "fx_digital",
 }
 
+MyFrame:RegisterFrame("f_bot_1s_adw_my2", { -- Engineer 10+2
+	size = "Unit", race = "robot", index = 111, name = "Engineer",
+	texture = "Main/textures/icons/frame/bot_1s_adw.png",
+	desc = "Engineer unit with excellent production speed and extensive upgradeability",
+	minimap_color = { 0.9, 0.9, 0.8 },
+	slot_type = "garage",
+	visibility_range = 7,
+	slots = { storage = 2, },
+	movement_speed = 2,
+	component_boost = 200,
+	start_disconnected = true,
+	health_points = 200, -- 120
+	power = -4,
+	flags = "AnimateRoot",
+	trigger_channels = "bot",
+	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
+	visual = "v_bot_1s_adw_my",
+	components =MyComponents("c_extractor_my2",my_num_components, {
+	-- components = {
+		--{ "c_moduleefficiency", "hidden" },
+		-- { "c_higrade_capacitor", "hidden" },
+		--{ "c_internal_crane", "hidden" },
+	}),
+})
 MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer 10+2
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
 	texture = "Main/textures/icons/frame/bot_1s_adw.png",
@@ -444,7 +475,7 @@ MyFrame:RegisterFrame("f_carrier_bot_my", { -- Runner 12
 	},
 })
 
-data.visuals.v_carrier_bot_my = { -- Runner
+data.visuals.v_carrier_bot_my = { -- Runner 운반 로봇
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Carrier_A.Bot_Carrier_A'",
 	sockets =MySockets(),
 }
