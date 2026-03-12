@@ -1,8 +1,12 @@
 local new_unlocks = { }
-local my_component_boost = 900 -- +%
+
 local my_num_hp = 10000 -- 최대 10000
 local my_num_power = 50000 --2147483647  -- 배터리
 local my_num_power2 = 100000000 --2147483647  -- 배터리 발전기
+local my_num_sockets = 12-7 --2147483647
+local my_num_components = 2 --2147483647
+
+local my_component_boost = 900 -- +%
 local my_miner_range = 32 --2147483647
 local my_Turret_radius = 32 --2147483647
 local my_visibility_range = 32 --2147483647
@@ -228,10 +232,10 @@ MyFrame:RegisterFrame("f_bot_1s_as_my", { -- Scout
 	components = { 
 		-- { "c_higrade_capacitor_my", "hidden" } ,
 		
-		{ "c_turret_energy", "hidden" } ,
-		{ "c_turret_plasma", "hidden" } ,
-		{ "c_turret_physical", "hidden" } ,
-		{ "c_uplink", "hidden" } ,
+		-- { "c_turret_energy", "hidden" } ,
+		-- { "c_turret_plasma", "hidden" } ,
+		-- { "c_turret_physical", "hidden" } ,
+		-- { "c_uplink", "hidden" } ,
 		{ "c_virus_cure", "hidden" } ,
 		{ "c_small_scanner", "hidden" } ,
 		-- { "c_repairer_my", "hidden" } ,
@@ -243,7 +247,7 @@ data.visuals.v_bot_1s_as_my = { -- Scout
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_AD/Ver2/Bot_1S_AD.Bot_1S_AD'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets =MySockets(12-5-1, {
+	sockets =MySockets(my_num_sockets-1, {
 		{ "Small1", "Large"    },
 	}),
 	--	placement = "Max",
@@ -268,7 +272,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components =MyComponents("c_adv_miner_my",10, {
+	components =MyComponents("c_adv_miner_my",my_num_components, {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
@@ -291,7 +295,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components =MyComponents("c_extractor_my",10, {
+	components =MyComponents("c_extractor_my",my_num_components, {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
@@ -314,7 +318,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_blight", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components = MyComponents("c_blight_extractor_my",10, {
+	components = MyComponents("c_blight_extractor_my",my_num_components, {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
@@ -325,7 +329,7 @@ data.visuals.v_bot_1s_adw_my = { -- Engineer
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets =MySockets(1, {
+	sockets =MySockets(my_num_sockets, {
 		{ "Small1", "Large"    },
 	}),
 	--	placement = "Max",
@@ -356,7 +360,7 @@ MyFrame:RegisterFrame("f_carrier_bot_my", { -- Runner 12
 
 data.visuals.v_carrier_bot_my = { -- Runner
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Carrier_A.Bot_Carrier_A'",
-	sockets =MySockets(12),
+	sockets =MySockets(my_num_sockets),
 }
 
 MyFrame:RegisterFrame("f_bot_2m_as_my", { -- 본부 이동
@@ -498,7 +502,7 @@ for key, value in pairs(f_building_my) do -- 제작기 일괄
 			texture = comp.texture,
 			trigger_channels = "building",
 			visual = "v_base2"..value,--
-			components =MyComponents(value,2,{}),
+			components =MyComponents(value,my_num_components,{}),
 		})
 		
 		if comp.visual then
