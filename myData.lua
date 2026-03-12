@@ -1,7 +1,7 @@
 local new_unlocks = { }
 
 local my_num_hp = 10000 -- 최대 10000
-local my_num_power = 50000 --2147483647  -- 배터리
+local my_num_power = 10000 --2147483647  -- 배터리
 local my_num_power2 = 100000000 --2147483647  -- 배터리 발전기
 local my_num_sockets = 12-7 --2147483647
 local my_num_components = 2 --2147483647
@@ -50,31 +50,100 @@ function MySockets(max_cnt,sockets)
 	return sockets
 end
 function MyMake(faction,x,y) --본부
-	for i = 1, 16 do
-			local car = Map.CreateEntity(faction, "f_bot_1s_as_my")-- Scout
-			car:Place(x-10, y)
-			car:PlayEffect("fx_digital_in")
+	local p={
+	{"","","v5","",""},
+	{"","v2","","v4",""},
+	{"","v2","c","v3",""},
+	{"","v2","s","v3",""},
+	{"","v2","","",""},
+	}
+	local t={
+		c="center",
+		s={entity="f_bot_1s_as_my",cnt=10},
+		v2={entity="f_bot_1s_adw_my",cnt=10},
+		v3={entity="f_bot_1s_adw_my_extractor",cnt=10},
+		v4={entity="f_bot_1s_adw_my_blight",cnt=10},
+		v5={entity="f_carrier_bot_my",cnt=100},
+	}
+	-- 중심점 찾기
+	local cx, cy = 0, 0
+	for i = 1, #p do
+			for j = 1, #p[i] do
+					if p[i][j] == "c" then
+							cx = (j-1)*10
+							cy = (i-1)*10
+							goto exit_loop
+					end
+			end
 	end
-	for i = 1, 64 do
-			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my") -- 4
-			car:Place(x, y-10)
-			car:PlayEffect("fx_digital_in")
+	::exit_loop::
+	for i = 1, #p do
+			for j = 1, #p[i] do
+					local tag = p[i][j]
+					if tag ~= "" and tag ~= "c"then
+							local info = t[tag]
+							for k = 1, info.cnt do
+									local car = Map.CreateEntity(faction, info.entity)
+									car:Place(x + (j-1)*10 - cx, y + (i-1)*10 - cy)
+							end
+					end
+			end
 	end
-	for i = 1, 16 do
-			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor") -- 2
-			car:Place(x-10, y-10)
-			car:PlayEffect("fx_digital_in")
-	end
-	for i = 1, 8 do
-			local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_blight") --
-			car:Place(x+10, y-10)
-			car:PlayEffect("fx_digital_in")
-	end
-	for i = 1, 64 do
-			local car = Map.CreateEntity(faction, "f_carrier_bot_my")
-			car:Place(x+10, y)
-			car:PlayEffect("fx_digital_in")
-	end
+
+	
+	-- for i = 1, 10 do
+			-- local car = Map.CreateEntity(faction, "f_bot_1s_as_my")-- Scout
+			-- car:Place(x+30, y+y1)
+			-- car:PlayEffect("fx_digital_in")
+	-- end
+	-- local y1=y-10*2
+	-- for i = 1, 10 do
+			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my") -- 4
+			-- car:Place(x+10, y+y1)
+			-- car:PlayEffect("fx_digital_in")
+	-- end
+	-- y1=y1+10
+	-- for i = 1, 10 do
+			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my") -- 4
+			-- car:Place(x+10, y+y1)
+			-- car:PlayEffect("fx_digital_in")
+	-- end
+	-- y1=y1+10
+	-- for i = 1, 10 do
+			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my") -- 4
+			-- car:Place(x+10, y+y1)
+			-- car:PlayEffect("fx_digital_in")
+	-- end
+	-- y1=y1+10
+	-- for i = 1, 10 do
+			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my") -- 4
+			-- car:Place(x+10, y+y1)
+			-- car:PlayEffect("fx_digital_in")
+	-- end
+	-- y1=y1+10
+	-- for i = 1, 10 do
+			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor") -- 2
+			-- car:Place(x+10, y+y1)
+			-- car:PlayEffect("fx_digital_in")
+	-- end
+	-- y1=y1+10
+	-- for i = 1, 10 do
+			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_extractor") -- 2
+			-- car:Place(x+10, y+y1)
+			-- car:PlayEffect("fx_digital_in")
+	-- end
+	-- y1=y1+10
+	-- for i = 1, 10 do
+			-- local car = Map.CreateEntity(faction, "f_bot_1s_adw_my_blight") --
+			-- car:Place(x+10, y+y1)
+			-- car:PlayEffect("fx_digital_in")
+	-- end
+	-- y1=y1+10
+	-- for i = 1, 100 do
+			-- local car = Map.CreateEntity(faction, "f_carrier_bot_my")
+			-- car:Place(x-30, y+30)
+			-- car:PlayEffect("fx_digital_in")
+	-- end
 end
 function FreeplaySpawnPlayer(faction, loc)
 	-- lander bot
@@ -608,7 +677,7 @@ c_power_cell_my:RegisterComponent("c_integrated_power_cell_my", {
 	attachment_size = "Hidden", race = "robot", index = 1012, name = "Integrated Power Cell",
 	desc = "Power system built directly into structure",
 	texture = "Main/textures/icons/hidden/integrated_power_cell.png",
-	power = my_num_power2,
+	power = my_num_power,
 	transfer_radius = 32,
 	production_recipe = false,
 })
@@ -905,7 +974,7 @@ MyComp:FindComponent("c_portablecrane"):RegisterComponent("c_portablecrane_my", 
 	power = 0,
 	desc = "Enables automatic transfer of inventory directly between adjacent units and buildings",
 	production_recipe = CreateProductionRecipe({ circuit_board = 5, wire = 1 }, { c_assembler = 50 }),
-	range = 512,
+	range = 128,-- 128 초과 안됨?
 })
 MyComp:FindComponent("c_portable_relay"):RegisterComponent("c_portable_relay_my", { -- 전력망
 	attachment_size = "Internal", race = "robot", index = 112, name = "Portable Power Field",
