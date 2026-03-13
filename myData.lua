@@ -7,15 +7,23 @@ local my_num_sockets_max = 12
 local my_num_sockets_def = 0 --2147483647
 local my_num_sockets = my_num_sockets_max-my_num_sockets_def --2147483647
 local my_num_components = 6 --2147483647
-local my_num_components_Engineer = my_num_sockets_max -my_num_sockets_def-1 --2147483647
 local my_components_Engineer = {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
 		{ "c_virus_cure", "hidden" },
 	}
+local my_num_components_Engineer_d = 1 --2147483647
+local my_num_components_Engineer = my_num_sockets_max -my_num_sockets_def-1 --2147483647
+local my_num_components_Engineer = 1 --2147483647
+local my_components_building =  {
+			{ "c_uplink", "hidden" }, -- 자리 차지
+			{ "c_behavior", "hidden" },-- 자리 차지
+		{ "c_virus_cure", "hidden" },-- 자리 차지
+			}
 local my_num_components_building_d =  3 --2147483647
 local my_num_components_building = my_num_sockets- my_num_components_building_d --2147483647
+local my_num_components_building = 1 --2147483647
 
 local my_component_boost = 900 -- +%
 local my_miner_range = 4 --2147483647
@@ -66,11 +74,18 @@ function MySetMining_recipe(key)
 	data.items.blight_extraction.extracted_by[key]=true
 end
 function MyComponents(key,cnt,components)
-	components=components or {}
-	for i = 1, cnt do
-		table.insert(components,{ key, "hidden" })
+	local comp={}
+	setmetatable(comp, { __index = components })
+	if components then
+			for i = 1, #components do
+					comp[i] = components[i]
+			end
 	end
-	return components
+
+	for i = 1, cnt do
+		table.insert(comp,{ key, "hidden" })
+	end
+	return comp
 end
 function MySockets(max_cnt,sockets)
 	sockets=sockets or {}
@@ -330,7 +345,8 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my2", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my2",
-	components =MyComponents("c_extractor_my2",my_num_components_Engineer-1, {
+	-- components =MyComponents("c_extractor_my2",my_num_components_Engineer-1, {
+	components =MyComponents("c_extractor_my2",my_num_components_Engineer, {
 	-- components = {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
@@ -343,7 +359,7 @@ data.visuals.v_bot_1s_adw_my2 = { -- Engineer
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets =MySockets(my_num_sockets - my_num_components_Engineer, {
+	sockets =MySockets(my_num_sockets - my_num_components_Engineer-2, {
 		-- { "Small1", "Large"    },
 	}),
 	--	placement = "Max",
@@ -368,7 +384,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components = MyComponents("c_adv_miner_my",my_num_components_Engineer,my_components_Engineer),
+	components = MyComponents("c_adv_miner_my",my_num_components_Engineer,{}),
 })
 MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
@@ -387,7 +403,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components = MyComponents("c_extractor_my",my_num_components_Engineer,my_components_Engineer),
+	components = MyComponents("c_extractor_my",my_num_components_Engineer,{}),
 })
 MyFrame:RegisterFrame("f_bot_1s_adw_my_blight", { -- Engineer 10+2
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
@@ -413,7 +429,7 @@ data.visuals.v_bot_1s_adw_my = { -- Engineer
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_1S_ADW.Bot_1S_ADW'",
 	light_radius = 5,
 	light_color = bot_light_color,
-	sockets =MySockets(my_num_sockets - my_num_components_Engineer, {
+	sockets =MySockets(my_num_sockets - my_num_components_Engineer-my_num_components_Engineer_d, {
 		-- { "Small1", "Large"    },
 	}),
 	--	placement = "Max",
@@ -1077,11 +1093,7 @@ for key, value in pairs(f_building_my) do -- 제작기 일괄
 			texture = comp.texture,
 			trigger_channels = "building",
 			visual = "v_base2"..value,--
-			components =MyComponents(value,my_num_components_building,{
-				{ "c_uplink", "hidden" }, -- 자리 차지
-				{ "c_behavior", "hidden" },
-		{ "c_virus_cure", "hidden" },
-			}),
+			components =MyComponents(value,1,my_components_building),
 		})
 		
 		if comp.visual then
@@ -1089,7 +1101,7 @@ for key, value in pairs(f_building_my) do -- 제작기 일괄
 			if baseVis and baseVis.mesh then
 				v_base2:RegisterVisual("v_base2"..value,{
 					mesh = baseVis.mesh,
-					sockets =MySockets(0, {
+					sockets =MySockets(my_num_sockets-my_num_components_building_d-my_num_components_building, {
 						-- { "small1", "Large" },
 					}),
 				})
@@ -1107,8 +1119,8 @@ for _, v in ipairs(new_unlocks) do -- 잠금 해제
 end
 
 for key, comp in pairs(data.components) do
-	if comp.production_recipe ~= nil then
-		-- comp["production_recipe"]["producers"]["c_make_all_my"]=1
+	if comp.production_recipe ~= nil and comp.production_recipe then
+		comp["production_recipe"]["producers"]["c_make_all_my"]=1
 	end
 end
 for key, visual in pairs(data.visuals) do
@@ -1119,9 +1131,12 @@ for key, visual in pairs(data.visuals) do
     end
 end
 for key, value in pairs(data.items) do
-    if value.stack_size ~= nil and value.stack_size then
-        value.stack_size = value.stack_size * 2
-    end
+	if value.stack_size ~= nil and value.stack_size then
+			value.stack_size = value.stack_size * 2
+	end
+	if value.production_recipe ~= nil and value.production_recipe then
+		value["production_recipe"]["producers"]["c_make_all_my"]=1
+	end
 end
 for key, value in pairs(data.techs) do
     if value.uplink_recipe ~= nil and value.uplink_recipe then
