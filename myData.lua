@@ -7,8 +7,15 @@ local my_num_sockets_max = 12
 local my_num_sockets_def = 0 --2147483647
 local my_num_sockets = my_num_sockets_max-my_num_sockets_def --2147483647
 local my_num_components = 6 --2147483647
-local my_num_components_Engineer = my_num_sockets_max -my_num_sockets_def --2147483647
-local my_num_components_building = my_num_sockets_max -my_num_sockets_def - 1 --2147483647
+local my_num_components_Engineer = my_num_sockets_max -my_num_sockets_def-1 --2147483647
+local my_components_Engineer = {
+		--{ "c_moduleefficiency", "hidden" },
+		-- { "c_higrade_capacitor", "hidden" },
+		--{ "c_internal_crane", "hidden" },
+		{ "c_virus_cure", "hidden" },
+	}
+local my_num_components_building_d =  3 --2147483647
+local my_num_components_building = my_num_sockets- my_num_components_building_d --2147483647
 
 local my_component_boost = 900 -- +%
 local my_miner_range = 4 --2147483647
@@ -323,11 +330,13 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my2", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my2",
-	components =MyComponents("c_extractor_my2",my_num_components_Engineer, {
+	components =MyComponents("c_extractor_my2",my_num_components_Engineer-1, {
 	-- components = {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
+		{ "c_behavior", "hidden" },
+		{ "c_virus_cure", "hidden" },
 	}),
 })
 data.visuals.v_bot_1s_adw_my2 = { -- Engineer
@@ -359,11 +368,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components = MyComponents("c_adv_miner_my",my_num_components_Engineer, {
-		--{ "c_moduleefficiency", "hidden" },
-		-- { "c_higrade_capacitor", "hidden" },
-		--{ "c_internal_crane", "hidden" },
-	}),
+	components = MyComponents("c_adv_miner_my",my_num_components_Engineer,my_components_Engineer),
 })
 MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
@@ -382,11 +387,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components = MyComponents("c_extractor_my",my_num_components_Engineer, {
-		--{ "c_moduleefficiency", "hidden" },
-		-- { "c_higrade_capacitor", "hidden" },
-		--{ "c_internal_crane", "hidden" },
-	}),
+	components = MyComponents("c_extractor_my",my_num_components_Engineer,my_components_Engineer),
 })
 MyFrame:RegisterFrame("f_bot_1s_adw_my_blight", { -- Engineer 10+2
 	size = "Unit", race = "robot", index = 111, name = "Engineer",
@@ -405,11 +406,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_blight", { -- Engineer 10+2
 	trigger_channels = "bot",
 	production_recipe = CreateProductionRecipe({  }, { c_carrier_factory = 1 }),
 	visual = "v_bot_1s_adw_my",
-	components = MyComponents("c_blight_extractor_my",my_num_components_Engineer, {
-		--{ "c_moduleefficiency", "hidden" },
-		-- { "c_higrade_capacitor", "hidden" },
-		--{ "c_internal_crane", "hidden" },
-	}),
+	components = MyComponents("c_blight_extractor_my",my_num_components_Engineer, my_components_Engineer),
 })
 
 data.visuals.v_bot_1s_adw_my = { -- Engineer
@@ -443,12 +440,13 @@ MyFrame:RegisterFrame("f_carrier_bot_my", { -- Runner 12
 	components = {
 		-- { "c_higrade_capacitor", "hidden" },
 		{ "c_uplink", "hidden" }, -- 자리 차지
+		{ "c_virus_cure", "hidden" } ,
 	},
 })
 
 data.visuals.v_carrier_bot_my = { -- Runner 운반 로봇
 	mesh = "StaticMesh'/Game/Meshes/RobotUnits/Bot_Carrier_A.Bot_Carrier_A'",
-	sockets =MySockets(my_num_sockets-1),
+	sockets =MySockets(my_num_sockets-2),
 }
 
 MyFrame:RegisterFrame("f_bot_2m_as_my", { -- 본부 이동
@@ -655,60 +653,6 @@ data.visuals.v_base12 = {
 }
 
 
-local f_building_my = {  -- 건물 제작기 일괄
-	'c_fabricator',
-	'c_assembler',
-	'c_refinery',
-	'c_robotics_factory',
-	'c_advanced_refinery',
-	'c_advanced_assembler',
-	'c_adv_alien_factory',
-	'c_data_analyzer',
-	'c_virus_decomposer',
-	'c_human_datacomplex', -- 역병 분석기
-	'c_human_factory_robots',
-	'c_human_science_analyzer_robots',
-	'c_human_refinery', -- 인류 정제기
-	'c_human_refinery', -- 멀티모달 AI 센터
-	'c_human_refinery', -- 인류의 공장
-}
-for key, value in pairs(f_building_my) do -- 제작기 일괄
-	print(key, value)
-	comp=MyComp:FindComponent(value)
-	if comp then
-		f_building_12:RegisterFrame(value.."_my",{
-			size = "Small", race = "robot", index = 101, name = comp.name,
-			desc = comp.desc,
-			minimap_color = { 0.8, 0.8, 0.8 },
-			visibility_range = 128,
-			slots = { storage = 20 },
-			health_points = 10000, --150
-			construction_recipe = CreateConstructionRecipe({ metalbar = 10, crystal = 5 }, 35),
-			texture = comp.texture,
-			trigger_channels = "building",
-			visual = "v_base2"..value,--
-			components =MyComponents(value,my_num_components_building,{
-				{ "c_uplink", "hidden" }, -- 자리 차지
-			}),
-		})
-		
-		if comp.visual then
-			local baseVis = MyVisual:FindVisual(comp.visual)
-			if baseVis and baseVis.mesh then
-				v_base2:RegisterVisual("v_base2"..value,{
-					mesh = baseVis.mesh,
-					sockets =MySockets(my_num_sockets-my_num_components_building-1, {
-						-- { "small1", "Large" },
-					}),
-				})
-			else
-				print("Visual INFO: unable to find visual '"..tostring(comp.visual).."' for component '"..tostring(value).."'")
-			end
-		else
-			print("Visual INFO: component '"..tostring(value).."' has no visual field")
-		end
-	end
-end
 
 MyFrame:RegisterFrame("f_building1x1f_my", {
 	size = "Small", race = "robot", index = 111, name = "Storage Block (20)",
@@ -768,7 +712,7 @@ MyFrame:RegisterFrame("f_large_power_relay_my", {
 	trigger_channels = "building",
 	visual = "v_large_power_relay_my",
 	components = {
-		{ "c_large_power_relay_my", "auto" },
+		{ "c_large_power_relay_my", "hidden" },
 		{ "c_uplink", "auto" },
 	},
 	
@@ -1074,6 +1018,16 @@ MyComp:FindComponent("c_large_power_relay"):RegisterComponent("c_large_power_rel
 -- c_uplink.registers = {}
 -- c_uplink.is_missing_ingredient_register = {}
 
+MyComp:FindComponent("c_carrier_factory"):RegisterComponent("c_make_all_my", {
+	attachment_size = "Hidden", race = "robot", index = 101, name = "Robot Factory",
+	desc = "An integrated component capable of producing Runner Bots",
+	texture = "Main/textures/icons/hidden/carrier_factory.png",
+	production_recipe = false,
+	production_effect = "fx_drone_production",
+})
+
+MyComp:FindComponent("c_virus_cure").trigger_radius=32
+
 MyFrame:FindFrame("f_building_sim"):RegisterFrame("f_building_sim_my", {
 	size = "Special", race = "robot", index = 102, name = "Re-Simulator",
 	desc = "Reconstructs objects on a simulation level, charged via datacubes",
@@ -1090,11 +1044,73 @@ MyFrame:FindFrame("f_building_sim"):RegisterFrame("f_building_sim_my", {
 	},
 })
 
+local f_building_my = {  -- 건물 제작기 일괄
+	'c_make_all_my',
+	'c_fabricator',
+	'c_assembler',
+	'c_refinery',
+	'c_robotics_factory',
+	'c_advanced_refinery',
+	'c_advanced_assembler',
+	'c_adv_alien_factory',
+	'c_data_analyzer',
+	'c_virus_decomposer',
+	'c_human_datacomplex', -- 역병 분석기
+	'c_human_factory_robots',
+	'c_human_science_analyzer_robots',
+	'c_human_refinery', -- 인류 정제기
+	'c_human_refinery', -- 멀티모달 AI 센터
+	'c_human_refinery', -- 인류의 공장
+}
+for key, value in pairs(f_building_my) do -- 제작기 일괄
+	print(key, value)
+	comp=MyComp:FindComponent(value)
+	if comp then
+		f_building_12:RegisterFrame(value.."_my",{
+			size = "Small", race = "robot", index = 101, name = comp.name,
+			desc = comp.desc,
+			minimap_color = { 0.8, 0.8, 0.8 },
+			visibility_range = 128,
+			slots = { storage = 20 },
+			health_points = 10000, --150
+			construction_recipe = CreateConstructionRecipe({ metalbar = 10, crystal = 5 }, 35),
+			texture = comp.texture,
+			trigger_channels = "building",
+			visual = "v_base2"..value,--
+			components =MyComponents(value,my_num_components_building,{
+				{ "c_uplink", "hidden" }, -- 자리 차지
+				{ "c_behavior", "hidden" },
+		{ "c_virus_cure", "hidden" },
+			}),
+		})
+		
+		if comp.visual then
+			local baseVis = MyVisual:FindVisual(comp.visual)
+			if baseVis and baseVis.mesh then
+				v_base2:RegisterVisual("v_base2"..value,{
+					mesh = baseVis.mesh,
+					sockets =MySockets(0, {
+						-- { "small1", "Large" },
+					}),
+				})
+			else
+				print("Visual INFO: unable to find visual '"..tostring(comp.visual).."' for component '"..tostring(value).."'")
+			end
+		else
+			print("Visual INFO: component '"..tostring(value).."' has no visual field")
+		end
+	end
+end
 
 for _, v in ipairs(new_unlocks) do -- 잠금 해제
     table.insert(data.techs.t_robot_tech_basic.unlocks, v)
 end
 
+for key, comp in pairs(data.components) do
+	if comp.production_recipe ~= nil then
+		-- comp["production_recipe"]["producers"]["c_make_all_my"]=1
+	end
+end
 for key, visual in pairs(data.visuals) do
     if visual.sockets then
         for i, socket in ipairs(visual.sockets) do
