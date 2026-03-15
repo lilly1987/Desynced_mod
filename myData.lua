@@ -12,7 +12,7 @@ local my_components_Engineer = {
 		--{ "c_moduleefficiency", "hidden" },
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
-		{ "c_virus_cure", "hidden" },
+		-- { "c_virus_cure", "hidden" },
 	}
 local my_num_components_Engineer_d = 1 --2147483647
 local my_num_components_Engineer = my_num_sockets_max -my_num_sockets_def-1 --2147483647
@@ -20,7 +20,7 @@ local my_num_components_Engineer = 1 --2147483647
 local my_components_building =  {
 			{ "c_uplink", "hidden" }, -- 자리 차지
 			{ "c_behavior", "hidden" },-- 자리 차지
-		{ "c_virus_cure", "hidden" },-- 자리 차지
+		-- { "c_virus_cure", "hidden" },-- 자리 차지
 			}
 local my_num_components_building_d =  3 --2147483647
 local my_num_components_building = my_num_sockets- my_num_components_building_d --2147483647
@@ -112,11 +112,11 @@ function MySockets(max_cnt,sockets)
 end
 function MyMake(faction,x,y) --본부
 	local p={
-	{"d100","","s","","d100"},
-	{"","","","",""},	
+	{"d10","","s","","d10"},
+	{"","r","","r",""},	
 	{"d10","","c","","d10"},
-	{"","","","",""},
-	{"d100","","b","","d100"},
+	{"","r","","r",""},
+	{"d10","","b","","d10"},
 	}
 	local t={
 		c="center",
@@ -126,7 +126,8 @@ function MyMake(faction,x,y) --본부
 		d100={entity="f_bot_1s_adw_my2",cnt=100},
 		-- v3={entity="f_bot_1s_adw_my_extractor",cnt=10},
 		b={entity="f_bot_1s_adw_my_blight",cnt=10},
-		-- r={entity="f_carrier_bot_my",cnt=100},
+		r={entity="f_carrier_bot",cnt=10},
+		rm={entity="f_carrier_bot_my",cnt=10},
 	}
 	-- 중심점 찾기
 	local cx, cy = 0, 0
@@ -324,7 +325,7 @@ MyFrame:RegisterFrame("f_bot_1s_as_my", { -- Scout
 		-- { "c_turret_plasma", "hidden" } ,
 		-- { "c_turret_physical", "hidden" } ,
 		-- { "c_uplink", "hidden" } ,
-		{ "c_virus_cure", "hidden" } ,
+		-- { "c_virus_cure", "hidden" } ,
 		{ "c_small_scanner", "hidden" } ,
 		{ "c_human_explorer_slot1", "hidden" } ,
 		{ "c_human_explorer_slot2", "hidden" } ,
@@ -369,7 +370,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my2", { -- Engineer 10+2
 		-- { "c_higrade_capacitor", "hidden" },
 		--{ "c_internal_crane", "hidden" },
 		{ "c_behavior", "hidden" },
-		{ "c_virus_cure", "hidden" },
+		-- { "c_virus_cure", "hidden" },
 	}),
 })
 data.visuals.v_bot_1s_adw_my2 = { -- Engineer
@@ -473,7 +474,7 @@ MyFrame:RegisterFrame("f_carrier_bot_my", { -- Runner 12
 	components = {
 		-- { "c_higrade_capacitor", "hidden" },
 		{ "c_uplink", "hidden" }, -- 자리 차지
-		{ "c_virus_cure", "hidden" } ,
+		-- { "c_virus_cure", "hidden" } ,
 	},
 })
 
@@ -1080,8 +1081,6 @@ MyComp:FindComponent("c_carrier_factory"):RegisterComponent("c_make_all_my", {
 	production_effect = "fx_drone_production",
 })
 
-MyComp:FindComponent("c_virus_cure").trigger_radius=32
-
 MyFrame:FindFrame("f_building_sim"):RegisterFrame("f_building_sim_my", {
 	size = "Special", race = "robot", index = 102, name = "Re-Simulator",
 	desc = "Reconstructs objects on a simulation level, charged via datacubes",
@@ -1156,6 +1155,8 @@ for _, v in ipairs(new_unlocks) do -- 잠금 해제
     table.insert(data.techs.t_robot_tech_basic.unlocks, v)
 end
 
+MyComp:FindComponent("c_virus_cure").trigger_radius=128
+
 for key, value in pairs(data.components) do
 	if value.production_recipe ~= nil  then --and value.production_recipe
 		if type(value.production_recipe) ~= "table" then
@@ -1191,6 +1192,20 @@ for key, value in pairs(data.items) do
 		value["production_recipe"]["ingredients"]={}
 		value["production_recipe"]["amount"]=1
 	end
+	if value.mining_recipe ~= nil then
+		data.items[key..'20']={
+			tag = "simple_material", index = 1, name = value.name,
+			desc = value.desc,
+			stack_size = 50000,
+			slot_type = value.slot_type,
+			visual = value.visual,
+			texture = value.texture,
+			production_recipe = CreateProductionRecipe(
+			{ [key] = 20 }, 
+			{ c_fabricator = 1, c_human_refinery = 1 , c_make_all_my=1 }
+			),
+		}
+	end
 end
 for key, value in pairs(data.techs) do
     if value.uplink_recipe ~= nil and value.uplink_recipe then
@@ -1217,7 +1232,6 @@ for key, value in pairs(data.frames) do
 		value["production_recipe"]["amount"]=1
 	end
 end
-
 
 
 
