@@ -1158,6 +1158,12 @@ end
 
 for key, value in pairs(data.components) do
 	if value.production_recipe ~= nil  then --and value.production_recipe
+		if type(value.production_recipe) ~= "table" then
+			value.production_recipe={}
+		end
+		if type(value.production_recipe.producers) ~= "table" then
+				value.production_recipe.producers = {}
+		end
 		value["production_recipe"]["producers"]["c_make_all_my"]=1
 		value["production_recipe"]["ingredients"]={}
 		value["production_recipe"]["amount"]=1
@@ -1175,6 +1181,12 @@ for key, value in pairs(data.items) do
 			value.stack_size = value.stack_size * 2
 	end
 	if value.production_recipe ~= nil then -- and value.production_recipe
+		if type(value.production_recipe) ~= "table" then
+			value.production_recipe={}
+		end
+		if type(value.production_recipe.producers) ~= "table" then
+				value.production_recipe.producers = {}
+		end
 		value["production_recipe"]["producers"]["c_make_all_my"]=1
 		value["production_recipe"]["ingredients"]={}
 		value["production_recipe"]["amount"]=1
@@ -1186,11 +1198,20 @@ for key, value in pairs(data.techs) do
     end
 end
 for key, value in pairs(data.frames) do
-    if value.construction_recipe ~= nil then --  and value.construction_recipe
-        value.construction_recipe.ingredients = {}
-        value.construction_recipe.ticks = 1
-    end
+	if value.construction_recipe ~= nil then --  and value.construction_recipe
+		if type(value.construction_recipe) ~= "table" then
+			value.construction_recipe={}
+		end
+		value.construction_recipe.ingredients = {}
+		value.construction_recipe.ticks = 1
+	end
 	if value.production_recipe ~= nil then --  and value.production_recipe
+		if type(value.production_recipe) ~= "table" then
+			value.production_recipe={}
+		end
+		if type(value.production_recipe.producers) ~= "table" then
+				value.production_recipe.producers = {}
+		end
 		value["production_recipe"]["producers"]["c_make_all_my"]=1
 		value["production_recipe"]["ingredients"]={}
 		value["production_recipe"]["amount"]=1
