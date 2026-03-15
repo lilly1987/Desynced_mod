@@ -1,10 +1,11 @@
 local new_unlocks = { }
 
+local my_num_storage = 32 -- 최대 10000
 local my_num_hp = 10000 -- 최대 10000
 local my_num_power = 10000 --2147483647  -- 배터리
 local my_num_power2 = 100000000 --2147483647  -- 배터리 발전기
 local my_num_sockets_max = 12
-local my_num_sockets_def = 0 --2147483647
+local my_num_sockets_def = 1 --2147483647
 local my_num_sockets = my_num_sockets_max-my_num_sockets_def --2147483647
 local my_num_components = 6 --2147483647
 local my_components_Engineer = {
@@ -46,6 +47,7 @@ local my_components = { -- 공용 넣을것
 			
 			{ "c_portablecrane_my", "hidden" },
 			
+			{ "c_make_all_my", "auto" },
 			-- { "c_adv_miner_my", "hidden" },
 			-- { "c_extractor_my", "hidden" },
 			-- { "c_blight_extractor_my", "hidden" },
@@ -63,6 +65,19 @@ local my_components = { -- 공용 넣을것
 -- function GetComponentRaceBG(race,bg)
 	-- return race and comp_race_image[race] or "component_bg"
 -- end
+function SumModuleKey(owner, id, remove_comp,key)
+	local sum = 0
+	for i=1,999 do
+		local boost_comp = owner:FindComponent(id, true, i)
+		if not boost_comp then break end
+		if boost_comp ~= remove_comp and boost_comp.def[key] ~= nil then 
+			sum = sum + boost_comp.def[key] 
+		end
+	end
+
+	return sum
+end
+
 function MySetMining_recipe(key)
 	data.items.metalore.mining_recipe[key] = 1
 	data.items.crystal.mining_recipe[key] = 1
@@ -207,7 +222,7 @@ function MyFrame:RegisterFrame(id, frame)
 	if frame["movement_speed"] ~= nil and frame["movement_speed"] < my_movement_speed then
 		frame["movement_speed"]= my_movement_speed
 	end
-	frame["slots"]= { storage = 20, gas = 2 , anomaly = 2 , virus = 2}
+	frame["slots"]= { storage = my_num_storage, gas = 2 , anomaly = 2 , virus = 2}
 	if frame["power"] ~= nil and frame["power"] < 0 then
 		frame["power"]= 0
 	end
@@ -1035,21 +1050,26 @@ MyComp:FindComponent("c_large_power_relay"):RegisterComponent("c_large_power_rel
 -- c_uplink.get_ui = false
 -- c_uplink.registers = {}
 -- c_uplink.is_missing_ingredient_register = {}
+local function BoostModuleOnAdd(self, comp) self:on_update_boosts(comp) end
+local function BoostModuleOnRemove(self, comp) self:on_update_boosts(comp, comp) end
 
 local c_module_my=MyComp:RegisterComponent("c_module_my",{
-	attachment_size = "Internal", race = "robot", index = 1053, name = "Large Movement Speed Module",
-	desc = "Increase unit movement speed by 120%",
+	attachment_size = "Internal", race = "robot", index = 1053, name = "My Module",
+	-- desc = "Increase unit movement speed by 120%",
 	production_recipe = CreateProductionRecipe({ icchip = 10, hdframe = 10 }, { c_advanced_assembler = 100, }),
 	texture = "Main/textures/icons/hidden/carrier_factory.png",
 	visual = "v_modulespeed_l",
+	add_max_health = 10000,
 	boost = 900,
 	power = 0,
+	on_add = BoostModuleOnAdd,
+	on_remove = BoostModuleOnRemove,
 })
 
 function c_module_my:on_update_boosts(comp, remove_comp)
 	local owner = comp.owner
-	owner.max_health = (owner.def.health_points or 100) + SumModuleBoosts(owner, "c_modulehealth", remove_comp)
-	owner.move_boost = 100 + SumModuleBoosts(owner, "c_modulespeed", remove_comp)
+	owner.max_health = (owner.def.health_points or 100) + SumModuleKey(owner, "c_module_my", remove_comp,'add_max_health')
+	owner.move_boost = 100 + SumModuleBoosts(owner, "c_module_my", remove_comp)
 end
 
 MyComp:FindComponent("c_carrier_factory"):RegisterComponent("c_make_all_my", {
@@ -1136,9 +1156,11 @@ for _, v in ipairs(new_unlocks) do -- 잠금 해제
     table.insert(data.techs.t_robot_tech_basic.unlocks, v)
 end
 
-for key, comp in pairs(data.components) do
-	if comp.production_recipe ~= nil and comp.production_recipe then
-		comp["production_recipe"]["producers"]["c_make_all_my"]=1
+for key, value in pairs(data.components) do
+	if value.production_recipe ~= nil  then --and value.production_recipe
+		value["production_recipe"]["producers"]["c_make_all_my"]=1
+		value["production_recipe"]["ingredients"]={}
+		value["production_recipe"]["amount"]=1
 	end
 end
 for key, visual in pairs(data.visuals) do
@@ -1152,7 +1174,7 @@ for key, value in pairs(data.items) do
 	if value.stack_size ~= nil and value.stack_size then
 			value.stack_size = value.stack_size * 2
 	end
-	if value.production_recipe ~= nil and value.production_recipe then
+	if value.production_recipe ~= nil then -- and value.production_recipe
 		value["production_recipe"]["producers"]["c_make_all_my"]=1
 		value["production_recipe"]["ingredients"]={}
 		value["production_recipe"]["amount"]=1
@@ -1164,9 +1186,15 @@ for key, value in pairs(data.techs) do
     end
 end
 for key, value in pairs(data.frames) do
-    if value.construction_recipe ~= nil and value.construction_recipe then
+    if value.construction_recipe ~= nil then --  and value.construction_recipe
+        value.construction_recipe.ingredients = {}
         value.construction_recipe.ticks = 1
     end
+	if value.production_recipe ~= nil then --  and value.production_recipe
+		value["production_recipe"]["producers"]["c_make_all_my"]=1
+		value["production_recipe"]["ingredients"]={}
+		value["production_recipe"]["amount"]=1
+	end
 end
 
 
