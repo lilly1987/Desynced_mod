@@ -1234,6 +1234,9 @@ for key, value in pairs(data.items) do
 	end
 end
 table.insert(new_unlocks,'infected_circuit_board')
+table.insert(new_unlocks,'unstable_matter')
+data.items.unstable_matter.production_recipe=CreateProductionRecipe({  }, { c_make_all_my=1 })
+data.items.obsidian_infected.production_recipe=CreateProductionRecipe({  }, { c_make_all_my=1 })
 
 for _, v in ipairs(new_unlocks) do -- 잠금 해제
     table.insert(data.techs.t_robot_tech_basic.unlocks, v)
