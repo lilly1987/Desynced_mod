@@ -1151,9 +1151,6 @@ for key, value in pairs(f_building_my) do -- 제작기 일괄
 	end
 end
 
-for _, v in ipairs(new_unlocks) do -- 잠금 해제
-    table.insert(data.techs.t_robot_tech_basic.unlocks, v)
-end
 
 MyComp:FindComponent("c_virus_cure").trigger_radius=128
 
@@ -1176,36 +1173,6 @@ for key, visual in pairs(data.visuals) do
 						socket[2] = "Large"   -- 원하는 값으로 변경
         end
     end
-end
-for key, value in pairs(data.items) do
-	if value.stack_size ~= nil and value.stack_size then
-			value.stack_size = value.stack_size * 2
-	end
-	if value.production_recipe ~= nil then -- and value.production_recipe
-		if type(value.production_recipe) ~= "table" then
-			value.production_recipe={}
-		end
-		if type(value.production_recipe.producers) ~= "table" then
-				value.production_recipe.producers = {}
-		end
-		value["production_recipe"]["producers"]["c_make_all_my"]=1
-		value["production_recipe"]["ingredients"]={}
-		value["production_recipe"]["amount"]=1
-	end
-	if value.mining_recipe ~= nil then
-		data.items[key..'20']={
-			tag = "simple_material", index = 1, name = value.name,
-			desc = value.desc,
-			stack_size = 50000,
-			slot_type = value.slot_type,
-			visual = value.visual,
-			texture = value.texture,
-			production_recipe = CreateProductionRecipe(
-			{ [key] = 20 }, 
-			{ c_fabricator = 1, c_human_refinery = 1 , c_make_all_my=1 }
-			),
-		}
-	end
 end
 for key, value in pairs(data.techs) do
     if value.uplink_recipe ~= nil and value.uplink_recipe then
@@ -1232,7 +1199,45 @@ for key, value in pairs(data.frames) do
 		value["production_recipe"]["amount"]=1
 	end
 end
+for key, value in pairs(data.items) do
+	if value.stack_size ~= nil and value.stack_size then
+			value.stack_size = value.stack_size * 2
+	end
+	if value.production_recipe ~= nil then -- and value.production_recipe
+		if type(value.production_recipe) ~= "table" then
+			value.production_recipe={}
+		end
+		if type(value.production_recipe.producers) ~= "table" then
+				value.production_recipe.producers = {}
+		end
+		value["production_recipe"]["producers"]["c_make_all_my"]=1
+		value["production_recipe"]["ingredients"]={}
+		value["production_recipe"]["amount"]=1
+	end
+end
+for key, value in pairs(data.items) do
+	if value.mining_recipe ~= nil then
+		local nm=key..'20'
+		data.items[nm]={
+			tag = "resource", index = 1, name = value.name..'20',
+			desc = value.desc,
+			stack_size = 50000,
+			slot_type = value.slot_type,
+			visual = value.visual,
+			texture = value.texture,
+			production_recipe = CreateProductionRecipe(
+			{ [key] = 20 }, 
+			{ c_fabricator = 1, c_human_refinery = 1 , c_make_all_my=1 }
+			),
+		}
+		table.insert(new_unlocks,nm)
+	end
+end
+table.insert(new_unlocks,'infected_circuit_board')
 
+for _, v in ipairs(new_unlocks) do -- 잠금 해제
+    table.insert(data.techs.t_robot_tech_basic.unlocks, v)
+end
 
 
 
