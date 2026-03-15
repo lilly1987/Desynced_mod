@@ -97,19 +97,21 @@ function MySockets(max_cnt,sockets)
 end
 function MyMake(faction,x,y) --본부
 	local p={
-	{"d","d","d","d","s"},
-	{"d","d","d","d","b"},
-	{"","","c","",""},
-	{"","","","","r"},
+	{"d100","","s","","d100"},
+	{"","","","",""},	
+	{"d10","","c","","d10"},
+	{"","","","",""},
+	{"d100","","b","","d100"},
 	}
 	local t={
 		c="center",
 		s={entity="f_bot_1s_as_my",cnt=10},
 		-- v2={entity="f_bot_1s_adw_my",cnt=10},
-		d={entity="f_bot_1s_adw_my2",cnt=10},
+		d10={entity="f_bot_1s_adw_my2",cnt=10},
+		d100={entity="f_bot_1s_adw_my2",cnt=100},
 		-- v3={entity="f_bot_1s_adw_my_extractor",cnt=10},
 		b={entity="f_bot_1s_adw_my_blight",cnt=10},
-		r={entity="f_carrier_bot_my",cnt=100},
+		-- r={entity="f_carrier_bot_my",cnt=100},
 	}
 	-- 중심점 찾기
 	local cx, cy = 0, 0
@@ -126,7 +128,7 @@ function MyMake(faction,x,y) --본부
 	for i = 1, #p do
 			for j = 1, #p[i] do
 					local tag = p[i][j]
-					if tag ~= "" and tag ~= "c"then
+					if tag ~= "" and tag ~= "c" and t[tag] ~=nil then
 							local info = t[tag]
 							for k = 1, info.cnt do
 									local car = Map.CreateEntity(faction, info.entity)
@@ -192,7 +194,7 @@ MyFrame = {
 }
 function MyFrame:RegisterFrame(id, frame)
 	table.insert(new_unlocks,id)
-	frame["start_disconnected"]= false
+	-- frame["start_disconnected"]= false
 	if frame["component_boost"] ~= nil and frame["component_boost"] < my_component_boost then
 		frame["component_boost"]= my_component_boost
 	end
@@ -396,7 +398,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_extractor", { -- Engineer 10+2
 	slots = { storage = 2, },
 	movement_speed = 2,
 	component_boost = 200,
-	start_disconnected = false,
+	start_disconnected = true,
 	health_points = 200, -- 120
 	power = -4,
 	flags = "AnimateRoot",
@@ -415,7 +417,7 @@ MyFrame:RegisterFrame("f_bot_1s_adw_my_blight", { -- Engineer 10+2
 	slots = { storage = 2, },
 	movement_speed = 2,
 	component_boost = 200,
-	start_disconnected = false,
+	start_disconnected = true,
 	health_points = 200, -- 120
 	power = -4,
 	flags = "AnimateRoot",
@@ -1011,7 +1013,7 @@ MyComp:FindComponent("c_portablecrane"):RegisterComponent("c_portablecrane_my", 
 	power = 0,
 	desc = "Enables automatic transfer of inventory directly between adjacent units and buildings",
 	production_recipe = CreateProductionRecipe({ circuit_board = 5, wire = 1 }, { c_assembler = 50 }),
-	range = 64,-- 128 초과 안됨?
+	range = 8,-- 128 초과 안됨?
 })
 MyComp:FindComponent("c_portable_relay"):RegisterComponent("c_portable_relay_my", { -- 전력망
 	attachment_size = "Internal", race = "robot", index = 112, name = "Portable Power Field",
@@ -1033,6 +1035,22 @@ MyComp:FindComponent("c_large_power_relay"):RegisterComponent("c_large_power_rel
 -- c_uplink.get_ui = false
 -- c_uplink.registers = {}
 -- c_uplink.is_missing_ingredient_register = {}
+
+local c_module_my=MyComp:RegisterComponent("c_module_my",{
+	attachment_size = "Internal", race = "robot", index = 1053, name = "Large Movement Speed Module",
+	desc = "Increase unit movement speed by 120%",
+	production_recipe = CreateProductionRecipe({ icchip = 10, hdframe = 10 }, { c_advanced_assembler = 100, }),
+	texture = "Main/textures/icons/hidden/carrier_factory.png",
+	visual = "v_modulespeed_l",
+	boost = 900,
+	power = 0,
+})
+
+function c_module_my:on_update_boosts(comp, remove_comp)
+	local owner = comp.owner
+	owner.max_health = (owner.def.health_points or 100) + SumModuleBoosts(owner, "c_modulehealth", remove_comp)
+	owner.move_boost = 100 + SumModuleBoosts(owner, "c_modulespeed", remove_comp)
+end
 
 MyComp:FindComponent("c_carrier_factory"):RegisterComponent("c_make_all_my", {
 	attachment_size = "Hidden", race = "robot", index = 101, name = "Robot Factory",
@@ -1136,6 +1154,8 @@ for key, value in pairs(data.items) do
 	end
 	if value.production_recipe ~= nil and value.production_recipe then
 		value["production_recipe"]["producers"]["c_make_all_my"]=1
+		value["production_recipe"]["ingredients"]={}
+		value["production_recipe"]["amount"]=1
 	end
 end
 for key, value in pairs(data.techs) do
